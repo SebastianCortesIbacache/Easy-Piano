@@ -1,0 +1,6 @@
+{
+  "appId": "com.pianofacil.mateo",
+  "appName": "PianoFácil de Mateo",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

@@ -1,0 +1,19 @@
+# Dependencias Node.js / Capacitor
+node_modules/
+
+# Proyecto nativo Android (generado automáticamente)
+android/
+
+# Carpeta www (copia de archivos web generada por Capacitor)
+www/
+
+# APK de debug (archivo grande, instalar desde releases o carpeta local)
+*.apk
+*.aab
+
+# Logs
+npm-debug.log*
+
+# Cache del sistema
+.DS_Store
+Thumbs.db

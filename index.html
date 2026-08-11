@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PianoFácil para Mateo 🎹</title>
+<meta name="description" content="Aprende piano jugando: 9 etapas, canciones famosas, partituras, postura y recompensas para Mateo.">
+<meta name="theme-color" content="#0e1018">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PianoFácil">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/outfit@latest/latin-400-normal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/outfit@latest/latin-600-normal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/outfit@latest/latin-800-normal.css">
+<style>
+:root{
+  --bg:#0e1018; --panel:rgba(255,255,255,.045); --line:rgba(255,255,255,.09);
+  --text:#f2f3f7; --muted:#9aa0b4; --accent:#ffb547; --accent2:#8b6cff;
+  --good:#3ddc84; --bad:#ff5d6c;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+[hidden]{display:none !important}
+body{font-family:'Outfit',system-ui,sans-serif;color:var(--text);background:var(--bg);min-height:100vh;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(900px 500px at 12% -5%, rgba(139,108,255,.22), transparent 60%),
+    radial-gradient(800px 500px at 95% 15%, rgba(255,181,71,.12), transparent 60%),
+    radial-gradient(700px 600px at 50% 110%, rgba(77,208,255,.10), transparent 60%),
+    var(--bg);}
+#errBanner{position:fixed;top:0;left:0;right:0;z-index:99;background:#7d1f2d;color:#fff;font-size:.82rem;padding:8px 16px;display:none}
+/* ---- Pantalla de carga ---- */
+#loader{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;overflow:hidden;
+  background:
+    radial-gradient(900px 500px at 12% -5%, rgba(139,108,255,.28), transparent 60%),
+    radial-gradient(800px 500px at 95% 15%, rgba(255,181,71,.16), transparent 60%),
+    var(--bg);
+  transition:opacity .6s}
+#loader.gone{opacity:0;pointer-events:none}
+.loadCard{text-align:center;animation:cardIn .6s;position:relative;z-index:2}
+.loadPiano{font-size:4.6rem;animation:bounce 1s ease-in-out infinite;display:inline-block}
+@keyframes bounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-18px) rotate(3deg)}}
+.loadTitle{font-size:2.1rem;font-weight:800;margin-top:8px;
+  background:linear-gradient(90deg,var(--accent),#ffd98a 45%,var(--accent2));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.loadSub{color:var(--muted);margin:8px 0 20px;font-size:1rem}
+.loadBar{width:280px;max-width:76vw;height:13px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;margin:0 auto;border:1px solid var(--line)}
+#loadFill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .1s linear}
+#loadPct{margin-top:12px;font-weight:800;color:var(--accent);font-size:1.1rem}
+.fnote{position:absolute;font-size:1.7rem;opacity:0;animation:floatUp 3s linear infinite;z-index:1}
+.fnote.n1{left:18%;top:62%;animation-delay:0s}
+.fnote.n2{left:74%;top:70%;animation-delay:.9s}
+.fnote.n3{left:50%;top:76%;animation-delay:1.7s}
+.sub.noMb{margin-bottom:0}
+#courseTxt{font-size:.85rem;color:var(--muted)}
+.recGroup{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.srcBtn small{font-weight:400;color:var(--muted)}
+@keyframes floatUp{0%{transform:translateY(50px) rotate(0);opacity:0}25%{opacity:.55}100%{transform:translateY(-160px) rotate(28deg);opacity:0}}
+header{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:16px clamp(14px,4vw,40px);border-bottom:1px solid var(--line)}
+.logo{font-weight:800;font-size:1.35rem;background:linear-gradient(90deg,var(--accent),#ffd98a 45%,var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
+.tabs{display:flex;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+.tab{border:0;background:transparent;color:var(--muted);font:600 .92rem 'Outfit';padding:8px 16px;border-radius:999px;cursor:pointer;transition:.2s}
+.tab:hover{color:var(--text)}
+.tab.active{background:linear-gradient(135deg,var(--accent),#ff8f4d);color:#241503;box-shadow:0 4px 14px rgba(255,150,60,.35)}
+.settings{margin-left:auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.settings label{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--muted);cursor:pointer;-webkit-user-select:none;user-select:none}
+.settings input[type=range]{width:80px;accent-color:var(--accent)}
+.settings select{background:#1a1d29;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:600 .82rem 'Outfit';cursor:pointer}
+.switch input{accent-color:var(--accent)}
+main{padding:20px clamp(14px,4vw,40px) 40px;max-width:1180px;margin:0 auto}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin-bottom:18px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+h2{font-size:1.1rem;margin-bottom:4px}
+.sub{color:var(--muted);font-size:.9rem;margin-bottom:12px;line-height:1.45}
+.btn{border:0;cursor:pointer;font:600 .9rem 'Outfit';color:#241503;background:linear-gradient(135deg,var(--accent),#ff9a4d);padding:9px 16px;border-radius:10px;box-shadow:0 4px 14px rgba(255,160,60,.3);transition:.18s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(255,160,60,.4)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn.small{padding:7px 12px;font-size:.82rem}
+#recStatus{color:var(--muted);font-size:.88rem;min-width:150px}
+#recStatus.rec{color:var(--bad);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.35}}
+#bigMsg{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%) scale(.8);z-index:120;
+  background:linear-gradient(135deg,#2a2140,#191c2b);border:2px solid var(--accent);
+  color:var(--text);font-weight:800;font-size:clamp(1.2rem,3.6vw,1.9rem);text-align:center;line-height:1.4;
+  padding:24px 36px;border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(255,181,71,.25);
+  opacity:0;pointer-events:none;transition:opacity .35s,transform .35s;max-width:86vw}
+#bigMsg.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);z-index:110;
+  background:#1d2130;border:1px solid var(--accent2);color:#d9d2ff;font:600 .9rem 'Outfit';
+  padding:11px 20px;border-radius:99px;opacity:0;pointer-events:none;transition:.35s;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.srcBtns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.srcBtn{flex:1;min-width:200px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--muted);font:600 .95rem 'Outfit';padding:12px 14px;border-radius:12px;cursor:pointer;transition:.2s;text-align:center}
+.srcBtn:hover{color:var(--text);border-color:rgba(255,181,71,.4)}
+.srcBtn.active{background:linear-gradient(135deg,rgba(255,181,71,.18),rgba(139,108,255,.15));border-color:var(--accent);color:var(--text);box-shadow:0 0 0 1px var(--accent), 0 6px 18px rgba(255,170,60,.18)}
+.tuner{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.tuner label{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--muted)}
+.tuner input[type=range]{width:80px;accent-color:var(--accent)}
+.tuner select{background:#1a1d29;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:5px 7px;font:600 .82rem 'Outfit'}
+.dot{width:11px;height:11px;border-radius:50%;background:#555;flex:none}
+.dot.on{background:var(--good);box-shadow:0 0 10px var(--good);animation:blink 1.4s infinite}
+.dot.err{background:var(--bad)}
+#micStatus{font-size:.83rem;color:var(--muted)}
+.meter{width:110px;height:9px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden;flex:none}
+#meterFill{height:100%;width:0%;background:linear-gradient(90deg,var(--good),var(--accent));transition:width .06s linear}
+.detBox{min-width:110px;text-align:center;background:rgba(255,181,71,.08);border:1px solid rgba(255,181,71,.3);border-radius:12px;padding:6px 14px}
+#detNote{font-size:1.5rem;font-weight:800;color:var(--accent);line-height:1.1}
+#detHz{font-size:.72rem;color:var(--muted);display:block}
+.micTip{margin-top:10px;font-size:.8rem;color:var(--muted);line-height:1.4}
+.courseTop{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.courseProg{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.miniBar{width:140px;height:8px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden}
+#courseFill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .4s}
+.timeChip{font-size:.75rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:4px 10px;background:rgba(0,0,0,.25)}
+.badgesBar{display:flex;gap:8px;flex-wrap:wrap;padding:12px;border-radius:14px;margin-bottom:6px;
+  background:linear-gradient(120deg,rgba(255,181,71,.07),rgba(139,108,255,.09));border:1px solid var(--line)}
+.badgeChip{display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;padding:6px 11px;border-radius:99px;
+  background:rgba(0,0,0,.28);border:1px solid var(--line);color:var(--muted);filter:grayscale(1);opacity:.5;transition:.3s}
+.badgeChip.on{filter:none;opacity:1;color:var(--text);border-color:rgba(255,181,71,.6);
+  background:linear-gradient(135deg,rgba(255,181,71,.18),rgba(139,108,255,.2));box-shadow:0 0 14px rgba(255,181,71,.25)}
+.badgeChip .bi{font-size:1rem}
+.continueBar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:13px 16px;border-radius:14px;margin:10px 0 4px;
+  background:linear-gradient(120deg,rgba(255,181,71,.14),rgba(139,108,255,.12));border:1px dashed rgba(255,181,71,.6);font-size:.92rem}
+.stageHead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:14px;margin:18px 0 10px;
+  background:linear-gradient(120deg,rgba(139,108,255,.14),rgba(255,181,71,.10));border:1px solid rgba(139,108,255,.35)}
+.stageHead.s1{background:linear-gradient(120deg,rgba(61,220,132,.10),rgba(255,181,71,.10));border-color:rgba(61,220,132,.35)}
+.stageEmoji{font-size:1.7rem}
+.stageTitle{font-weight:800;font-size:1rem}
+.stageDesc{color:var(--muted);font-size:.82rem}
+.stageState{margin-left:auto;font-size:.8rem;font-weight:600;color:var(--muted);background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:99px;padding:5px 12px}
+.stageState.ok{color:var(--good);border-color:rgba(61,220,132,.5)}
+.path{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.035);transition:.2s;flex-wrap:wrap}
+.step:not(.locked):hover{border-color:rgba(255,181,71,.5);transform:translateX(4px)}
+.step.locked{opacity:.42;filter:grayscale(.7)}
+.step.current{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent), 0 8px 22px rgba(255,170,60,.12)}
+.num{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;flex:none;background:rgba(255,255,255,.08);border:1px solid var(--line)}
+.step.done .num{background:linear-gradient(135deg,var(--good),#1fa868);color:#04231a;border:0}
+.stepInfo{flex:1;min-width:160px}
+.stepTitle{font-weight:800;font-size:1rem}
+.stepDesc{color:var(--muted);font-size:.83rem;margin-top:2px}
+.stepStars{color:var(--accent);font-size:.85rem;letter-spacing:2px;margin-top:3px;min-height:1em}
+.lockIco{font-size:1.2rem;color:var(--muted)}
+.pracTop{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.pracTitle{font-weight:800;font-size:1.1rem}
+.lvlChip{font-size:.72rem;background:rgba(139,108,255,.2);border:1px solid rgba(139,108,255,.5);color:#cdbcff;border-radius:99px;padding:3px 10px;margin-left:6px;vertical-align:middle}
+.pracCtrls{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.lesson{background:rgba(139,108,255,.10);border:1px solid rgba(139,108,255,.4);border-radius:12px;padding:10px 14px;font-size:.87rem;color:#d9d2ff;margin-bottom:12px;line-height:1.45}
+.teachRow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.teachCard{background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:14px;padding:10px 14px;text-align:center;min-width:150px}
+.teachLabel{font-size:.75rem;color:var(--muted);margin-bottom:6px;font-weight:600;letter-spacing:.4px}
+#handsBox{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.handUnit{padding:4px 6px;border-radius:12px;border:1px solid transparent;transition:.25s}
+.handUnit.act{border-color:rgba(255,181,71,.7);background:rgba(255,181,71,.08);box-shadow:0 0 16px rgba(255,181,71,.25)}
+.handLbl{font-size:.7rem;color:var(--muted);font-weight:700;margin-bottom:2px}
+#handTxt{font-size:.85rem;font-weight:700;color:var(--accent);margin-top:4px;min-height:1.2em}
+#handCard.lh #handTxt{color:var(--accent2)}
+.hg{fill:#454b63;transition:fill .2s}
+.hg.on{fill:var(--accent)}
+svg.lhsvg .hg.on{fill:var(--accent2)}
+.hnum{fill:#9aa0b4;font:700 11px 'Outfit';text-anchor:middle}
+.hnum.on{fill:var(--accent)}
+svg.lhsvg .hnum.on{fill:var(--accent2)}
+.noteBadgeWrap{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin:4px 0 12px}
+#handTag{font-weight:700;font-size:.9rem;border-radius:99px;padding:8px 16px;border:1px solid var(--line)}
+#handTag.dh{background:rgba(255,181,71,.12);border-color:rgba(255,181,71,.5);color:var(--accent)}
+#handTag.ih{background:rgba(139,108,255,.14);border-color:rgba(139,108,255,.55);color:#c4b3ff}
+#noteBadge{background:rgba(255,181,71,.1);border:1px solid rgba(255,181,71,.4);padding:9px 24px;border-radius:999px;font-size:clamp(1rem,2.6vw,1.35rem);font-weight:600}
+#noteName{color:var(--accent);font-weight:800;display:inline-block}
+#noteName.pop{animation:pop .3s}
+#noteBadge.bad{border-color:var(--bad);background:rgba(255,93,108,.12)}
+@keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.progress{height:9px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:14px}
+#progFill{height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .25s}
+.stats{display:flex;gap:10px;flex-wrap:wrap}
+.stat{flex:1;min-width:110px;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.8rem;color:var(--muted);text-align:center}
+.stat b{display:block;font-size:1.15rem;color:var(--text);margin-top:2px}
+#pianoWrap{position:relative;background:linear-gradient(#2b2e3c,#15171f);border-radius:18px;padding:40px 14px 16px;box-shadow:0 24px 50px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06)}
+#hintArrow{position:absolute;top:5px;transform:translateX(-50%);color:var(--accent);font-size:22px;z-index:7;opacity:0;transition:left .25s,opacity .25s;filter:drop-shadow(0 0 8px rgba(255,181,71,.8));animation:bob .8s ease-in-out infinite;pointer-events:none}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,6px)}}
+#fingerChip{position:absolute;z-index:8;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),#6a4ee0);
+  color:#fff;font:800 15px 'Outfit';display:flex;align-items:center;justify-content:center;
+  transform:translate(-50%,0);transition:left .25s,opacity .2s;box-shadow:0 0 12px rgba(139,108,255,.8);pointer-events:none;opacity:0}
+.felt{height:7px;border-radius:3px 3px 0 0;background:linear-gradient(#c2405a,#7d2337);box-shadow:0 2px 4px rgba(0,0,0,.5)}
+#piano{position:relative;display:flex;height:230px}
+.key{cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;touch-action:none}
+.key.white{flex:1;position:relative;border-radius:0 0 7px 7px;background:linear-gradient(#fdfcf7,#ece8dd 82%,#d9d4c6);border-left:1px solid #b7b2a4;box-shadow:inset 0 -7px 9px rgba(0,0,0,.10), 0 4px 5px rgba(0,0,0,.4);transition:transform .07s,background .12s}
+.key.white.down{transform:translateY(3px);background:linear-gradient(#ffe9c2,#ffc97e);box-shadow:inset 0 -3px 6px rgba(0,0,0,.15), 0 0 18px rgba(255,181,71,.55)}
+.key.black{position:absolute;top:0;height:62%;z-index:3;border-radius:0 0 6px 6px;background:linear-gradient(#4a4a52,#101014 65%);box-shadow:inset 0 -6px 8px rgba(255,255,255,.07), inset 0 3px 3px rgba(255,255,255,.15), 0 5px 7px rgba(0,0,0,.6);transition:transform .07s,background .12s}
+.key.black.down{transform:translateY(3px);background:linear-gradient(#8a6a2e,#241a05);box-shadow:0 0 16px rgba(255,181,71,.6)}
+.kname{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);font:600 11px 'Outfit';color:#5a5648;pointer-events:none}
+.khint{position:absolute;left:50%;transform:translateX(-50%);pointer-events:none;font:600 9px 'Outfit';padding:1px 4px;border-radius:5px}
+.key.white .khint{top:8px;background:#262a38;color:#cdd2e4}
+.key.black .khint{bottom:7px;background:#e8e4d8;color:#26210f}
+.key.hint{z-index:4;animation:hintPulse 1s ease-in-out infinite;box-shadow:0 0 0 3px var(--accent), 0 0 24px 5px rgba(255,181,71,.6)}
+.key.white.hint{background:linear-gradient(#fff3d6,#ffd37e)}
+.key.white.hint .kname{color:#7a4c00;font-weight:800}
+@keyframes hintPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.28)}}
+.key.err{animation:shake .32s}
+@keyframes shake{20%{transform:translateX(-5px)}45%{transform:translateX(5px)}70%{transform:translateX(-3px)}90%{transform:translateX(3px)}}
+#fx{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:6}
+.pt{position:absolute;width:7px;height:7px;border-radius:50%;opacity:1;animation:pt .7s ease-out forwards}
+@keyframes pt{to{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+.keysHelp{color:var(--muted);font-size:.82rem;text-align:center;margin-top:14px;line-height:1.5}
+footer{text-align:center;color:#565b6e;font-size:.78rem;padding:18px}
+.modal{position:fixed;inset:0;background:rgba(8,9,15,.7);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;z-index:70;padding:20px}
+.modalCard{background:linear-gradient(165deg,#232636,#14161f);border:1px solid rgba(255,181,71,.35);border-radius:22px;padding:28px 30px;text-align:center;max-width:460px;width:100%;box-shadow:0 30px 70px rgba(0,0,0,.6);animation:cardIn .4s cubic-bezier(.2,1.4,.4,1);max-height:92vh;overflow:auto}
+@keyframes cardIn{from{transform:scale(.7) translateY(30px);opacity:0}}
+.modalCard h2{font-size:1.35rem;margin-bottom:6px}
+.cheer{color:#ffd98a;font-weight:700;font-size:.95rem;margin-bottom:8px;line-height:1.4}
+.bigStars{font-size:2.3rem;letter-spacing:8px;margin:4px 0 12px}
+.bigStars span{display:inline-block;color:#4a4436;animation:starPop .5s backwards}
+.bigStars span.on{color:var(--accent);text-shadow:0 0 18px rgba(255,181,71,.8)}
+.bigStars span:nth-child(1){animation-delay:.15s}.bigStars span:nth-child(2){animation-delay:.45s}.bigStars span:nth-child(3){animation-delay:.75s}
+@keyframes starPop{0%{transform:scale(0) rotate(-90deg)}70%{transform:scale(1.4)}100%{transform:scale(1)}}
+.modalStats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.modalStats div{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:12px;padding:10px;font-size:.78rem;color:var(--muted)}
+.modalStats b{display:block;font-size:1.25rem;color:var(--text)}
+#rewardLine{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.rewardChip{display:flex;align-items:center;gap:7px;font-size:.82rem;font-weight:700;padding:8px 14px;border-radius:99px;color:#241503;
+  background:linear-gradient(135deg,#ffd98a,var(--accent));box-shadow:0 0 20px rgba(255,181,71,.6);animation:badgeIn .6s cubic-bezier(.2,1.6,.4,1) backwards}
+.rewardChip:nth-child(2){animation-delay:.25s}
+@keyframes badgeIn{from{transform:scale(0) rotate(-20deg)}}
+.after{color:var(--muted);font-size:.85rem;margin-bottom:12px;line-height:1.4}
+.modalBtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+#confetti{pointer-events:none}
+#confetti i{position:fixed;top:-14px;z-index:80;border-radius:2px;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(106vh) rotate(720deg)}}
+@media (max-width:720px){
+  #piano{height:160px}
+  .kname{font-size:9px;bottom:4px}
+  .khint{display:none}
+  .modalCard{padding:22px 16px}
+}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <span class="fnote n1">🎵</span>
+  <span class="fnote n2">🎶</span>
+  <span class="fnote n3">🎵</span>
+  <div class="loadCard">
+    <span class="loadPiano">🎹</span>
+    <div class="loadTitle">PianoFácil</div>
+    <p class="loadSub">Preparando el piano para Mateo… ✨</p>
+    <div class="loadBar"><div id="loadFill"></div></div>
+    <div id="loadPct">0%</div>
+  </div>
+</div>
+
+<div class="bg"></div>
+<div id="errBanner"></div>
+<div id="bigMsg"></div>
+<div id="toast"></div>
+
+<header>
+  <div class="logo">🎹 PianoFácil de Mateo</div>
+  <nav class="tabs">
+    <button class="tab active" id="tabLearn" type="button">🎓 Plan de aprendizaje</button>
+    <button class="tab" id="tabFree" type="button">🎹 Tocar libre</button>
+  </nav>
+  <div class="settings">
+    <button class="btn ghost small" id="installBtn" type="button" hidden>📲 Instalar app</button>
+    <label>🔊 <input type="range" id="vol" min="0" max="100" value="80"></label>
+    <select id="sysSel" title="Sistema de notas">
+      <option value="solfege">Do · Re · Mi</option>
+      <option value="letter">C · D · E</option>
+    </select>
+    <label class="switch"><input type="checkbox" id="tglNames" checked> Notas</label>
+    <label class="switch"><input type="checkbox" id="tglHints" checked> Teclas</label>
+    <label class="switch" title="Mostrar el nombre de la nota bajo la partitura"><input type="checkbox" id="tglStaffNames" checked> Nombre en partitura</label>
+  </div>
+</header>
+
+<main>
+  <section class="panel" id="learnPanel">
+    <div id="pathView">
+      <div class="courseTop">
+        <div>
+          <h2>¡Hola, Mateo! 👋 Este es tu camino del piano</h2>
+          <p class="sub noMb">9 etapas con canciones famosas que se desbloquean al avanzar. Gana estrellas y recompensas, Mateo 🏆. Tu avance y tu tiempo se guardan solos.</p>
+        </div>
+        <div class="courseProg">
+          <div class="miniBar"><div id="courseFill"></div></div>
+          <span id="courseTxt">0/40</span>
+          <span class="timeChip" id="timeChip">⏱ 0 min</span>
+        </div>
+      </div>
+      <div class="badgesBar" id="badgesBar"></div>
+      <div id="pathBox"></div>
+    </div>
+    <div id="practice" hidden>
+      <div class="pracTop">
+        <button class="btn ghost small" id="backBtn" type="button">← Plan</button>
+        <div class="pracTitle"><span id="pracName"></span><span class="lvlChip" id="pracLvl"></span></div>
+        <div class="pracCtrls">
+          <select id="tempoSel" title="Velocidad de la demo">
+            <option value="0.6">🐢 Lento</option>
+            <option value="1" selected>🎵 Normal</option>
+            <option value="1.35">🐇 Rápido</option>
+          </select>
+          <button class="btn small" id="demoBtn" type="button">▶ Escuchar</button>
+        </div>
+      </div>
+      <div class="lesson" id="lessonBox" hidden></div>
+      <div class="teachRow" id="teachRow" hidden>
+        <div class="teachCard" id="handCard" hidden>
+          <div class="teachLabel">🖐 DEDOS SUGERIDOS</div>
+          <div id="handsBox"></div>
+          <div id="handTxt"></div>
+        </div>
+        <div class="teachCard" id="staffCard" hidden>
+          <div class="teachLabel">📖 LEE LA PARTITURA</div>
+          <div id="staffBox"></div>
+        </div>
+      </div>
+      <div class="noteBadgeWrap">
+        <div id="handTag" hidden></div>
+        <div id="noteBadge">Toca: <b id="noteName">—</b></div>
+      </div>
+      <div class="progress"><div id="progFill"></div></div>
+      <div class="stats">
+        <div class="stat">Progreso <b id="statProg">0/0</b></div>
+        <div class="stat">Racha <b id="statStreak">0</b></div>
+        <div class="stat">Precisión <b id="statAcc">—</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="freePanel" hidden>
+    <h2>Modo libre 🎶</h2>
+    <p class="sub">Mateo, toca lo que quieras en la pantalla o con tu piano real (micrófono). ¡Graba tus melodías!</p>
+    <div class="recGroup">
+      <button class="btn" id="recBtn" type="button">⏺ Grabar</button>
+      <button class="btn ghost" id="playRecBtn" type="button" disabled>▶ Reproducir</button>
+      <button class="btn ghost small" id="clearRecBtn" type="button" disabled>🗑 Borrar</button>
+      <span id="recStatus">Listo para grabar</span>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="srcBtns">
+      <button class="srcBtn active" id="srcPiano" type="button">🖐 Piano en pantalla<br><small>Siempre disponible: ratón, táctil o teclado</small></button>
+      <button class="srcBtn" id="srcMic" type="button">🎤 Mi piano real (micrófono)<br><small>La app escucha las notas que toca Mateo</small></button>
+    </div>
+    <div id="micPanel" class="tuner" hidden>
+      <button class="btn small" id="micBtn" type="button">🎤 Activar micrófono</button>
+      <span class="dot" id="micDot"></span>
+      <span id="micStatus">Micrófono apagado</span>
+      <div class="meter"><div id="meterFill"></div></div>
+      <div class="detBox"><span id="detNote">—</span><small id="detHz"></small></div>
+      <label>Sensibilidad <input type="range" id="sens" min="0" max="100" value="50"></label>
+      <label>Octava
+        <select id="octSel">
+          <option value="-1">−1</option>
+          <option value="0" selected>0</option>
+          <option value="1">+1</option>
+        </select>
+      </label>
+    </div>
+    <p class="micTip">Mateo, el piano en pantalla siempre funciona. Si además activas el micrófono, la app también escuchará tu piano real: las dos fuentes cuentan para la lección.</p>
+  </section>
+
+  <section>
+    <div id="pianoWrap">
+      <div id="hintArrow">▼</div>
+      <div id="fingerChip"></div>
+      <div class="felt"></div>
+      <div id="piano"></div>
+      <div id="fx"></div>
+    </div>
+    <p class="keysHelp">💡 Teclado: <b>1 2 3 4 5 6 7</b> = zona grave (mano izquierda) · <b>A W S E D F T G Y H U J</b> = centro · <b>K O L P Ñ</b> y <b>Z X C V B N M ,</b> = agudas.<br>Sigue la flecha dorada, la partitura, los dedos de las manos y la mano indicada. ¡Tú puedes, Mateo! 💪</p>
+  </section>
+</main>
+
+<footer>Hecho con ❤️ para que Mateo aprenda piano · PianoFácil</footer>
+
+<div class="modal" id="modal" hidden>
+  <div class="modalCard">
+    <h2 id="modalTitle">🎉 ¡Nivel completado, Mateo!</h2>
+    <div class="cheer" id="cheerMsg" hidden></div>
+    <div class="bigStars" id="starsBox"></div>
+    <div class="modalStats">
+      <div>Precisión <b id="mAcc">—</b></div>
+      <div>Mejor racha <b id="mStreak">—</b></div>
+      <div>Aciertos <b id="mHits">—</b></div>
+      <div>Errores <b id="mMiss">—</b></div>
+    </div>
+    <div id="rewardLine" hidden></div>
+    <div class="after" id="afterTip"></div>
+    <div class="modalBtns">
+      <button class="btn ghost" id="retryBtn" type="button">↻ Repetir</button>
+      <button class="btn" id="nextBtn" type="button">Siguiente ▸</button>
+    </div>
+  </div>
+</div>
+<div id="confetti"></div>
+
+<script>
+"use strict";
+window.addEventListener('error',function(e){
+  var b=document.getElementById('errBanner');
+  if(b){b.style.display='block';b.textContent='⚠ Error: '+e.message;}
+});
+function $(s){return document.querySelector(s);}
+var memStore={};
+function storeGet(k){try{return window.localStorage.getItem(k);}catch(e){return (k in memStore)?memStore[k]:null;}}
+function storeSet(k,v){try{window.localStorage.setItem(k,v);}catch(e){memStore[k]=v;}}
+
+/* ============ PANTALLA DE CARGA (5 s) ============ */
+(function(){
+  var pct=0;
+  var fill=document.getElementById('loadFill');
+  var txt=document.getElementById('loadPct');
+  var iv=setInterval(function(){
+    pct=Math.min(100,pct+1);
+    if(fill)fill.style.width=pct+'%';
+    if(txt)txt.textContent=pct+'%';
+    if(pct>=100){
+      clearInterval(iv);
+      var l=document.getElementById('loader');
+      if(l){l.classList.add('gone');setTimeout(function(){ if(l.parentNode)l.parentNode.removeChild(l); },700);}
+    }
+  },50);
+})();
+
+/* ============ FRASES Y MENSAJES ============ */
+var PRE_TIPS=[
+ 'Siéntate en la mitad del banco, con la espalda recta como un superhéroe 🦸',
+ 'Manos en forma de garra, como sosteniendo una pelotita 🎾',
+ 'Relaja los hombros y las muñecas antes de empezar 🌬️',
+ 'Respira profundo tres veces: la música empieza tranquilo 😌',
+ 'Toca con las puntas de los dedos, no con el dedo plano 👆',
+ 'Los pies bien apoyados en el suelo te dan equilibrio 🪑'
+];
+var POST_TIPS=[
+ '🧘 Sacude y estira tus manos suavemente, Mateo. ¡Se lo ganaron!',
+ '👏 ¡Choca esos cinco! Tus dedos hicieron un gran trabajo.',
+ '🌬️ Respira profundo: descansar también es practicar.',
+ '💧 Buen momento para tomar agüita y relajar las muñecas.',
+ '🎩 Un pianista de verdad también descansa con estilo. ¡Bien hecho!'
+];
+var DURING_TIPS=[
+ 'Muñecas relajadas, Mateo 😉','Hombros abajo y tranquilos 💪','Dedos curvados como garrita 🎾',
+ 'Espalda recta de superhéroe 🦸','Respira mientras tocas 🌬️','Tranquilo: la música no corre 🐢'
+];
+var ENTHUSIASM=[
+ '¡Sigue así, Mateo, vamos avanzando súper bien! 🚀',
+ '¡Tu papá Seba estará orgulloso al escucharte tocar! 🥹',
+ '¡A tu hermana Fer le encantará esta melodía! 🎶',
+ '¿Tu mamá Bernardita te escucha? ¡Debería deleitarse con tu talento! 🌟',
+ '¡Bravo, Mateo! Seba, Fer y Bernardita aplauden fuerte 👏',
+ '¡Cada día suenas mejor, Mateo! La familia tiene su propio pianista 💛',
+ '¡Qué bárbaro, Mateo! Fer va a querer que se la enseñes 🎹',
+ '¡Seba va a presumir que su hijo toca así de bien! 😎'
+];
+function rnd(a){return a[Math.floor(Math.random()*a.length)];}
+function toast(txt){
+  var t=$('#toast');t.textContent=txt;t.classList.add('show');
+  clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('show');},2600);
+}
+var msgTimer=null;
+function showMsg(text,ms,onDone){
+  var el=$('#bigMsg');
+  el.innerHTML=text;
+  el.classList.add('show');
+  clearTimeout(msgTimer);
+  msgTimer=setTimeout(function(){
+    el.classList.remove('show');
+    if(onDone) setTimeout(onDone,380);
+  },ms);
+}
+function hideMsgNow(){
+  clearTimeout(msgTimer);
+  $('#bigMsg').classList.remove('show');
+}
+
+/* ============ NOTAS ============ */
+var NOTE_IDX={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+var PC_SHARP=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+var SOL={C:'Do','C#':'Do#',D:'Re','D#':'Re#',E:'Mi',F:'Fa','F#':'Fa#',G:'Sol','G#':'Sol#',A:'La','A#':'La#',B:'Si'};
+var FIRST=48, LAST=84;
+var FING_NAMES=['','Pulgar','Índice','Medio','Anular','Meñique'];
+function nameToMidi(n){var m=n.match(/^([A-G])(#?)(\d)$/);return 12*(+m[3]+1)+NOTE_IDX[m[1]]+(m[2]?1:0);}
+function midiToPC(m){return PC_SHARP[((m%12)+12)%12];}
+function midiToOct(m){return Math.floor(m/12)-1;}
+var KEYMAP={'1':48,'2':50,'3':52,'4':53,'5':55,'6':57,'7':59,
+ a:60,w:61,s:62,e:63,d:64,f:65,t:66,g:67,y:68,h:69,u:70,j:71,
+ k:72,o:73,l:74,p:75,'ñ':76,';':76,z:77,x:78,c:79,v:80,b:81,n:82,m:83,',':84};
+var MIDITOKEY={};
+for(var kk in KEYMAP){ if(!(KEYMAP[kk] in MIDITOKEY)) MIDITOKEY[KEYMAP[kk]]=kk; }
+
+/* ============ CANCIONES BASE ============ */
+var MARTINILLO=[['C4',1],['D4',1],['E4',1],['C4',1],['C4',1],['D4',1],['E4',1],['C4',1],
+ ['E4',1],['F4',1],['G4',2],['E4',1],['F4',1],['G4',2],
+ ['G4',.5],['A4',.5],['G4',.5],['F4',.5],['E4',1],['C4',1],
+ ['G4',.5],['A4',.5],['G4',.5],['F4',.5],['E4',1],['C4',1],
+ ['C4',1],['G4',1],['C4',3]];
+var ESTRELLITA=[['C4',1],['C4',1],['G4',1],['G4',1],['A4',1],['A4',1],['G4',2],
+ ['F4',1],['F4',1],['E4',1],['E4',1],['D4',1],['D4',1],['C4',2],
+ ['G4',1],['G4',1],['F4',1],['F4',1],['E4',1],['E4',1],['D4',2],
+ ['G4',1],['G4',1],['F4',1],['F4',1],['E4',1],['E4',1],['D4',2],
+ ['C4',1],['C4',1],['G4',1],['G4',1],['A4',1],['A4',1],['G4',2],
+ ['F4',1],['F4',1],['E4',1],['E4',1],['D4',1],['D4',1],['C4',2]];
+var HIMNO=[['E4',1],['E4',1],['F4',1],['G4',1],['G4',1],['F4',1],['E4',1],['D4',1],
+ ['C4',1],['C4',1],['D4',1],['E4',1],['E4',1.5],['D4',.5],['D4',2],
+ ['E4',1],['E4',1],['F4',1],['G4',1],['G4',1],['F4',1],['E4',1],['D4',1],
+ ['C4',1],['C4',1],['D4',1],['E4',1],['D4',1.5],['C4',.5],['C4',2]];
+var CUMPLE=[['C4',.75],['C4',.25],['D4',1],['C4',1],['F4',1],['E4',2],
+ ['C4',.75],['C4',.25],['D4',1],['C4',1],['G4',1],['F4',2],
+ ['C4',.75],['C4',.25],['C5',1],['A4',1],['F4',1],['E4',1],['D4',2],
+ ['A#4',.75],['A#4',.25],['A4',1],['F4',1],['G4',1],['F4',2]];
+var NOCHE=[['G4',1.5],['A4',.5],['G4',1],['E4',2],['G4',1.5],['A4',.5],['G4',1],['E4',2],
+ ['D5',2],['D5',1],['B4',3],['C5',2],['C5',1],['G4',3],
+ ['A4',2],['A4',1],['C5',1.5],['B4',.5],['A4',1],['G4',1.5],['A4',.5],['G4',1],['E4',2],
+ ['A4',2],['A4',1],['C5',1.5],['B4',.5],['A4',1],['G4',1.5],['A4',.5],['G4',1],['E4',2],
+ ['C5',2],['G4',1],['E4',1.5],['G4',.5],['F4',1],['D4',1],['C4',3]];
+var CAMPANITAS=[['E4',1],['E4',1],['E4',2],['E4',1],['E4',1],['E4',2],['E4',1],['G4',1],['C4',1],['D4',1],['E4',4],
+ ['F4',1],['F4',1],['F4',1],['F4',1],['F4',1],['E4',1],['E4',1],['E4',1],['E4',1],['D4',1],['D4',1],['E4',1],['D4',2],['G4',2],
+ ['E4',1],['E4',1],['E4',2],['E4',1],['E4',1],['E4',2],['E4',1],['G4',1],['C4',1],['D4',1],['E4',4],
+ ['F4',1],['F4',1],['F4',1],['F4',1],['F4',1],['E4',1],['E4',1],['E4',1],['G4',1],['G4',1],['F4',1],['D4',1],['C4',4]];
+var SAINTS=[['C4',1],['E4',1],['F4',1],['F4',2],['C4',1],['E4',1],['F4',1],['F4',2],
+ ['E4',1],['D4',1],['E4',1],['F4',1],['E4',1],['D4',1],['C4',3]];
+var GREENS=[['A4',1],['C5',2],['D5',1],['E5',1.5],['F5',.5],['E5',1],['D5',2],['B4',1],
+ ['G4',1.5],['A4',.5],['B4',1],['C5',1.5],['A4',.5],['A4',1],['G4',2],['E4',1],
+ ['A4',1],['C5',2],['D5',1],['E5',1.5],['F5',.5],['E5',1],['D5',2],['B4',1],
+ ['G4',1.5],['A4',.5],['B4',1],['C5',1.5],['B4',.5],['C5',1],['D5',2],['B4',1],
+ ['E5',1.5],['F5',.5],['E5',1],['D5',2],['B4',1],['A4',3]];
+var FUR=[['E5',.5],['D#5',.5],['E5',.5],['D#5',.5],['E5',.5],['B4',.5],['D5',.5],['C5',.5],['A4',1],
+ ['C4',.5],['E4',.5],['A4',.5],['B4',1],['E4',.5],['G#4',.5],['B4',.5],['C5',1],['E4',.5],
+ ['E5',.5],['D#5',.5],['E5',.5],['D#5',.5],['E5',.5],['B4',.5],['D5',.5],['C5',.5],['A4',1],
+ ['C4',.5],['E4',.5],['A4',.5],['B4',1],['E4',.5],['C5',.5],['B4',.5],['A4',2]];
+var MINUET=[['D5',1],['G4',.5],['A4',.5],['B4',.5],['C5',.5],['D5',1],['G4',1],['G4',1],
+ ['E5',1],['C5',.5],['D5',.5],['E5',.5],['F#5',.5],['G5',1],['G4',1],['G4',1]];
+var CANON=[['F#5',1],['E5',1],['D5',1],['C#5',1],['B4',1],['A4',1],['B4',1],['C#5',1],
+ ['D5',1],['C#5',1],['B4',1],['A4',1],['G4',1],['F#4',1],['G4',1],['E4',1],
+ ['D4',1],['A4',1],['D5',2]];
+var BAJOMELO=[['C3',1],['C4',1],['E4',1],['G4',1],['G3',1],['G4',1],['B4',1],['D5',1],
+ ['F3',1],['F4',1],['A4',1],['C5',1],['C3',1],['E4',1],['G4',1],['C5',2]];
+var VALS=[['C3',1],['G4',1],['E4',1],['C3',1],['G4',1],['E4',1],['F3',1],['A4',1],['F4',1],
+ ['G3',1],['B4',1],['G4',1],['C3',1],['G4',1],['E4',1],['C3',1],['E4',1],['C4',1]];
+var NOCHE2=[['C3',1],['G4',1.5],['A4',.5],['G4',1],['E4',2],['C3',1],['G4',1.5],['A4',.5],['G4',1],['E4',2],
+ ['G3',1],['D5',2],['D5',1],['B4',3],['C3',1],['C5',2],['C5',1],['G4',3],
+ ['F3',1],['A4',2],['A4',1],['C5',1.5],['B4',.5],['A4',1],['C3',1],['G4',1.5],['A4',.5],['G4',1],['E4',2],
+ ['F3',1],['A4',2],['A4',1],['C5',1.5],['B4',.5],['A4',1],['C3',1],['G4',1.5],['A4',.5],['G4',1],['E4',2],
+ ['C3',1],['C5',2],['G4',1],['E4',1.5],['G4',.5],['F4',1],['D4',1],['C4',3]];
+var HIMNO2=[['C3',1],['E4',1],['E4',1],['F4',1],['G4',1],['G3',1],['G4',1],['F4',1],['E4',1],['D4',1],
+ ['C3',1],['C4',1],['C4',1],['D4',1],['E4',1],['G3',1],['E4',1],['D4',1],['D4',2],
+ ['C3',1],['E4',1],['E4',1],['F4',1],['G4',1],['G3',1],['G4',1],['F4',1],['E4',1],['D4',1],
+ ['C3',1],['C4',1],['C4',1],['D4',1],['E4',1],['C3',1],['D4',1],['C4',1],['C4',2]];
+var CAMP2=[['C3',1],['E4',1],['E4',1],['E4',2],['C3',1],['E4',1],['E4',1],['E4',2],
+ ['G3',1],['E4',1],['G4',1],['C3',1],['C4',1],['D4',1],['E4',2],
+ ['F3',1],['F4',1],['F4',1],['F4',2],['C3',1],['F4',1],['E4',1],['E4',2],
+ ['G3',1],['G4',1],['G4',1],['F4',1],['D4',1],
+ ['C3',1],['C4',1],['E4',1],['G4',1],['C5',3]];
+var GRANFINAL=[['C3',1],['C4',1],['E4',1],['G4',1],['C5',1],
+ ['C3',1],['E4',1],['E4',1],['F4',1],['G4',1],['G3',1],['G4',1],['F4',1],['E4',1],['D4',1],
+ ['C3',1],['C4',1],['C4',1],['G4',1],['G4',1],
+ ['F3',1],['F4',1],['E4',1],['D4',1],['C4',1],
+ ['C3',1],['E4',1],['G4',1],['C5',3]];
+var FING_MART=[1,2,3,1, 1,2,3,1, 1,2,3, 1,2,3, 3,4,3,2,1,1, 3,4,3,2,1,1, 1,5,1];
+var FING_EST=[1,1,5,5,5,5,4, 3,3,2,2,1,1,1, 5,5,4,4,3,3,2, 5,5,4,4,3,3,2, 1,1,5,5,5,5,4, 3,3,2,2,1,1,1];
+var FING_HIM=[3,3,4,5,5,4,3,2,1,1,2,3,3,2,1, 3,3,4,5,5,4,3,2,1,1,2,3,2,1,1];
+var FING_CUM=[1,1,2,1,4,3, 1,1,2,1,5,4, 1,1,5,4,3,2,1, 4,3,1,2,1];
+var FING_NOCHE=[3,4,3,1, 3,4,3,1, 4,4,2, 3,3,1, 1,1,3,2,1, 3,4,3,1, 1,1,3,2,1, 3,4,3,1, 5,3,1,3,2,1,1];
+var FING_CAMP=[3,3,3,3,3,3,3,5,1,2,3, 4,4,4,4,4,3,3,3,3,2,2,3,2,5, 3,3,3,3,3,3,3,5,1,2,3, 4,4,4,4,4,3,3,3,5,5,4,2,1];
+var FING_SAINTS=[1,2,3,3, 1,2,3,3, 2,1,2,3,2,1,1];
+var FING_GREENS=[1,2,3,4,5,4,3,2, 1,2,3,4,3,3,2,1, 1,2,3,4,5,4,3,2, 1,2,3,4,3,4,5,3, 4,5,4,3,2,1];
+var FING_FUR=[3,2,3,2,3,1,4,3,1, 1,2,4,5,1,3,4,5,2, 3,2,3,2,3,1,4,3,1, 1,2,4,5,1,5,4,3];
+var FING_MINUET=[5,1,2,3,4,5,1,1, 5,3,4,5,4,5,1,1];
+var FING_CANON=[5,4,3,2,1,1,2,3, 5,4,3,2,1,2,3,1, 1,3,5];
+function handsAlt(n,pattern){var out=[];for(var i=0;i<n;i++)out.push(pattern[i%pattern.length]);return out;}
+var H_BAJOMELO=handsAlt(16,['I','D','D','D']);
+var H_VALS=handsAlt(18,['I','D','D']);
+var H_NOCHE2=NOCHE2.map(function(x){return ['C3','G3','F3'].indexOf(x[0])>=0?'I':'D';});
+var H_HIMNO2=HIMNO2.map(function(x){return ['C3','G3'].indexOf(x[0])>=0?'I':'D';});
+var H_CAMP2=CAMP2.map(function(x){return ['C3','G3','F3'].indexOf(x[0])>=0?'I':'D';});
+var H_GRANFINAL=GRANFINAL.map(function(x){return ['C3','G3','F3'].indexOf(x[0])>=0?'I':'D';});
+
+/* ============ ETAPAS Y NIVELES ============ */
+var STAGES=[
+ {id:1,emoji:'🌱',title:'Etapa 1 · Primeros pasos',desc:'Tus dos primeras lecciones, Mateo: conoce el piano sin miedo.'},
+ {id:2,emoji:'🖐',title:'Etapa 2 · Postura y técnica',desc:'Numera tus dedos, relaja la mano y aprende la digitación correcta.'},
+ {id:3,emoji:'📖',title:'Etapa 3 · Lectura musical',desc:'Aprende a leer notas y ritmos en el pentagrama.'},
+ {id:4,emoji:'🚀',title:'Etapa 4 · Melodías reales',desc:'Escalas, arpegios y tus primeras canciones completas.'},
+ {id:5,emoji:'🫲',title:'Etapa 5 · La mano izquierda',desc:'Despierta tu mano secreta y alterna las dos manos.'},
+ {id:6,emoji:'✨',title:'Etapa 6 · Canciones mágicas',desc:'🔓 Melodías famosas que todos reconocen: ¡se desbloquean al llegar aquí!'},
+ {id:7,emoji:'🤲',title:'Etapa 7 · Dos manos',desc:'Bajos y melodía trabajando en equipo por primera vez.'},
+ {id:8,emoji:'🔥',title:'Etapa 8 · Desafíos virtuosos',desc:'Los clásicos más famosos del piano, con sostenidos y velocidad.'},
+ {id:9,emoji:'🎓',title:'Etapa 9 · Gran concierto',desc:'Tus versiones de concierto, Mateo. ¡La graduación final!'}
+];
+var LEVELS=[
+ {id:1,stage:1,title:'Tu primera nota',emoji:'👋',desc:'Toca Do (C4) tres veces, sin prisa.',bpm:80,
+  lesson:'Mateo, siéntate frente al centro del piano, con la espalda recta y los hombros relajados. 🪑',
+  seq:[['C4',1],['C4',1],['C4',1]]},
+ {id:2,stage:1,title:'Do y Mi',emoji:'🌱',desc:'Alterna entre Do y Mi.',bpm:85,seq:[['C4',1],['E4',1],['C4',1],['E4',1]]},
+ {id:3,stage:2,title:'Conoce tus dedos',emoji:'🖐',desc:'Cada dedo tiene un número y una tecla.',bpm:80,ui:{hand:true},fing:[1,2,3,4,5],
+  lesson:'Mateo, los dedos se numeran del 1 al 5: 1 = pulgar 👍, 2 = índice, 3 = medio, 4 = anular y 5 = meñique. Mira el dibujo de la mano.',
+  seq:[['C4',1],['D4',1],['E4',1],['F4',1],['G4',1]]},
+ {id:4,stage:2,title:'La mano en garra',emoji:'🎾',desc:'Sube y baja con la mano relajada.',bpm:85,ui:{hand:true},fing:[1,2,3,4,5,4,3,2,1],
+  lesson:'Curva los dedos como si sostuvieras una pelota pequeña 🎾. La muñeca está relajada y tocas con las puntas de los dedos.',
+  seq:[['C4',1],['D4',1],['E4',1],['F4',1],['G4',1],['F4',1],['E4',1],['D4',1],['C4',1]]},
+ {id:5,stage:2,title:'Dedos independientes',emoji:'🕺',desc:'Pequeños giros con grupos de dedos.',bpm:90,ui:{hand:true},fing:[1,2,3,2,1, 2,3,4,3,2, 3,4,5,4,3],
+  lesson:'Cada dedo se mueve por su cuenta mientras la mano permanece tranquila. Solo se mueven los dedos, no la muñeca.',
+  seq:[['C4',1],['D4',1],['E4',1],['D4',1],['C4',1],['D4',1],['E4',1],['F4',1],['E4',1],['D4',1],['E4',1],['F4',1],['G4',1],['F4',1],['E4',1]]},
+ {id:6,stage:2,title:'El pulgar por debajo',emoji:'🌉',desc:'El truco secreto de las escalas.',bpm:90,ui:{hand:true},fing:[1,2,3,1,2, 2,1,3,2,1],
+  lesson:'Para llegar al Fa, el pulgar (1) pasa por debajo del dedo medio (3): el famoso "paso del pulgar" ✨.',
+  seq:[['C4',1],['D4',1],['E4',1],['F4',1],['G4',1],['F4',1],['E4',1],['D4',1],['C4',1],['C4',2]]},
+ {id:7,stage:2,title:'Escala con digitación',emoji:'🏆',desc:'Do mayor completa con los dedos correctos.',bpm:96,ui:{hand:true},fing:[1,2,3,1,2,3,4,5,4,3,2,1,3,2,1],
+  lesson:'Digitación oficial de la escala de Do: sube 1-2-3-1-2-3-4-5 y baja 5-4-3-2-1-3-2-1. ¡La usarás toda la vida!',
+  seq:[['C4',1],['D4',1],['E4',1],['F4',1],['G4',1],['A4',1],['B4',1],['C5',1],['B4',1],['A4',1],['G4',1],['F4',1],['E4',1],['D4',1],['C4',2]]},
+ {id:8,stage:3,title:'El pentagrama y la clave de Sol',emoji:'📖',desc:'El Sol vive en la segunda línea.',bpm:80,ui:{score:true},
+  lesson:'El pentagrama tiene 5 líneas que se cuentan desde abajo. La clave de Sol 𝄞 marca la segunda línea: ahí vive la nota Sol.',
+  seq:[['G4',1],['G4',1],['G4',2],['E4',1],['E4',1],['E4',2]]},
+ {id:9,stage:3,title:'Las notas en los espacios',emoji:'🔲',desc:'Fa y La viven en los espacios.',bpm:85,ui:{score:true},
+  lesson:'Las notas también viven en los espacios entre líneas. Fa está en el primer espacio (abajo) y La en el segundo.',
+  seq:[['F4',1],['F4',1],['A4',1],['A4',1],['F4',1],['A4',2]]},
+ {id:10,stage:3,title:'Mi y Si en las líneas',emoji:'📏',desc:'Primera y tercera línea.',bpm:85,ui:{score:true},
+  lesson:'Mi está en la primera línea (la de abajo del todo) y Si en la tercera línea, justo en el medio del pentagrama.',
+  seq:[['E4',1],['G4',1],['B4',1],['G4',1],['E4',2],['B4',2]]},
+ {id:11,stage:3,title:'Subiendo por el pentagrama',emoji:'🪜',desc:'Línea, espacio, línea, espacio…',bpm:90,ui:{score:true},
+  lesson:'Las notas suben por el pentagrama como por una escalera: línea, espacio, línea, espacio… ¡Sigue hasta el Do agudo!',
+  seq:[['E4',1],['F4',1],['G4',1],['A4',1],['B4',1],['C5',2],['B4',1],['A4',1],['G4',2]]},
+ {id:12,stage:3,title:'Ritmos: negras y blancas',emoji:'⏱️',desc:'Cada figura dura un tiempo distinto.',bpm:90,ui:{score:true},
+  lesson:'La negra (cabeza rellena ♩) dura 1 tiempo. La blanca (círculo abierto) dura 2: mantén la tecla más.',
+  seq:[['G4',1],['A4',1],['B4',1],['C5',1],['B4',2],['G4',2],['E4',1],['F4',1],['G4',3]]},
+ {id:13,stage:3,title:'El Do central',emoji:'🎯',desc:'La línea adicional.',bpm:90,ui:{score:true},
+  lesson:'El Do central se escribe con una pequeña línea adicional debajo del pentagrama. ¡Ya puedes leer todas las notas del curso, Mateo!',
+  seq:[['C4',1],['D4',1],['E4',1],['F4',1],['G4',1],['A4',1],['B4',1],['C5',2],['G4',1],['E4',1],['C4',3]]},
+ {id:14,stage:4,title:'La escala completa',emoji:'🎼',desc:'Do mayor subiendo una octava.',bpm:92,ui:{hand:true},fing:[1,2,3,1,2,3,4,5],
+  seq:[['C4',1],['D4',1],['E4',1],['F4',1],['G4',1],['A4',1],['B4',1],['C5',1]]},
+ {id:15,stage:4,title:'Escala ida y vuelta',emoji:'🔄',desc:'Sube la octava y vuelve bajando.',bpm:96,ui:{hand:true},fing:[1,2,3,1,2,3,4,5,4,3,2,1,3,2,1],
+  seq:[['C4',1],['D4',1],['E4',1],['F4',1],['G4',1],['A4',1],['B4',1],['C5',1],['B4',1],['A4',1],['G4',1],['F4',1],['E4',1],['D4',1],['C4',1]]},
+ {id:16,stage:4,title:'Arpegios',emoji:'🏗️',desc:'Do mayor y Sol mayor, subiendo y bajando.',bpm:100,ui:{hand:true},fing:[1,2,3,5,3,2,1, 1,2,3,5,3,2,1],
+  seq:[['C4',1],['E4',1],['G4',1],['C5',1],['G4',1],['E4',1],['C4',1],['G4',1],['B4',1],['D5',1],['G5',1],['D5',1],['B4',1],['G4',1]]},
+ {id:17,stage:4,title:'Canción: Martinillo',emoji:'🔔',desc:'¡Tu primera canción completa!',bpm:104,song:true,ui:{hand:true,score:true},fing:FING_MART,seq:MARTINILLO},
+ {id:18,stage:4,title:'Canción: Estrellita',emoji:'⭐',desc:'La canción de las estrellas, entera.',bpm:100,song:true,ui:{hand:true,score:true},fing:FING_EST,seq:ESTRELLITA},
+ {id:19,stage:4,title:'Canción: Himno de la Alegría',emoji:'🎻',desc:'La melodía más famosa de Beethoven.',bpm:112,song:true,ui:{hand:true,score:true},fing:FING_HIM,seq:HIMNO},
+ {id:20,stage:4,title:'Canción: Cumpleaños Feliz',emoji:'🎂',desc:'¡Para cantar en cualquier fiesta!',bpm:126,song:true,ui:{hand:true,score:true},fing:FING_CUM,seq:CUMPLE},
+ {id:21,stage:4,title:'Canción: Noche de Paz',emoji:'🌙',desc:'Un clásico suave para cerrar la etapa.',bpm:96,song:true,ui:{hand:true,score:true},fing:FING_NOCHE,seq:NOCHE},
+ {id:22,stage:5,title:'Hola, mano izquierda',emoji:'🫲',desc:'Las notas graves también se tocan.',bpm:80,ui:{hand:true},handAll:'I',fing:[1,2,3,2,1],
+  lesson:'Mateo, la mano izquierda también numera sus dedos del 1 al 5. Su pulgar queda cerca del centro del piano.',
+  seq:[['C3',1],['D3',1],['E3',1],['D3',1],['C3',1]]},
+ {id:23,stage:5,title:'Los cinco graves',emoji:'🦶',desc:'Cinco notas de la mano izquierda.',bpm:85,ui:{hand:true},handAll:'I',fing:[1,2,3,4,5,5,4,3,2,1],
+  seq:[['C3',1],['D3',1],['E3',1],['F3',1],['G3',1],['G3',1],['F3',1],['E3',1],['D3',1],['C3',1]]},
+ {id:24,stage:5,title:'Manos que se turnan',emoji:'🔁',desc:'Derecha e izquierda por turnos.',bpm:85,ui:{hand:true},hands:handsAlt(10,['D','I']),fing:[1,1,2,2,3,3,4,4,5,5],
+  lesson:'Ahora participan las dos manos, ¡pero una a la vez! Mira la etiqueta de mano y el dibujo antes de cada nota.',
+  seq:[['C4',1],['C3',1],['D4',1],['D3',1],['E4',1],['E3',1],['F4',1],['F3',1],['G4',1],['G3',1]]},
+ {id:25,stage:5,title:'Escalera de octavas',emoji:'🪜',desc:'Sube alternando las dos manos.',bpm:90,ui:{hand:true},hands:handsAlt(16,['D','I']),
+  fing:[1,1,2,1,3,1,1,1,2,1,3,1,4,1,5,1],
+  seq:[['C4',1],['C3',1],['D4',1],['D3',1],['E4',1],['E3',1],['F4',1],['F3',1],['G4',1],['G3',1],['A4',1],['A3',1],['B4',1],['B3',1],['C5',1],['C4',1]]},
+ {id:26,stage:5,title:'Ecos',emoji:'🗻',desc:'La derecha canta y la izquierda repite.',bpm:90,ui:{hand:true},
+  hands:['D','D','D','I','I','I','D','D','D','I','I','I','D','D','D','I','I','I','D','I'],
+  fing:[1,2,3,3,2,1,1,2,3,3,2,1,1,2,3,3,2,1,1,1],
+  lesson:'La mano derecha toca un motivo y la izquierda lo responde una octava más grave, como un eco en la montaña.',
+  seq:[['C4',1],['D4',1],['E4',1],['C3',1],['D3',1],['E3',1],['E4',1],['F4',1],['G4',1],['E3',1],['F3',1],['G3',1],
+   ['G4',1],['F4',1],['E4',1],['G3',1],['F3',1],['E3',1],['C4',2],['C3',2]]},
+ {id:27,stage:6,title:'Campanitas',emoji:'🛷',desc:'El villancico más famoso del mundo.',bpm:110,song:true,ui:{hand:true,score:true},fing:FING_CAMP,seq:CAMPANITAS,
+  lesson:'¡Canción famosa desbloqueada! Lee la partitura y usa la digitación. Las redondas (círculo sin plica) duran 4 tiempos.'},
+ {id:28,stage:6,title:'Cuando los santos',emoji:'🎺',desc:'El clásico del jazz tradicional.',bpm:108,song:true,ui:{hand:true,score:true},fing:FING_SAINTS,seq:SAINTS},
+ {id:29,stage:6,title:'Greensleeves',emoji:'🏰',desc:'La balada inglesa legendaria.',bpm:92,song:true,ui:{hand:true,score:true},fing:FING_GREENS,seq:GREENS,
+  lesson:'Una melodía de hace más de 400 años. Deja que las notas largas respiren, Mateo.'},
+ {id:30,stage:7,title:'Bajo y melodía',emoji:'🤲',desc:'La izquierda sostiene, la derecha canta.',bpm:90,ui:{hand:true},hands:H_BAJOMELO,
+  lesson:'A dos manos de verdad: la izquierda toca el bajo y la derecha la melodía. Muy despacio al principio, Mateo.',
+  seq:BAJOMELO},
+ {id:31,stage:7,title:'Vals sencillo',emoji:'💃',desc:'Bajo y dos notas, en ritmo de vals.',bpm:96,ui:{hand:true},hands:H_VALS,seq:VALS},
+ {id:32,stage:7,title:'Noche de Paz a dos manos',emoji:'🌙',desc:'Con bajo incluido.',bpm:88,song:true,ui:{hand:true},hands:H_NOCHE2,seq:NOCHE2},
+ {id:33,stage:7,title:'Himno a dos manos',emoji:'🎻',desc:'Beethoven con bajos.',bpm:104,song:true,ui:{hand:true},hands:H_HIMNO2,seq:HIMNO2},
+ {id:34,stage:8,title:'Para Elisa',emoji:'🌹',desc:'El tema más famoso del piano… ¡con sostenidos!',bpm:100,song:true,ui:{hand:true,score:true},fing:FING_FUR,seq:FUR,
+  lesson:'¡Llegaron las teclas negras! D# (Re#) y G# (Sol#) aparecen con el símbolo ♯. El trino inicial se toca con los dedos 3 y 2.'},
+ {id:35,stage:8,title:'Minueto en Sol',emoji:'🎩',desc:'El elegante baile de Bach.',bpm:104,song:true,ui:{hand:true,score:true},fing:FING_MINUET,seq:MINUET},
+ {id:36,stage:8,title:'Canon en Re',emoji:'🌊',desc:'La melodía más serena de Pachelbel.',bpm:88,song:true,ui:{hand:true,score:true},fing:FING_CANON,seq:CANON},
+ {id:37,stage:9,title:'Campanitas a dos manos',emoji:'🛷',desc:'Versión de concierto con bajos.',bpm:104,song:true,ui:{hand:true},hands:H_CAMP2,seq:CAMP2},
+ {id:38,stage:9,title:'Estrellita de concierto',emoji:'⭐',desc:'Lenta, expresiva y perfecta.',bpm:90,song:true,ui:{hand:true,score:true},fing:FING_EST,seq:ESTRELLITA,
+  lesson:'Versión de concierto: más lenta y expresiva. Respira entre frases y mira la partitura.'},
+ {id:39,stage:9,title:'Noche de Paz · Gran final',emoji:'🌙',desc:'A dos manos, como un profesional.',bpm:84,song:true,ui:{hand:true},hands:H_NOCHE2,seq:NOCHE2},
+ {id:40,stage:9,title:'Popurrí de graduación',emoji:'🎓',desc:'Tu examen final: bajos + melodía + ¡confeti!',bpm:100,song:true,ui:{hand:true},hands:H_GRANFINAL,seq:GRANFINAL,
+  lesson:'El gran final 🎓: un popurrí con las melodías que aprendiste, a dos manos. Cuando termines, Mateo… ¡serás pianista graduado!'}
+];
+LEVELS.forEach(function(l){ l.notes=l.seq.map(function(x){return {midi:nameToMidi(x[0]),dur:x[1]};}); });
+
+/* ============ RECOMPENSAS ============ */
+function stageDoneIn(prog,s){
+  var lv=LEVELS.filter(function(l){return l.stage===s;});
+  return lv.length>0&&lv.every(function(l){return (prog[l.id]||0)>0;});
+}
+var BADGES=[
+ {id:'first',icon:'🐣',name:'Primer paso',desc:'Completa tu primera lección',fn:function(p,s){return s.done>=1;}},
+ {id:'five',icon:'🎵',name:'Aprendiz musical',desc:'Completa 5 niveles',fn:function(p,s){return s.done>=5;}},
+ {id:'posture',icon:'🖐',name:'Dedos de oro',desc:'Domina Postura y técnica',fn:function(p){return stageDoneIn(p,2);}},
+ {id:'reader',icon:'📖',name:'Lector de partituras',desc:'Completa Lectura musical',fn:function(p){return stageDoneIn(p,3);}},
+ {id:'player',icon:'🚀',name:'Intérprete',desc:'Completa Melodías reales',fn:function(p){return stageDoneIn(p,4);}},
+ {id:'left',icon:'🫲',name:'La mano misteriosa',desc:'Domina la mano izquierda',fn:function(p){return stageDoneIn(p,5);}},
+ {id:'magic',icon:'✨',name:'Estrella en ascenso',desc:'Completa las Canciones mágicas',fn:function(p){return stageDoneIn(p,6);}},
+ {id:'twohands',icon:'🤲',name:'Dos manos, un piano',desc:'Completa la etapa a dos manos',fn:function(p){return stageDoneIn(p,7);}},
+ {id:'virtuoso',icon:'🔥',name:'Virtuoso',desc:'Supera los desafíos virtuosos',fn:function(p){return stageDoneIn(p,8);}},
+ {id:'grad',icon:'🎓',name:'Pianista graduado',desc:'Completa todo el curso',fn:function(p){return stageDoneIn(p,9);}},
+ {id:'stars30',icon:'⭐',name:'Coleccionista',desc:'Consigue 30 estrellas',fn:function(p,s){return s.stars>=30;}},
+ {id:'diamond',icon:'💎',name:'Perfeccionista',desc:'Logra 3 estrellas en 10 niveles',fn:function(p,s){return s.threes>=10;}}
+];
+function courseStats(prog){
+  var done=0,stars=0,threes=0;
+  LEVELS.forEach(function(l){var s=prog[l.id]||0;if(s>0){done++;stars+=s;if(s===3)threes++;}});
+  return {done:done,stars:stars,threes:threes};
+}
+function earnedBadges(prog){
+  var st=courseStats(prog);
+  return BADGES.filter(function(b){return b.fn(prog,st);}).map(function(b){return b.id;});
+}
+function renderBadges(){
+  var prog=getPath();
+  var earned=earnedBadges(prog);
+  var bar=$('#badgesBar');bar.innerHTML='';
+  BADGES.forEach(function(b){
+    var on=earned.indexOf(b.id)>=0;
+    var chip=document.createElement('div');
+    chip.className='badgeChip'+(on?' on':'');
+    chip.title=b.name+' — '+b.desc;
+    chip.innerHTML='<span class="bi">'+(on?b.icon:'🔒')+'</span>'+b.name;
+    bar.appendChild(chip);
+  });
+}
+
+/* ============ AJUSTES ============ */
+var settings={vol:.8,sys:'solfege',names:true,hints:true,staffNames:true};
+try{ var sv=JSON.parse(storeGet('pf_settings')||'{}'); for(var sk in sv) settings[sk]=sv[sk]; }catch(e){}
+function saveSettings(){storeSet('pf_settings',JSON.stringify(settings));}
+
+/* ============ AUDIO ============ */
+var AC=null,master=null;
+function ensureAudio(){
+  if(!AC){
+    var Ctx=window.AudioContext||window.webkitAudioContext;
+    if(!Ctx) return false;
+    AC=new Ctx();
+    master=AC.createGain(); master.gain.value=settings.vol;
+    var comp=AC.createDynamicsCompressor();
+    master.connect(comp); comp.connect(AC.destination);
+  }
+  if(AC.state==='suspended') AC.resume();
+  return true;
+}
+function playSound(m,vel){
+  if(!AC) return;
+  var f=440*Math.pow(2,(m-69)/12), t=AC.currentTime;
+  var dec=Math.max(1.1,2.6-(m-60)*0.045);
+  var env=AC.createGain();
+  env.gain.setValueAtTime(0,t);
+  env.gain.linearRampToValueAtTime(.4*vel,t+.006);
+  env.gain.exponentialRampToValueAtTime(.0001,t+dec);
+  var lp=AC.createBiquadFilter(); lp.type='lowpass';
+  lp.frequency.setValueAtTime(Math.min(f*10,12000),t);
+  lp.frequency.exponentialRampToValueAtTime(Math.max(f*1.3,300),t+dec*.7);
+  env.connect(lp); lp.connect(master);
+  var H=[1,2,3,4,5],G=[1,.45,.22,.12,.06];
+  H.forEach(function(h,i){
+    var o=AC.createOscillator(); o.type='sine'; o.frequency.value=f*h; o.detune.value=(Math.random()-.5)*4;
+    var og=AC.createGain(); og.gain.value=G[i]/(1+h*.12);
+    o.connect(og); og.connect(env); o.start(t); o.stop(t+dec+.2);
+  });
+}
+
+/* ============ PIANO ============ */
+var piano=$('#piano'), keyEls={};
+var whiteIdx={}, whiteCount=0;
+var BLACK=[1,3,6,8,10];
+for(var m0=FIRST;m0<=LAST;m0++){ if(BLACK.indexOf(m0%12)<0){whiteIdx[m0]=whiteCount;whiteCount++;} }
+for(var m1=FIRST;m1<=LAST;m1++){
+  (function(m){
+    var black=BLACK.indexOf(m%12)>=0;
+    var el=document.createElement('div');
+    el.className='key '+(black?'black':'white');
+    if(!black){var nm=document.createElement('span');nm.className='kname';el.appendChild(nm);}
+    var kh=document.createElement('span');kh.className='khint';kh.textContent=(MIDITOKEY[m]||'').toUpperCase();el.appendChild(kh);
+    piano.appendChild(el);
+    if(black){
+      el.style.left=((whiteIdx[m-1]+1)*100/whiteCount)+'%';
+      var wPct=(100/whiteCount*0.62);
+      el.style.width=wPct+'%';
+      el.style.marginLeft=(-wPct/2)+'%';
+    }
+    keyEls[m]=el;
+    if(window.PointerEvent){
+      el.addEventListener('pointerdown',function(ev){
+        if(ev.cancelable)ev.preventDefault();
+        try{el.releasePointerCapture(ev.pointerId);}catch(e){}
+        triggerNote(m,false);
+      });
+      el.addEventListener('pointerenter',function(ev){ if(ev.buttons&&ev.buttons&1) triggerNote(m,false); });
+    }else{
+      el.addEventListener('mousedown',function(ev){ if(ev.cancelable)ev.preventDefault(); triggerNote(m,false); });
+      el.addEventListener('touchstart',function(ev){ev.preventDefault();triggerNote(m,false);},{passive:false});
+    }
+    el.addEventListener('contextmenu',function(ev){ev.preventDefault();});
+  })(m1);
+}
+function refreshLabels(){
+  for(var m=FIRST;m<=LAST;m++){
+    var el=keyEls[m]; if(!el)continue;
+    var nm=el.querySelector('.kname');
+    if(nm){var pc=midiToPC(m);nm.textContent=settings.sys==='solfege'?SOL[pc]:pc;nm.style.display=settings.names?'':'none';}
+    var kh=el.querySelector('.khint'); if(kh)kh.style.display=settings.hints?'':'none';
+  }
+}
+
+/* ============ DISPARO DE NOTAS ============ */
+function triggerNote(m,silent,internal){
+  if(practice.intro && !internal) return;
+  if(!silent){ ensureAudio(); playSound(m,1); }
+  flash(m);
+  recordEvent(m);
+  judge(m);
+}
+function flash(m){
+  var el=keyEls[m]; if(!el)return;
+  el.classList.remove('down'); void el.offsetWidth; el.classList.add('down');
+  clearTimeout(el._t); el._t=setTimeout(function(){el.classList.remove('down');},230);
+  burst(m,false);
+}
+function burst(m,big){
+  var el=keyEls[m]; if(!el)return;
+  var r=el.getBoundingClientRect(),w=$('#pianoWrap').getBoundingClientRect();
+  var x=r.left+r.width/2-w.left,y=r.top-w.top+6,fx=$('#fx');
+  var colors=['#ffb547','#8b6cff','#3ddc84','#ff6b9d','#4dd0ff'];
+  var n=big?12:5;
+  for(var i=0;i<n;i++){
+    var p=document.createElement('i');p.className='pt';
+    p.style.left=x+'px';p.style.top=y+'px';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    p.style.setProperty('--dx',(Math.random()*70-35)+'px');
+    p.style.setProperty('--dy',(-25-Math.random()*70)+'px');
+    fx.appendChild(p);
+    p.addEventListener('animationend',function(){this.remove();});
+  }
+}
+
+/* ============ MICRÓFONO ============ */
+var micStream=null,micSrc=null,micFilterNode=null,analyser=null,micBuf=null,rafId=null,micActive=false;
+var smoothMidi=null,pendingMidi=null,stable=0,wasSilent=true,lastEmitT=0,lastEmitMidi=null;
+function gateVal(){return 0.0005*Math.pow(10,$('sens').value/50);}
+function octShift(){return parseInt($('#octSel').value,10)||0;}
+function detectPitch(buf,sr,gate){
+  var N=buf.length,rms=0,i;
+  for(i=0;i<N;i++){var v=buf[i];rms+=v*v;}
+  rms=Math.sqrt(rms/N);
+  if(rms<gate) return {rms:rms,freq:0};
+  var minLag=Math.max(2,Math.floor(sr/1100));
+  var maxLag=Math.min(N-2,Math.floor(sr/65));
+  var energy=0; for(i=0;i<N;i+=2) energy+=buf[i]*buf[i];
+  var bestLag=-1,best=0,lag;
+  for(lag=minLag;lag<=maxLag;lag++){
+    var s=0;
+    for(i=0;i<N-lag;i+=2) s+=buf[i]*buf[i+lag];
+    if(s>best){best=s;bestLag=lag;}
+  }
+  if(bestLag<0||best<energy*0.3) return {rms:rms,freq:0};
+  function corr(l){var t=0;for(var j=0;j<N-l;j+=2)t+=buf[j]*buf[j+l];return t;}
+  var prev=corr(bestLag-1),next=corr(bestLag+1);
+  var a=(prev+next-2*best)/2,b=(next-prev)/2;
+  var refined=bestLag; if(a) refined=bestLag-b/(2*a);
+  var freq=sr/Math.max(1,refined);
+  if(freq<60||freq>1200) return {rms:rms,freq:0};
+  return {rms:rms,freq:freq};
+}
+function startMic(){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+    $('#micDot').className='dot err';
+    $('#micStatus').textContent='Tu navegador no permite micrófono aquí. Usa una conexión segura (https).';
+    return;
+  }
+  if(!ensureAudio()){ $('#micStatus').textContent='Audio no disponible en este navegador.'; return; }
+  $('#micStatus').textContent='Pidiendo permiso…';
+  navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}})
+  .then(function(stream){
+    micStream=stream;
+    micSrc=AC.createMediaStreamSource(stream);
+    
+    // Low-Pass Biquad Filter to remove high frequency overtones & prevent pitch jumps on physical pianos
+    micFilterNode=AC.createBiquadFilter();
+    micFilterNode.type='lowpass';
+    micFilterNode.frequency.value=1400; // Cutoff ~1400Hz
+    micSrc.connect(micFilterNode);
+
+    analyser=AC.createAnalyser(); analyser.fftSize=2048;
+    micBuf=new Float32Array(analyser.fftSize);
+    micFilterNode.connect(analyser);
+
+    micActive=true; smoothMidi=null;pendingMidi=null;stable=0;wasSilent=true;
+    $('#micBtn').textContent='⏹ Detener';
+    $('#micDot').className='dot on';
+    $('#micStatus').textContent='Escuchando el piano de Mateo… 🎧';
+    micLoop();
+  })
+  .catch(function(){
+    $('#micDot').className='dot err';
+    $('#micStatus').textContent='No se pudo acceder al micrófono. Revisa los permisos del navegador.';
+  });
+}
+function stopMic(){
+  micActive=false;
+  cancelAnimationFrame(rafId);
+  if(micStream){micStream.getTracks().forEach(function(t){t.stop();});}
+  micStream=null;
+  $('#micBtn').textContent='🎤 Activar micrófono';
+  $('#micDot').className='dot';
+  $('#micStatus').textContent='Micrófono apagado';
+  $('#meterFill').style.width='0%';
+}
+function micLoop(){
+  if(!micActive)return;
+  rafId=requestAnimationFrame(micLoop);
+  analyser.getFloatTimeDomainData(micBuf);
+  micFrame(detectPitch(micBuf,AC.sampleRate,gateVal()));
+}
+function micFrame(res){
+  $('#meterFill').style.width=Math.min(100,res.rms*600)+'%';
+  if(!res.freq){
+    if(res.rms<gateVal()){pendingMidi=null;stable=0;wasSilent=true;smoothMidi=null;}
+    return;
+  }
+  var fm=69+12*Math.log2(res.freq/440)+octShift()*12;
+  smoothMidi=(smoothMidi==null)?fm:smoothMidi+(fm-smoothMidi)*.45;
+  var midi=Math.round(smoothMidi);
+  var pc=midiToPC(midi);
+  $('#detNote').textContent=settings.sys==='solfege'?SOL[pc]:pc;
+  $('#detHz').textContent=pc+midiToOct(midi)+' · '+Math.round(res.freq)+' Hz';
+  if(midi===pendingMidi)stable++; else{pendingMidi=midi;stable=1;}
+  if(stable===6){
+    var now=performance.now();
+    var ok=(wasSilent||midi!==lastEmitMidi||now-lastEmitT>800)&&(now-lastEmitT>220||midi!==lastEmitMidi);
+    if(ok){
+      wasSilent=false;lastEmitMidi=midi;lastEmitT=now;
+      triggerNote(midi,true);
+    }
+  }
+}
+$('#micBtn').addEventListener('click',function(){ micActive?stopMic():startMic(); });
+$('#srcMic').addEventListener('click',function(){
+  $('#micPanel').hidden=false;
+  $('#srcMic').classList.add('active');
+  $('#srcPiano').classList.remove('active');
+});
+$('#srcPiano').addEventListener('click',function(){
+  $('#micPanel').hidden=true;
+  $('#srcPiano').classList.add('active');
+  $('#srcMic').classList.remove('active');
+  stopMic();
+});
+
+/* ============ TECLADO FÍSICO ============ */
+window.addEventListener('keydown',function(e){
+  if(e.repeat)return;
+  if(e.key==='Escape'){
+    if(!$('#modal').hidden){closeToPath();}
+    else if(practice.active){exitPractice();}
+    return;
+  }
+  var k=e.key.toLowerCase();
+  if(k in KEYMAP) triggerNote(KEYMAP[k],false);
+});
+window.addEventListener('blur',function(){
+  for(var k in keyEls) keyEls[k].classList.remove('down');
+});
+
+/* ============ PESTAÑAS ============ */
+function setMode(mode){
+  $('#tabLearn').classList.toggle('active',mode==='learn');
+  $('#tabFree').classList.toggle('active',mode==='free');
+  $('#learnPanel').hidden=(mode!=='learn');
+  $('#freePanel').hidden=(mode!=='free');
+  if(mode==='free') exitPractice();
+}
+$('#tabLearn').addEventListener('click',function(){ if(practice.active)exitPractice(); setMode('learn'); });
+$('#tabFree').addEventListener('click',function(){ setMode('free'); });
+
+/* ============ PARTITURA ============ */
+function diatonic(m){
+  var pc=((m%12)+12)%12, oct=Math.floor(m/12)-1;
+  var letter=[0,-1,1,-1,2,3,-1,4,-1,5,-1,6][pc];
+  return oct*7+letter;
+}
+function renderStaff(container,note,showName){
+  var steps=diatonic(note.midi)-30;
+  var y=70-steps*5, x=150, dur=note.dur;
+  var hollow=(dur>=2), hasStem=(dur<4), isEighth=(dur<1);
+  var sharp=midiToPC(note.midi).indexOf('#')>=0;
+  var s='<svg viewBox="0 0 260 118" width="250" height="114">';
+  for(var i=0;i<5;i++) s+='<line x1="12" y1="'+(30+i*10)+'" x2="248" y2="'+(30+i*10)+'" stroke="#6a7089" stroke-width="1.4"/>';
+  s+='<text x="14" y="80" font-size="60" fill="#cdd2e4" font-family="serif">𝄞</text>';
+  if(note.midi<=60) s+='<line x1="'+(x-13)+'" y1="80" x2="'+(x+13)+'" y2="80" stroke="#6a7089" stroke-width="1.4"/>';
+  if(sharp) s+='<text x="'+(x-19)+'" y="'+(y+6)+'" font-size="17" fill="#ffb547" font-family="serif">♯</text>';
+  if(hasStem) s+='<line x1="'+(x+7)+'" y1="'+(y-2)+'" x2="'+(x+7)+'" y2="'+(y-40)+'" stroke="#f7f3e8" stroke-width="2"/>';
+  if(isEighth) s+='<path d="M '+(x+7)+' '+(y-40)+' q 12 6 7 22" stroke="#f7f3e8" stroke-width="2.4" fill="none"/>';
+  s+='<ellipse cx="'+x+'" cy="'+y+'" rx="7.5" ry="5.5" transform="rotate(-18 '+x+' '+y+')" '+(hollow?'fill="none" stroke="#f7f3e8" stroke-width="2.2"':'fill="#f7f3e8"')+'/>';
+  if(showName){
+    var pc2=midiToPC(note.midi);
+    var label=settings.sys==='solfege'?SOL[pc2]:pc2;
+    s+='<text x="'+x+'" y="112" text-anchor="middle" fill="#ffb547" font-size="14" font-family="Outfit,sans-serif" font-weight="700">'+label+midiToOct(note.midi)+'</text>';
+  }
+  s+='</svg>';
+  container.innerHTML=s;
+}
+
+/* ============ MANOS (SVG) ============ */
+function handSVG(prefix,mirror){
+  var F=[{x:6,w:19,y:52,h:46},{x:30,w:17,y:24,h:70},{x:52,w:17,y:14,h:80},{x:74,w:17,y:22,h:72},{x:96,w:16,y:38,h:56}];
+  var s='<svg viewBox="0 0 140 132" width="112" class="'+(mirror?'lhsvg':'')+'">';
+  s+='<rect x="26" y="88" width="92" height="34" rx="14" fill="#343a4f"/>';
+  var i,f,x;
+  for(i=0;i<5;i++){
+    f=F[i];
+    x=mirror?(140-f.x-f.w):f.x;
+    s+='<rect class="hg" id="'+prefix+'g'+(i+1)+'" x="'+x+'" y="'+f.y+'" width="'+f.w+'" height="'+f.h+'" rx="8"/>';
+  }
+  for(i=0;i<5;i++){
+    f=F[i];
+    var cx=mirror?(140-f.x-f.w/2):(f.x+f.w/2);
+    s+='<text class="hnum" id="'+prefix+'n'+(i+1)+'" x="'+cx+'" y="115">'+(i+1)+'</text>';
+  }
+  s+='</svg>';
+  return s;
+}
+function handWrap(prefix,label,mirror){
+  var d=document.createElement('div');
+  d.className='handUnit';
+  d.id=(prefix==='hgL')?'huL':'huR';
+  d.innerHTML='<div class="handLbl">'+label+'</div>'+handSVG(prefix,mirror);
+  return d;
+}
+var handState={both:false,leftOnly:false};
+function setupHands(lv){
+  var box=$('#handsBox');box.innerHTML='';
+  var both=!!lv.hands, leftOnly=(!both)&&lv.handAll==='I';
+  if(both){
+    box.appendChild(handWrap('hgL','🫲 Izquierda',true));
+    box.appendChild(handWrap('hgR','🖐 Derecha',false));
+  }else if(leftOnly){
+    box.appendChild(handWrap('hgL','🫲 Izquierda',true));
+  }else{
+    box.appendChild(handWrap('hgR','🖐 Derecha',false));
+  }
+  handState={both:both,leftOnly:leftOnly};
+}
+function clearHandHighlights(){
+  ['hgL','hgR'].forEach(function(p){
+    for(var i=1;i<=5;i++){
+      var g=document.getElementById(p+'g'+i), t=document.getElementById(p+'n'+i);
+      if(g)g.classList.remove('on');
+      if(t)t.classList.remove('on');
+    }
+  });
+  var huL=document.getElementById('huL'),huR=document.getElementById('huR');
+  if(huL)huL.classList.remove('act');
+  if(huR)huR.classList.remove('act');
+}
+function setHandFinger(n,which){
+  clearHandHighlights();
+  var pref;
+  if(handState.both) pref=(which==='I')?'hgL':'hgR';
+  else pref=handState.leftOnly?'hgL':'hgR';
+  if(n){
+    var g=document.getElementById(pref+'g'+n), t=document.getElementById(pref+'n'+n);
+    if(g)g.classList.add('on');
+    if(t)t.classList.add('on');
+  }else if(handState.both&&which){
+    var hu=(which==='I')?document.getElementById('huL'):document.getElementById('huR');
+    if(hu)hu.classList.add('act');
+  }
+  $('#handTxt').textContent=n?('Dedo '+n+' · '+FING_NAMES[n]+(handState.both?(which==='I'?' · Izquierda':' · Derecha'):'')):'Observa las manos';
+  $('#handCard').classList.toggle('lh',which==='I'&&!handState.both);
+}
+function positionFingerChip(el,f){
+  var r=el.getBoundingClientRect(),w=$('#pianoWrap').getBoundingClientRect();
+  var chip=$('#fingerChip');
+  chip.textContent=f;
+  chip.style.left=(r.left+r.width/2-w.left)+'px';
+  chip.style.top=(r.top-w.top+18)+'px';
+  chip.style.opacity='1';
+}
+function hideFingerChip(){$('#fingerChip').style.opacity='0';}
+
+/* ============ PLAN ============ */
+function getPath(){ try{return JSON.parse(storeGet('pf_path')||'{}');}catch(e){return {};} }
+function stageLocked(s,prog){
+  if(s===1) return false;
+  return !stageDoneIn(prog,s-1);
+}
+function nextLevelFor(prog){
+  for(var i=0;i<LEVELS.length;i++){
+    var lv=LEVELS[i];
+    if((prog[lv.id]||0)>0) continue;
+    if(stageLocked(lv.stage,prog)) continue;
+    return lv;
+  }
+  return null;
+}
+function continueLevel(prog){
+  var lastId=parseInt(storeGet('pf_last')||'0',10);
+  var last=null;
+  if(lastId) last=LEVELS.filter(function(l){return l.id===lastId;})[0]||null;
+  if(last&&(prog[last.id]||0)===0&&!stageLocked(last.stage,prog)) return last;
+  return nextLevelFor(prog);
+}
+function renderPath(){
+  var box=$('#pathBox'); box.innerHTML='';
+  var prog=getPath();
+  var st=courseStats(prog);
+  var cont=continueLevel(prog);
+  if(cont){
+    var bar=document.createElement('div');
+    bar.className='continueBar';
+    bar.innerHTML='👉 <b>Continúa donde lo dejaste, Mateo:</b>&nbsp; '+cont.emoji+' Nivel '+cont.id+' · '+cont.title;
+    var cb=document.createElement('button');cb.className='btn small';cb.type='button';cb.textContent='▶ Continuar';
+    cb.addEventListener('click',(function(l){return function(){startPractice(l);};})(cont));
+    bar.appendChild(cb);
+    box.appendChild(bar);
+  }
+  var foundNext=false;
+  STAGES.forEach(function(sg){
+    var lvls=LEVELS.filter(function(l){return l.stage===sg.id;});
+    var done=stageDoneIn(prog,sg.id);
+    var locked=stageLocked(sg.id,prog);
+    var head=document.createElement('div');
+    head.className='stageHead'+(sg.id===1?' s1':'');
+    var stState;
+    if(done) stState='<span class="stageState ok">✅ Completada</span>';
+    else if(locked) stState='<span class="stageState">🔒 Completa la Etapa '+(sg.id-1)+'</span>';
+    else stState='<span class="stageState">En progreso…</span>';
+    head.innerHTML='<div class="stageEmoji">'+sg.emoji+'</div>'+
+      '<div><div class="stageTitle">'+sg.title+'</div><div class="stageDesc">'+sg.desc+'</div></div>'+stState;
+    box.appendChild(head);
+    var wrap=document.createElement('div');
+    wrap.className='path';
+    lvls.forEach(function(lv){
+      var gi=LEVELS.indexOf(lv);
+      var stars=prog[lv.id]||0;
+      var unlocked=(!locked)&&(gi===0||(prog[LEVELS[gi-1].id]||0)>0);
+      var isNext=unlocked&&stars===0&&!foundNext;
+      if(isNext) foundNext=true;
+      var step=document.createElement('div');
+      step.className='step'+(unlocked?'':' locked')+(stars>0?' done':'')+(isNext?' current':'');
+      var num=document.createElement('div');num.className='num';num.textContent=stars>0?'✓':lv.id;
+      var info=document.createElement('div');info.className='stepInfo';
+      info.innerHTML='<div class="stepTitle">'+lv.emoji+' '+lv.title+'</div>'+
+        '<div class="stepDesc">'+lv.desc+' · '+lv.notes.length+' notas</div>'+
+        '<div class="stepStars">'+(stars>0?'★'.repeat(stars)+'☆'.repeat(3-stars):'')+'</div>';
+      step.appendChild(num);step.appendChild(info);
+      if(unlocked){
+        var btn=document.createElement('button');btn.className='btn small';btn.type='button';
+        btn.textContent=isNext?'▶ Empezar':(stars>0?'↻ Repetir':'Tocar');
+        btn.addEventListener('click',(function(l){return function(){startPractice(l);};})(lv));
+        step.appendChild(btn);
+      }else{
+        var lk=document.createElement('span');lk.className='lockIco';lk.textContent='🔒';
+        step.appendChild(lk);
+      }
+      wrap.appendChild(step);
+    });
+    box.appendChild(wrap);
+  });
+  $('#courseFill').style.width=(st.done/LEVELS.length*100)+'%';
+  $('#courseTxt').textContent=st.done+'/'+LEVELS.length+' · ⭐ '+st.stars;
+  renderBadges();
+}
+
+/* ============ PRÁCTICA ============ */
+var practice={active:false,level:null,idx:0,hits:0,misses:0,streak:0,bestStreak:0,demo:false,intro:false};
+var lastHintMidi=null,demoRun=0;
+function needsListenMsg(lv){ return (lv.stage===1&&lv.id<=2)||!!lv.song; }
+function startPractice(lv){
+  setMode('learn');
+  demoRun++;
+  stopRecorderPlayback();
+  hideMsgNow();
+  practice={active:true,level:lv,idx:0,hits:0,misses:0,streak:0,bestStreak:0,demo:false,intro:true};
+  storeSet('pf_last',String(lv.id));
+  $('#pathView').hidden=true; $('#practice').hidden=false;
+  $('#pracName').textContent=lv.emoji+' '+lv.title;
+  $('#pracLvl').textContent='Nivel '+lv.id+' de '+LEVELS.length+' · '+STAGES[lv.stage-1].title;
+  $('#demoBtn').textContent='▶ Escuchar';
+  if(lv.lesson){$('#lessonBox').hidden=false;$('#lessonBox').textContent='💡 '+lv.lesson;}
+  else $('#lessonBox').hidden=true;
+  var ui=lv.ui||{};
+  $('#teachRow').hidden=!(ui.hand||ui.score);
+  $('#handCard').hidden=!ui.hand;
+  $('#staffCard').hidden=!ui.score;
+  if(ui.hand) setupHands(lv);
+  if(ui.score) renderStaff($('#staffBox'),lv.notes[0],settings.staffNames);
+  updatePracticeUI();
+  runIntro();
+}
+function endIntro(){
+  practice.intro=false;
+  $('#demoBtn').disabled=false;
+  $('#demoBtn').textContent='▶ Escuchar';
+  if(practice.active) setHint(practice.level.notes[practice.idx]);
+}
+function runIntro(){
+  practice.intro=true;
+  $('#demoBtn').disabled=true;
+  $('#demoBtn').textContent='🎧 Preparando…';
+  showMsg('🧘 Antes de tocar, Mateo:<br>'+rnd(PRE_TIPS),3800,function(){
+    if(!practice.active)return;
+    var play=function(){
+      $('#demoBtn').textContent='🎧 Escuchando…';
+      playDemo(function(){
+        if(!practice.active)return;
+        showMsg('🎹 ¡Ahora te toca a ti, Mateo!',3000,function(){ endIntro(); });
+      });
+    };
+    if(needsListenMsg(practice.level)){
+      showMsg('🎧 ¡Vamos a escuchar y luego a practicar, Mateo!',3500,play);
+    }else{
+      play();
+    }
+  });
+}
+function exitPractice(){
+  demoRun++;
+  hideMsgNow();
+  practice.active=false;practice.demo=false;practice.intro=false;
+  $('#demoBtn').textContent='▶ Escuchar';
+  $('#demoBtn').disabled=false;
+  hideArrow();clearHints();hideFingerChip();
+  $('#practice').hidden=true;$('#pathView').hidden=false;
+  renderPath();
+}
+$('#backBtn').addEventListener('click',exitPractice);
+function currentHand(){
+  var lv=practice.level;
+  if(lv.hands) return lv.hands[practice.idx];
+  return lv.handAll||null;
+}
+function setHint(note){
+  clearHints(); lastHintMidi=note.midi;
+  var lv=practice.level, ui=lv.ui||{};
+  var el=keyEls[note.midi]; if(el) el.classList.add('hint');
+  var pc=midiToPC(note.midi),nameEl=$('#noteName');
+  nameEl.textContent=settings.sys==='solfege'?SOL[pc]:pc;
+  nameEl.classList.remove('pop');void nameEl.offsetWidth;nameEl.classList.add('pop');
+  if(el) positionArrow(el); else hideArrow();
+  if(ui.score) renderStaff($('#staffBox'),note,settings.staffNames);
+  var fing=(lv.fing&&lv.fing[practice.idx])||0;
+  var which=currentHand();
+  if(ui.hand) setHandFinger(fing,which);
+  if(ui.hand&&fing&&el) positionFingerChip(el,fing); else hideFingerChip();
+  var tag=$('#handTag');
+  if(which){
+    tag.hidden=false;
+    tag.className=which==='I'?'ih':'dh';
+    tag.textContent=which==='I'?'🫲 Mano izquierda':'🖐 Mano derecha';
+  }else tag.hidden=true;
+}
+function refreshTeach(){
+  if(practice.active&&practice.level.ui&&practice.level.ui.score){
+    var n=practice.level.notes[practice.idx];
+    if(n) renderStaff($('#staffBox'),n,settings.staffNames);
+  }
+}
+function clearHints(){for(var k in keyEls)keyEls[k].classList.remove('hint');}
+function positionArrow(el){
+  var r=el.getBoundingClientRect(),w=$('#pianoWrap').getBoundingClientRect();
+  var a=$('#hintArrow');a.style.opacity='1';a.style.left=(r.left+r.width/2-w.left)+'px';
+}
+function hideArrow(){$('#hintArrow').style.opacity='0';lastHintMidi=null;}
+window.addEventListener('resize',function(){
+  if(practice.active&&lastHintMidi!=null&&keyEls[lastHintMidi]){
+    positionArrow(keyEls[lastHintMidi]);
+    var lv=practice.level,fing=(lv.fing&&lv.fing[practice.idx])||0;
+    if(lv.ui&&lv.ui.hand&&fing) positionFingerChip(keyEls[lastHintMidi],fing);
+  }
+});
+function updatePracticeUI(){
+  var total=practice.level.notes.length;
+  $('#progFill').style.width=(practice.idx/total*100)+'%';
+  $('#statProg').textContent=practice.idx+'/'+total;
+  $('#statStreak').textContent=practice.streak+(practice.streak>=5?' 🔥':'');
+  var tries=practice.hits+practice.misses;
+  $('#statAcc').textContent=tries?Math.round(practice.hits/tries*100)+'%':'—';
+}
+function restartFromStart(){
+  practice.intro=true;
+  hideArrow();clearHints();hideFingerChip();
+  showMsg('💪 ¡Dos errores, Mateo! Volvamos al comienzo.<br>¡Con calma, tú puedes lograrlo!',3000,function(){
+    if(!practice.active){practice.intro=false;return;}
+    practice.idx=0;practice.hits=0;practice.misses=0;practice.streak=0;
+    updatePracticeUI();
+    practice.intro=false;
+    setHint(practice.level.notes[0]);
+  });
+}
+function judge(m){
+  if(!practice.active||practice.demo||practice.intro)return;
+  var expected=practice.level.notes[practice.idx].midi;
+  if(m===expected){
+    practice.hits++;practice.streak++;
+    if(practice.streak>practice.bestStreak)practice.bestStreak=practice.streak;
+    burst(m,true);
+    if(practice.hits>0&&practice.hits%8===0) toast('🧘 '+rnd(DURING_TIPS));
+    practice.idx++;
+    updatePracticeUI();
+    if(practice.idx>=practice.level.notes.length) finishPractice();
+    else setHint(practice.level.notes[practice.idx]);
+  }else{
+    practice.misses++;practice.streak=0;
+    var el=keyEls[m];
+    if(el){el.classList.remove('err');void el.offsetWidth;el.classList.add('err');}
+    var badge=$('#noteBadge');
+    badge.classList.add('bad');setTimeout(function(){badge.classList.remove('bad');},350);
+    if(practice.misses>=2){ updatePracticeUI(); restartFromStart(); return; }
+    updatePracticeUI();
+  }
+}
+function finishPractice(){
+  practice.active=false;hideArrow();clearHints();hideFingerChip();
+  var tries=practice.hits+practice.misses;
+  var acc=tries?Math.round(practice.hits/tries*100):100;
+  var stars=acc>=92?3:(acc>=75?2:1);
+  var prog=getPath();
+  if(stars>(prog[practice.level.id]||0)) prog[practice.level.id]=stars;
+  storeSet('pf_path',JSON.stringify(prog));
+  var nowEarned=earnedBadges(prog);
+  var prev=[];
+  try{prev=JSON.parse(storeGet('pf_badges')||'[]');}catch(e){}
+  var newOnes=nowEarned.filter(function(id){return prev.indexOf(id)<0;});
+  storeSet('pf_badges',JSON.stringify(nowEarned));
+  var rl=$('#rewardLine');rl.innerHTML='';
+  if(newOnes.length){
+    rl.hidden=false;
+    newOnes.forEach(function(id){
+      var b=BADGES.filter(function(x){return x.id===id;})[0];
+      var chip=document.createElement('div');chip.className='rewardChip';
+      chip.innerHTML=b.icon+' ¡Recompensa para Mateo: '+b.name+'!';
+      rl.appendChild(chip);
+    });
+  }else rl.hidden=true;
+  var stageNowDone=stageDoneIn(prog,practice.level.stage);
+  var cheer=$('#cheerMsg');
+  if(stars===3||practice.level.song||stageNowDone){
+    cheer.hidden=false;
+    cheer.textContent='💛 '+rnd(ENTHUSIASM);
+  }else cheer.hidden=true;
+  $('#afterTip').textContent=rnd(POST_TIPS);
+  var box=$('#starsBox');box.innerHTML='';
+  for(var i=1;i<=3;i++){
+    var sp=document.createElement('span');sp.textContent='★';
+    if(i<=stars)sp.classList.add('on');
+    box.appendChild(sp);
+  }
+  $('#mAcc').textContent=acc+'%';$('#mStreak').textContent=practice.bestStreak;
+  $('#mHits').textContent=practice.hits;$('#mMiss').textContent=practice.misses;
+  var idx=LEVELS.findIndex(function(l){return l.id===practice.level.id;});
+  var nxt=LEVELS[idx+1]||null;
+  var crossed=nxt&&nxt.stage>practice.level.stage;
+  if(!nxt) $('#modalTitle').textContent='🏆 ¡Curso completado, Mateo! ¡Pianista graduado!';
+  else if(crossed) $('#modalTitle').textContent='🎊 ¡'+STAGES[nxt.stage-1].title+' desbloqueada, Mateo!';
+  else $('#modalTitle').textContent='🎉 ¡Nivel completado, Mateo!';
+  $('#nextBtn').textContent=!nxt?'🎓 Ver mi plan':(crossed?('🚀 ¡A la Etapa '+nxt.stage+'!'):'Siguiente nivel ▸');
+  $('#nextBtn').onclick=function(){
+    $('#modal').hidden=true;
+    if(nxt) startPractice(nxt); else exitPractice();
+  };
+  $('#modal').hidden=false;
+  launchConfetti();
+  if(newOnes.length) setTimeout(function(){launchConfetti();},600);
+}
+function closeToPath(){$('#modal').hidden=true;exitPractice();}
+$('#retryBtn').addEventListener('click',function(){
+  var lv=practice.level;
+  $('#modal').hidden=true;
+  if(lv) startPractice(lv);
+});
+
+/* ============ DEMO ============ */
+function playDemo(onDone){
+  if(!practice.level)return;
+  var my=++demoRun;
+  practice.demo=true;
+  $('#demoBtn').textContent='⏹ Detener';
+  clearHints();hideArrow();hideFingerChip();
+  var mult=parseFloat($('#tempoSel').value)||1;
+  var i=0;
+  function step(){
+    if(my!==demoRun)return;
+    if(i>=practice.level.notes.length){
+      practice.demo=false;
+      if(onDone){onDone();}
+      else{
+        $('#demoBtn').textContent='▶ Escuchar';
+        if(practice.active) setHint(practice.level.notes[practice.idx]);
+      }
+      return;
+    }
+    var n=practice.level.notes[i++];
+    var dur=n.dur*60/practice.level.bpm*1000/mult;
+    triggerNote(n.midi,false,true);
+    setTimeout(step,dur*.92);
+  }
+  step();
+}
+$('#demoBtn').addEventListener('click',function(){
+  var self=this;
+  if(!practice.level||practice.intro)return;
+  if(practice.demo){
+    demoRun++;practice.demo=false;
+    self.textContent='▶ Escuchar';
+    if(practice.active) setHint(practice.level.notes[practice.idx]);
+    return;
+  }
+  playDemo(null);
+});
+
+/* ============ GRABACIÓN ============ */
+var rec={state:'idle',events:[],t0:0,timer:null,playing:false,timeouts:[]};
+function fmt(ms){var s=Math.floor(ms/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function recordEvent(m){if(rec.state==='rec')rec.events.push({m:m,t:performance.now()-rec.t0});}
+$('#recBtn').addEventListener('click',function(){
+  if(rec.playing)return;
+  if(rec.state==='idle'){
+    rec.state='rec';rec.events=[];rec.t0=performance.now();
+    this.textContent='⏹ Detener';
+    $('#recStatus').className='rec';$('#recStatus').textContent='Grabando… 0:00';
+    $('#playRecBtn').disabled=true;$('#clearRecBtn').disabled=true;
+    rec.timer=setInterval(function(){$('#recStatus').textContent='Grabando… '+fmt(performance.now()-rec.t0);},250);
+  }else{
+    rec.state='idle';clearInterval(rec.timer);
+    this.textContent='⏺ Grabar';
+    $('#recStatus').className='';
+    $('#recStatus').textContent=rec.events.length+' notas guardadas ✔';
+    $('#playRecBtn').disabled=!rec.events.length;$('#clearRecBtn').disabled=!rec.events.length;
+  }
+});
+function stopRecorderPlayback(){
+  if(!rec.playing)return;
+  rec.timeouts.forEach(clearTimeout);rec.timeouts=[];
+  rec.playing=false;$('#recBtn').disabled=false;$('#playRecBtn').textContent='▶ Reproducir';
+}
+$('#playRecBtn').addEventListener('click',function(){
+  if(rec.playing){stopRecorderPlayback();return;}
+  if(!rec.events.length)return;
+  rec.playing=true;rec.timeouts=[];
+  this.textContent='⏹ Detener';$('#recBtn').disabled=true;
+  rec.events.forEach(function(e){
+    rec.timeouts.push(setTimeout(function(){triggerNote(e.m,false,true);},e.t));
+  });
+  var end=rec.events[rec.events.length-1].t+800;
+  rec.timeouts.push(setTimeout(function(){
+    rec.playing=false;$('#recBtn').disabled=false;$('#playRecBtn').textContent='▶ Reproducir';
+  },end));
+});
+$('#clearRecBtn').addEventListener('click',function(){
+  rec.events=[];
+  $('#playRecBtn').disabled=true;$('#clearRecBtn').disabled=true;
+  $('#recStatus').textContent='Listo para grabar';
+});
+
+/* ============ RELOJ OCULTO + TIEMPO GUARDADO ============ */
+var totalSec=parseInt(storeGet('pf_time')||'0',10)||0;
+var sessionPracticeSec=0, notified15=false;
+function fmtTotal(sec){
+  var m=Math.floor(sec/60);
+  if(m<60) return m+' min';
+  return Math.floor(m/60)+' h '+(m%60)+' min';
+}
+function paintTime(){ $('#timeChip').textContent='⏱ '+fmtTotal(totalSec)+' practicados'; }
+setInterval(function(){
+  if(practice.active){
+    sessionPracticeSec++; totalSec++;
+    if(totalSec%10===0) storeSet('pf_time',String(totalSec));
+    if(sessionPracticeSec>=900&&!notified15){
+      notified15=true;
+      showMsg('🌟 ¡Mateo, llevas 15 minutos practicando!<br>Sigues avanzando súper bien, con mucha constancia. ¡Qué orgullo!',4200,null);
+    }
+  }
+  paintTime();
+},1000);
+window.addEventListener('beforeunload',function(){
+  storeSet('pf_time',String(totalSec));
+  if(practice.level) storeSet('pf_last',String(practice.level.id));
+});
+
+/* ============ CONFETI ============ */
+function launchConfetti(){
+  var c=$('#confetti'),colors=['#ffb547','#8b6cff','#3ddc84','#ff6b9d','#4dd0ff','#fff'];
+  for(var i=0;i<90;i++){
+    var d=document.createElement('i');
+    d.style.left=Math.random()*100+'vw';
+    d.style.background=colors[i%colors.length];
+    var sz=(6+Math.random()*7)+'px';
+    d.style.width=sz;d.style.height=sz;
+    d.style.animationDelay=(Math.random()*.5)+'s';
+    d.style.animationDuration=(2.3+Math.random()*1.8)+'s';
+    c.appendChild(d);
+    (function(el){setTimeout(function(){el.remove();},5000);})(d);
+  }
+}
+
+/* ============ CONTROLES ============ */
+$('#vol').addEventListener('input',function(){
+  settings.vol=this.value/100;
+  if(master)master.gain.value=settings.vol;
+  saveSettings();
+});
+$('#sysSel').addEventListener('change',function(){
+  settings.sys=this.value;refreshLabels();saveSettings();refreshTeach();
+});
+$('#tglNames').addEventListener('change',function(){settings.names=this.checked;refreshLabels();saveSettings();});
+$('#tglHints').addEventListener('change',function(){settings.hints=this.checked;refreshLabels();saveSettings();});
+$('#tglStaffNames').addEventListener('change',function(){settings.staffNames=this.checked;saveSettings();refreshTeach();});
+
+/* ============ PWA: SERVICE WORKER + INSTALACIÓN ============ */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
+var deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){
+  e.preventDefault();
+  deferredPrompt=e;
+  var b=document.getElementById('installBtn');
+  if(b)b.hidden=false;
+});
+document.getElementById('installBtn').addEventListener('click',function(){
+  var b=this;
+  if(!deferredPrompt)return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(function(){deferredPrompt=null;b.hidden=true;});
+});
+
+/* ============ INICIO ============ */
+$('#vol').value=Math.round(settings.vol*100);
+$('#sysSel').value=settings.sys;
+$('#tglNames').checked=settings.names;
+$('#tglHints').checked=settings.hints;
+$('#tglStaffNames').checked=settings.staffNames;
+refreshLabels();
+renderPath();
+paintTime();
+setMode('learn');
+</script>
+</body>
+</html>

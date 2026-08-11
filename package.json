@@ -1,0 +1,16 @@
+{
+  "name": "pianofacil-mateo",
+  "version": "1.0.0",
+  "description": "PianoFácil PWA para Mateo empaquetada como APK de Android",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo Building web assets"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/core": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.0.0"
+  }
+}
