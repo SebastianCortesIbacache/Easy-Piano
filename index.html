@@ -842,8 +842,14 @@ function burst(m,big){
 /* ============ MICRÓFONO ============ */
 var micStream=null,micSrc=null,micFilterNode=null,analyser=null,micBuf=null,rafId=null,micActive=false;
 var smoothMidi=null,pendingMidi=null,stable=0,wasSilent=true,lastEmitT=0,lastEmitMidi=null;
-function gateVal(){return 0.0005*Math.pow(10,$('#sens').value/50);}
-function octShift(){return parseInt($('#octSel').value,10)||0;}
+function gateVal(){
+  var el=document.getElementById('sens');
+  return 0.0005*Math.pow(10,((el?parseFloat(el.value):50)/50));
+}
+function octShift(){
+  var el=document.getElementById('octSel');
+  return el?parseInt(el.value,10)||0:0;
+}
 function detectPitch(buf,sr,gate){
   var N=buf.length,rms=0,i;
   for(i=0;i<N;i++){var v=buf[i];rms+=v*v;}
@@ -918,7 +924,8 @@ function micLoop(){
   micFrame(detectPitch(micBuf,AC.sampleRate,gateVal()));
 }
 function micFrame(res){
-  $('#meterFill').style.width=Math.min(100,res.rms*600)+'%';
+  var mf=document.getElementById('meterFill');
+  if(mf) mf.style.width=Math.min(100,res.rms*600)+'%';
   if(!res.freq){
     if(res.rms<gateVal()){pendingMidi=null;stable=0;wasSilent=true;smoothMidi=null;}
     return;
@@ -927,8 +934,10 @@ function micFrame(res){
   smoothMidi=(smoothMidi==null)?fm:smoothMidi+(fm-smoothMidi)*.45;
   var midi=Math.round(smoothMidi);
   var pc=midiToPC(midi);
-  $('#detNote').textContent=settings.sys==='solfege'?SOL[pc]:pc;
-  $('#detHz').textContent=pc+midiToOct(midi)+' · '+Math.round(res.freq)+' Hz';
+  var dn=document.getElementById('detNote');
+  var dh=document.getElementById('detHz');
+  if(dn) dn.textContent=settings.sys==='solfege'?SOL[pc]:pc;
+  if(dh) dh.textContent=pc+midiToOct(midi)+' · '+Math.round(res.freq)+' Hz';
   if(midi===pendingMidi)stable++; else{pendingMidi=midi;stable=1;}
   if(stable===6){
     var now=performance.now();
