@@ -842,7 +842,7 @@ function burst(m,big){
 /* ============ MICRÓFONO ============ */
 var micStream=null,micSrc=null,micFilterNode=null,analyser=null,micBuf=null,rafId=null,micActive=false;
 var smoothMidi=null,pendingMidi=null,stable=0,wasSilent=true,lastEmitT=0,lastEmitMidi=null;
-function gateVal(){return 0.0005*Math.pow(10,$('sens').value/50);}
+function gateVal(){return 0.0005*Math.pow(10,$('#sens').value/50);}
 function octShift(){return parseInt($('#octSel').value,10)||0;}
 function detectPitch(buf,sr,gate){
   var N=buf.length,rms=0,i;
