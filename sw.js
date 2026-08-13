@@ -1,13 +1,14 @@
 /* ============================================================
    Service Worker (PWA offline support) - PianoFácil para Mateo
 ============================================================= */
-var CACHE = 'pianofacil-mateo-v1';
+var CACHE = 'pianofacil-mateo-v2';
 var CORE = [
   './',
   './index.html',
   './manifest.webmanifest',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './piano_hand_posture_1786427260354.png'
 ];
 
 self.addEventListener('install', function (e) {
