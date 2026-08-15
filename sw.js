@@ -1,13 +1,21 @@
 /* ============================================================
    Service Worker (PWA offline support) - PianoFácil para Mateo
 ============================================================= */
-var CACHE = 'pianofacil-mateo-v2';
+var CACHE = 'pianofacil-mateo-v3';
 var CORE = [
   './',
   './index.html',
+  './styles.css',
+  './app.js',
+  './levels.js',
   './manifest.webmanifest',
   './icon-192.png',
   './icon-512.png',
+  './mateo.glb',
+  './mateo_chibi_portrait.png',
+  './mateo_chibi_portrait.jpg',
+  './mateo_geoguessr_3d.jpg',
+  './mateo_planet.jpg',
   './piano_hand_posture_1786427260354.png'
 ];
 
@@ -42,11 +50,17 @@ self.addEventListener('fetch', function (e) {
       if (hit) return hit;
       return fetch(req).then(function (res) {
         if (res && (res.ok || res.type === 'opaque')) {
-          var copy = res.clone();
-          caches.open(CACHE).then(function (c) {
-            c.put(req, copy);
-          });
-        }
+            // Avoid caching unsupported schemes (extensions, chrome-extension:, data:, blob:)
+            try{
+              var parsed = new URL(req.url);
+              if(parsed.protocol && (parsed.protocol === 'http:' || parsed.protocol === 'https:')){
+                var copy = res.clone();
+                caches.open(CACHE).then(function (c) {
+                  try{ c.put(req, copy); }catch(cacheErr){ console.warn('SW cache put failed', cacheErr); }
+                });
+              }
+            }catch(e){ /* ignore non-HTTP URLs */ }
+          }
         return res;
       }).catch(function () {
         if (req.mode === 'navigate') return caches.match('./index.html');

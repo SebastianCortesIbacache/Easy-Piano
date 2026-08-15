@@ -2,18 +2,27 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>PianoFácil · Mateo</title>
-<meta name="description" content="PWA educativa de piano para Mateo con partituras, lecciones progresivas, audio synth y micrófono.">
-<meta name="theme-color" content="#121520">
-<link rel="manifest" href="manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PianoFácil PRO · Mateo</title>
+<meta name="description" content="PWA educativa de piano interactiva y gamificada para Mateo con partituras en vivo, lecciones progresivas, audio synth y afinador por micrófono.">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<!-- THREE.JS WebGL 3D Avatar Engine -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
+<!-- Controls and HDR loader for better PBR lighting -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
 </head>
 <body>
 
+<div class="bg"></div>
 <div id="errBanner"></div>
 
 <!-- PANTALLA DE CARGA MEJORADA PARA TABLET -->
@@ -24,8 +33,8 @@
   <div class="fnote n4">✨</div>
   <div class="loadCard">
     <div class="loadPiano">🎹</div>
-    <h1 class="loadTitle">PianoFácil</h1>
-    <p class="loadSub">Preparando las lecciones y melodías para Mateo… 🎶</p>
+    <h1 class="loadTitle">PianoFácil PRO</h1>
+    <p class="loadSub">Preparando las lecciones, canciones y partituras para Mateo… 🎶</p>
     <div class="soundWaves">
       <span></span><span></span><span></span><span></span><span></span>
     </div>
@@ -38,50 +47,63 @@
   <div class="brand">
     <div class="logo">🎹</div>
     <div>
-      <h1>PianoFácil</h1>
-      <p class="subtitle">Curso de piano para Mateo · Paso a paso 🌟</p>
+      <h1>PianoFácil PRO</h1>
+      <p class="subtitle">Curso de piano de Mateo · Nivel Maestro 🌟</p>
     </div>
   </div>
+  
+  <!-- BARRA DE PERFIL GAMIFICADO DE MATEO -->
+  <div class="headerProfile">
+    <div class="gamerChip streak" id="headerStreak">🔥 0 Días</div>
+    <div class="gamerChip stars" id="headerStars">⭐ 0 Estrellas</div>
+    <div class="gamerChip" id="timeChip">⏱ 0 min</div>
+    <button class="btn small ghost" id="statsBtn" type="button">📊 Estadísticas</button>
+  </div>
+
   <div class="headerActions">
     <button class="btn installBtn" id="installBtn" hidden type="button">📲 Instalar App</button>
+    <button class="btn small ghost" id="kidModeBtn" type="button">🧸 Modo Niño</button>
   </div>
 </header>
 
 <div class="modeTabs">
-  <button class="tab active" id="tabLearn" type="button">🎯 Modo Curso (Plan de Mateo)</button>
-  <button class="tab" id="tabFree" type="button">🎹 Piano Libre / Micrófono</button>
+  <button class="tab active" id="tabLearn" type="button">🎯 Modo Aventura (Plan de Mateo)</button>
+  <button class="tab" id="tabFree" type="button">🎙️ Estudio Libre & Afinador</button>
 </div>
+
+<!-- Condensed kid-mode path: visible only in Kid Mode -->
+<div id="kidPathMini" class="kid-path-mini" hidden aria-hidden="true"></div>
 
 <div class="bigMsg" id="bigMsg"></div>
 <div class="toast" id="toast"></div>
 
 <main>
+  <!-- MODO CURSO / MAPA DE APRENDIZAJE -->
   <section class="panel" id="learnPanel">
     <div id="pathView">
       <div class="courseTop">
         <div>
           <h2>¡Hola, Mateo! 👋 Este es tu camino del piano</h2>
-          <p class="sub noMb">9 etapas con canciones famosas que se desbloquean al avanzar. Gana estrellas y recompensas, Mateo 🏆. Tu avance y tu tiempo se guardan solos.</p>
+          <p class="sub noMb">9 etapas con canciones famosas que se desbloquean al avanzar. Gana estrellas, colecciona insignias y domina el teclado 🏆.</p>
         </div>
         <div class="courseProg">
           <div class="miniBar"><div id="courseFill"></div></div>
           <span id="courseTxt">0/44</span>
-          <span class="timeChip" id="timeChip">⏱ 0 min</span>
-          <button class="btn small ghost" id="statsBtn" type="button" style="margin-left:6px">📊 Stats</button>
-          <span class="timeChip" id="headerStreak" style="margin-left:6px;border-color:var(--accent);color:var(--accent);font-weight:800">🔥 0 Días</span>
         </div>
       </div>
       <div class="badgesBar" id="badgesBar"></div>
       <div id="pathBox"></div>
     </div>
+
+    <!-- PANTALLA DE PRÁCTICA Y LECCIÓN EN VIVO -->
     <div id="practice" hidden>
       <div class="pracTop">
-        <button class="btn ghost small" id="backBtn" type="button">← Plan</button>
+        <button class="btn ghost small" id="backBtn" type="button">← Volver al Plan</button>
         <div class="pracTitle"><span id="pracName"></span><span class="lvlChip" id="pracLvl"></span></div>
         <div class="pracCtrls">
           <label class="switch" title="Modo Paciente: Espera sin reiniciar al fallar"><input type="checkbox" id="tglWaitMode"> 🐢 Paciente</label>
-          <label class="switch" title="Vista Synthesia"><input type="checkbox" id="tglSynthesia"> 🎹 Cayendo</label>
-          <select id="tempoSel" title="Velocidad de la demo">
+          <label class="switch" title="Vista Synthesia (Notas cayendo)"><input type="checkbox" id="tglSynthesia"> 🎹 Synthesia Neón</label>
+          <select id="tempoSel" title="Velocidad de la audición">
             <option value="0.6">🐢 Lento</option>
             <option value="1" selected>🎵 Normal</option>
             <option value="1.35">🐇 Rápido</option>
@@ -90,7 +112,18 @@
           <button class="btn ghost small" id="skipIntroBtn" hidden type="button">⏭ Saltar Intro</button>
         </div>
       </div>
+
+      <!-- COMPAÑERO AVATAR DE MATEO ESTILO GEOGUESSR -->
+      <div class="companionBar" id="companionBar">
+        <div class="companionAvatar" id="companionAvatarSvg"></div>
+        <div class="avatarSpeech" id="avatarSpeech">
+          <span class="speechName">Mateo:</span>
+          <span id="speechTxt">¡Listo para tocar! Escucha o toca la primera nota 🎹</span>
+        </div>
+      </div>
+
       <div class="lesson" id="lessonBox" hidden></div>
+
       <div class="teachRow" id="teachRow" hidden>
         <div class="teachCard" id="handCard" hidden>
           <div class="teachLabel">🖐 DEDOS SUGERIDOS</div>
@@ -98,15 +131,18 @@
           <div id="handTxt"></div>
         </div>
         <div class="teachCard" id="staffCard" hidden>
-          <div class="teachLabel">📖 LEE LA PARTITURA</div>
+          <div class="teachLabel">📖 LECTURA DE PARTITURA</div>
           <div id="staffBox"></div>
         </div>
       </div>
+
       <div class="noteBadgeWrap">
         <div id="handTag" hidden></div>
         <div id="noteBadge">Toca: <b id="noteName">—</b></div>
       </div>
+
       <div class="progress"><div id="progFill"></div></div>
+
       <div class="stats">
         <div class="stat">Progreso <b id="statProg">0/0</b></div>
         <div class="stat">Racha <b id="statStreak">0</b></div>
@@ -115,72 +151,81 @@
     </div>
   </section>
 
+  <!-- MODO ESTUDIO LIBRE & AFINADOR EN VIVO -->
   <section class="panel" id="freePanel" hidden>
-    <h2>🎹 Piano Libre, Grabación y Micrófono</h2>
-    <p class="sub">Toca lo que quieras o usa el micrófono para detectar las notas de tu piano real. Configura las ayudas visuales como prefieras.</p>
+    <h2>🎙️ Estudio de Piano, Grabación & Osciloscopio</h2>
+    <p class="sub">Toca libremente en pantalla o conecta el micrófono para afinar y detectar las notas de tu piano acústico real en tiempo real con el osciloscopio.</p>
 
-    <div class="ctrlGroup">
-      <h3>1. Fuente de sonido / Entrada</h3>
-      <div class="sourceSel">
-        <button class="srcBtn active" id="srcPiano" type="button">🎹 Piano en pantalla / Teclado</button>
-        <button class="srcBtn" id="srcMic" type="button">🎤 Micrófono (Piano real)</button>
+    <!-- OSCILOSCOPIO Y ANALIZADOR EN TIEMPO REAL -->
+    <div class="scopeContainer">
+      <div class="scopeOverlay">🌊 Osciloscopio & Espectro de Audio en Vivo</div>
+      <canvas id="scopeCanvas" width="800" height="120"></canvas>
+    </div>
+
+    <div class="studioCard">
+      <div class="ctrlGroup">
+        <h3>1. Fuente de sonido / Entrada</h3>
+        <div class="sourceSel">
+          <button class="srcBtn active" id="srcPiano" type="button">🎹 Piano en pantalla / Teclado PC</button>
+          <button class="srcBtn" id="srcMic" type="button">🎤 Micrófono (Piano acústico real)</button>
+        </div>
+
+        <div id="micPanel" hidden>
+          <div class="micHeaderRow">
+            <button class="btn small" id="micBtn" type="button">🎤 Activar micrófono</button>
+            <span class="statusText"><span class="dot" id="micDot"></span> <span id="micStatus">Micrófono apagado</span></span>
+          </div>
+          <div class="meter"><div class="meterFill" id="meterFill"></div></div>
+          <div class="micCtrls">
+            <label>Sensibilidad de micrófono (filtra ruidos del ambiente):<br><input type="range" id="sens" min="0" max="100" value="50"></label>
+            <label>Ajuste de octava acústica:<br>
+              <select id="octSel">
+                <option value="-1">-1 Octava (Grave)</option>
+                <option value="0" selected>Normal (sin cambio)</option>
+                <option value="1">+1 Octava (Agudo)</option>
+              </select>
+            </label>
+          </div>
+          <div class="detBox">
+            <div>Nota detectada: <b id="detNote">—</b></div>
+            <div id="detHz">— Hz</div>
+          </div>
+        </div>
       </div>
 
-      <div id="micPanel" hidden>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
-          <button class="btn small" id="micBtn" type="button">🎤 Activar micrófono</button>
-          <span class="statusText"><span class="dot" id="micDot"></span><span id="micStatus">Micrófono apagado</span></span>
-        </div>
-        <div class="meter"><div class="meterFill" id="meterFill"></div></div>
-        <div class="micCtrls">
-          <label>Sensibilidad (filtra ruido de fondo):<br><input type="range" id="sens" min="0" max="100" value="50"></label>
-          <label>Ajuste de octava (si tu piano suena grave o agudo):<br>
-            <select id="octSel">
-              <option value="-1">-1 Octava</option>
-              <option value="0" selected>Normal (sin cambio)</option>
-              <option value="1">+1 Octava</option>
+      <div class="ctrlGroup">
+        <h3>2. Opciones de visualización del teclado y partitura</h3>
+        <div class="switches">
+          <label class="switch"><input type="checkbox" id="tglNames" checked> Nombres de notas en teclas</label>
+          <label class="switch"><input type="checkbox" id="tglHints" checked> Atajos de teclado PC</label>
+          <label class="switch"><input type="checkbox" id="tglStaffNames" checked> Nombres bajo la partitura</label>
+          <label class="sysSelectLabel">Nomenclatura:
+            <select id="sysSel">
+              <option value="solfege">Do Re Mi (Español / Latino)</option>
+              <option value="letters">C D E (Anglosajón)</option>
             </select>
           </label>
         </div>
-        <div class="detBox">
-          <div>Nota detectada: <b id="detNote">—</b></div>
-          <div id="detHz" style="color:var(--muted);font-size:0.85rem">— Hz</div>
+      </div>
+
+      <div class="ctrlGroup">
+        <h3>3. Volumen y Grabadora de Pistas</h3>
+        <div class="volRow">
+          <span>Volumen general:</span>
+          <input type="range" id="vol" min="0" max="100" value="80">
+        </div>
+        <div class="recBar">
+          <button class="btn small" id="recBtn" type="button">⏺ Grabar pista</button>
+          <button class="btn small ghost" id="playRecBtn" disabled type="button">▶ Reproducir</button>
+          <button class="btn small ghost" id="clearRecBtn" disabled type="button">🗑 Limpiar</button>
+          <span id="recStatus">Listo para grabar</span>
         </div>
       </div>
+      <p class="micTip">💡 Mateo, el piano en pantalla siempre suena con síntesis acústica enriquecida. Si activas el micrófono, también escuchará tu piano real y verás las ondas en el osciloscopio superior.</p>
     </div>
-
-    <div class="ctrlGroup">
-      <h3>2. Opciones de visualización del teclado y partitura</h3>
-      <div class="switches">
-        <label class="switch"><input type="checkbox" id="tglNames" checked> Mostrar nombres en las teclas</label>
-        <label class="switch"><input type="checkbox" id="tglHints" checked> Mostrar atajos de teclado PC</label>
-        <label class="switch"><input type="checkbox" id="tglStaffNames" checked> Nombres debajo de la partitura</label>
-        <label class="switch"><input type="select" style="display:none"></label>
-        <label style="display:inline-flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--muted)">Nomenclatura:
-          <select id="sysSel">
-            <option value="solfege">Do Re Mi (Español)</option>
-            <option value="letters">C D E (Anglosajón)</option>
-          </select>
-        </label>
-      </div>
-    </div>
-
-    <div class="ctrlGroup">
-      <h3>3. Volumen y Grabadora simple</h3>
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-        <span>Volumen:</span>
-        <input type="range" id="vol" min="0" max="100" value="80" style="width:140px">
-      </div>
-      <div class="recBar">
-        <button class="btn small" id="recBtn" type="button">⏺ Grabar</button>
-        <button class="btn small ghost" id="playRecBtn" disabled type="button">▶ Reproducir</button>
-        <button class="btn small ghost" id="clearRecBtn" disabled type="button">🗑 Limpiar</button>
-        <span id="recStatus" style="font-size:0.85rem;color:var(--muted)">Listo para grabar</span>
-      </div>
-    </div>
-    <p class="micTip">Mateo, el piano en pantalla siempre funciona. Si además activas el micrófono, la app también escuchará tu piano real: las dos fuentes cuentan para la lección.</p>
   </section>
 
+  <!-- TECLADO 3D Y PIANO ENGINE -->
   <section>
     <div id="pianoWrap">
       <canvas id="fallingCanvas" hidden></canvas>
@@ -191,14 +236,76 @@
       <div id="piano"></div>
       <div id="fx"></div>
     </div>
-    <p class="keysHelp">💡 Teclado: <b>1 2 3 4 5 6 7</b> = zona grave (mano izquierda) · <b>A W S E D F T G Y H U J</b> = centro · <b>K O L P Ñ</b> y <b>Z X C V B N M ,</b> = agudas.<br>Sigue la flecha dorada, la partitura, los dedos de las manos y la mano indicada. ¡Tú puedes, Mateo! 💪</p>
+    <p class="keysHelp">💡 <b>Atajos de teclado PC:</b> <b>1 2 3 4 5 6 7</b> = zona grave (mano izquierda) · <b>A W S E D F T G Y H U J</b> = centro · <b>K O L P Ñ</b> y <b>Z X C V B N M ,</b> = agudas.<br>Sigue la flecha dorada, las manos indicadas y el pentagrama vivo. ¡A brillar en el piano, Mateo! 🌟</p>
   </section>
 </main>
 
-<footer>Hecho con ❤️ para que Mateo aprenda piano · PianoFácil</footer>
+<!-- AVATAR 3D FLOTANTE PERMANENTE DE MATEO (ESTILO GEOGUESSR) -->
+<!-- AVATAR 3D FLOTANTE PERMANENTE DE MATEO (THREE.JS WEBGL) -->
+<div id="floatingMateoWidget" class="floatingWidget fw-state-idle">
 
+  <!-- Globo de diálogo flotante -->
+  <div id="floatingSpeechBubble" class="floatingBubble">
+    <div class="bubbleHeader">
+      <span class="bubbleBadge">Mateo</span>
+      <span id="floatingEmotionTag" class="emotionTag">✨ Listo</span>
+    </div>
+    <div id="floatingSpeechTxt" class="bubbleText">¡Hola! Estoy listo para tocar piano contigo 🎹</div>
+  </div>
+
+  <!-- Escenario 3D WebGL (Three.js se renderiza aquí) -->
+  <div class="geo3dScene" id="avatar3dStage">
+
+    <!-- CANVAS Three.js: invisible hasta que el modelo .glb cargue -->
+    <canvas id="avatarCanvas" class="avatarCanvas"></canvas>
+
+    <!-- FALLBACK: imagen mientras no hay modelo .glb -->
+    <div class="geo3dFallback" id="geo3dFallback">
+      <!-- Aura de fuego Super Saiyan (rachas 5+) -->
+      <div class="fireAuraEffect" id="fireAuraEffect"></div>
+
+      <!-- Partículas de estrellas orbitales -->
+      <div class="starParticle sp1">✦</div>
+      <div class="starParticle sp2">✦</div>
+      <div class="starParticle sp3">✦</div>
+      <div class="starParticle sp4">✦</div>
+      <div class="starParticle sp5">✦</div>
+
+      <!-- Personaje 3D de Mateo Chibi (render GeoGuessr 3D con ropa de verano) -->
+      <!-- Imagen fallback estática eliminada para mostrar directamente el canvas 3D -->
+
+      <!-- Planeta Musical Base -->
+      <div class="geo3dPlanet">
+        <img src="mateo_planet.jpg" alt="Planeta Musical" class="planetImg">
+        <div class="planetGlow"></div>
+      </div>
+
+      <!-- Retrato de Mateo (fallback). Si tienes PNG con transparencia, ponla aquí como mateo_portrait.png -->
+      <div class="fallbackPortraitWrap">
+        <img src="mateo_chibi_portrait.jpg" alt="Mateo" class="fallbackPortrait" id="fallbackPortraitImg">
+      </div>
+
+      <!-- Sombra de contacto bajo el personaje -->
+      <div class="contactShadow"></div>
+    </div>
+
+    <!-- Indicador de carga del modelo -->
+    <div class="avatarLoadingHint" id="avatarLoadingHint" hidden>
+      <div class="loadingSpinner"></div>
+      <span>Cargando Mateo 3D...</span>
+    </div>
+
+    <!-- Botón interactivo -->
+    <button class="avatarInteractBtn" id="avatarInteractBtn" type="button" title="Hablar con Mateo">💬</button>
+  </div>
+</div>
+
+<footer>Hecho con ❤️ para que Mateo aprenda piano como un maestro · PianoFácil PRO</footer>
+
+<!-- MODAL DE NIVEL COMPLETADO -->
 <div class="modal" id="modal" hidden>
   <div class="modalCard">
+    <div class="modalAvatarBox" id="modalAvatarSvg"></div>
     <h2 id="modalTitle">🎉 ¡Nivel completado, Mateo!</h2>
     <div class="cheer" id="cheerMsg" hidden></div>
     <div class="bigStars" id="starsBox"></div>
@@ -211,30 +318,56 @@
     <div id="rewardLine" hidden></div>
     <div class="after" id="afterTip"></div>
     <div class="modalBtns">
-      <button class="btn ghost" id="retryBtn" type="button">↻ Repetir</button>
-      <button class="btn" id="nextBtn" type="button">Siguiente ▸</button>
+      <button class="btn ghost" id="retryBtn" type="button">↻ Repetir nivel</button>
+      <button class="btn" id="nextBtn" type="button">Siguiente nivel ▸</button>
     </div>
   </div>
 </div>
 <div id="confetti"></div>
 
+<!-- MODAL DE ESTADÍSTICAS SEMANALES -->
 <div class="modal" id="statsModal" hidden>
   <div class="modalCard">
-    <h2>📊 Tu Progreso Semanal</h2>
-    <p class="sub">Mateo, así va tu práctica de los últimos 7 días.</p>
+    <h2>📊 Tu Progreso de Práctica Semanal</h2>
+    <p class="sub">Mateo, así va tu constancia y dedicación en los últimos 7 días.</p>
     <div class="statsHead">
       <div>Racha Actual<b id="smStreak">0</b></div>
       <div>Hoy<b id="smToday">0 min</b></div>
       <div>Total<b id="smTotal">0 min</b></div>
     </div>
     <div class="statsModalChart" id="smChart"></div>
-    <div class="modalBtns" style="margin-top:16px">
-      <button class="btn" id="closeStatsBtn" type="button">¡A seguir practicando!</button>
+    <div class="modalBtns statsModalBtns">
+      <button class="btn" id="closeStatsBtn" type="button">¡A seguir tocando!</button>
     </div>
   </div>
 </div>
 
-<!-- SCRIPTS MODULARES EXTRAÍDOS -->
+<!-- ONBOARDING / FIRST-RUN MODAL -->
+<div class="modal" id="onboardingModal" hidden>
+  <div class="modalCard">
+    <h2>👋 Hola, Mateo</h2>
+    <p class="sub">Bienvenido a PianoFácil PRO. Vamos a configurar rápidamente tu experiencia para que puedas tocar con tu piano real.</p>
+    <ol class="onboardSteps">
+      <li><strong>Coloca tus manos</strong>: siéntate frente al piano y coloca las palmas relajadas sobre las teclas.</li>
+      <li><strong>Calibrar micrófono</strong>: activaremos el micrófono y tocarás una nota para ajustar la sensibilidad.</li>
+      <li><strong>Modo Niño</strong>: activaremos una interfaz más simple si quieres.</li>
+    </ol>
+
+    <div id="onboardCalArea" style="margin-top:10px; display:none;">
+      <div style="margin-bottom:8px">Presiona <b>Iniciar calibración</b> y toca una nota larga en tu piano.</div>
+      <button class="btn" id="onboardStartCal">▶ Iniciar calibración</button>
+      <button class="btn ghost" id="onboardStopCal" style="display:none;">⏹ Detener</button>
+      <div style="margin-top:8px">Nivel: <div class="meter" style="display:inline-block; width:120px; height:12px; background:#222; border-radius:6px; margin-left:8px;"><div id="onboardMeter" style="height:100%; width:0%; background:linear-gradient(90deg,#00e5ff,#ffb547); border-radius:6px"></div></div></div>
+    </div>
+
+    <div class="modalBtns" style="margin-top:18px">
+      <button class="btn ghost" id="onboardSkip">Saltar</button>
+      <button class="btn" id="onboardNext">Listo</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS MODULARES -->
 <script src="levels.js"></script>
 <script src="app.js"></script>
 </body>

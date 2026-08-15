@@ -1,28 +1,28 @@
-# 🎹 MEMORIA DEL PROYECTO — PianoFácil para Mateo
+# 🎹 MEMORIA DEL PROYECTO — PianoFácil PRO para Mateo
 
-> Archivo de Memoria Viva del Proyecto. Actualizado al 2026-08-13. Leer esto antes de retomar cualquier tarea del proyecto.
+> Archivo de Memoria Viva del Proyecto. Actualizado al 2026-08-13 (Versión 3.0 PRO - GeoGuessr Avatar & Audio Studio). Leer esto antes de retomar cualquier tarea del proyecto.
 
 ---
 
 ## 📋 RESUMEN EJECUTIVO
 
-**PianoFácil para Mateo** es una Progressive Web App (PWA) y aplicación nativa Android de aprendizaje de piano diseñada para que **Mateo** (hijo de Sebastián Cortés) aprenda piano de forma gamificada, con soporte para piano virtual en pantalla y detección de notas por micrófono desde un piano acústico real.
+**PianoFácil PRO para Mateo** es una Progressive Web App (PWA) y aplicación nativa Android de aprendizaje de piano con diseño de nivel profesional (**"Apple Arcade / Simply Piano PRO"**), diseñada para que **Mateo** (hijo de Sebastián Cortés) aprenda piano de forma gamificada, con avatar interactivo animado estilo **GeoGuessr / Duolingo**, teclado virtual 3D táctil en pantalla, osciloscopio en tiempo real y detección de notas por micrófono desde su piano acústico real.
 
-- **Repositorio GitHub:** https://github.com/SebastianCortesIbacache/Easy-Piano
-- **GitHub Pages (web):** https://sebastiancortesibacache.github.io/Easy-Piano/
-- **APK Android local:** `e:\Easy Piano\PianoFacil-Mateo.apk` (4.5 MB)
+- **Repositorio GitHub:** <https://github.com/SebastianCortesIbacache/Easy-Piano>
+- **GitHub Pages (web):** <https://sebastiancortesibacache.github.io/Easy-Piano/>
+- **APK Android local:** `e:\Easy Piano\PianoFacil-Mateo.apk` (4.57 MB)
 - **Cuenta GitHub:** `SebastianCortesIbacache`
 
 ---
 
 ## 📂 ESTRUCTURA DE ARCHIVOS
 
-```
+```text
 e:\Easy Piano\
-├── index.html              ← App HTML semántico modularizado (~230 líneas)
-├── app.js                  ← Lógica principal, audio, micrófono, gamificación y partitura (~1175 líneas)
-├── levels.js               ← Base de datos de 40 niveles, canciones, etapas, tips y estadísticas (~500 líneas)
-├── styles.css              ← Sistema de diseño completo, tokens, glassmorphism, responsive landscape (~990 líneas)
+├── index.html              ← App HTML semántico con header gamer, avatar y osciloscopio (~280 líneas)
+├── app.js                  ← Lógica core, motor Web Audio HI-FI, motor de Avatar SVG, osciloscopio y Synthesia (~1750 líneas)
+├── levels.js               ← Base de datos de 44 niveles, canciones, 9 etapas, tips familiares y recompensas (~310 líneas)
+├── styles.css              ← Sistema de diseño PRO completo: dark glassmorphism, avatar animado, teclado 3D de marfil/ébano, fieltro acústico (~1950 líneas)
 ├── manifest.webmanifest    ← Metadatos PWA (nombre, iconos, colores)
 ├── sw.js                   ← Service Worker (modo offline, cache-first)
 ├── icon-192.png            ← Ícono PWA 192×192
@@ -50,12 +50,14 @@ e:\Easy Piano\
 ## 🛠️ STACK TECNOLÓGICO
 
 | Componente | Tecnología | Versión / Detalle |
-|---|---|---|
+| --- | --- | --- |
 | Frontend | HTML5 + CSS Vanilla + JavaScript ES6 Modular | Separado en `app.js`, `levels.js`, `styles.css` |
-| Síntesis de audio | Web Audio API (osciladores) | ADSR envelope, 5 armónicos |
-| Detección de pitch | Autocorrelación + BiquadFilter LP 1400Hz | Detección continua optimizada para piano físico |
-| QA & Testing | Playwright (E2E Automated Testing) | Suite en Node.js (`run_playwright_tests.js`) |
-| Fuentes | Outfit (Google Fonts / fontsource CDN) | 400, 600, 700, 800 |
+| Avatar Dinámico | Generador SVG multi-capa + CSS Keyframes | Estilo GeoGuessr/Duolingo 3D, expresiones reactivas y accesorios por etapa |
+| Síntesis de audio | Web Audio API (6 armónicos + Dynamics Compressor) | ADSR envelope, modelado físico acústico, micro-sonidos UI |
+| Detección de pitch | Autocorrelación + BiquadFilter LP 1400Hz | Detección continua optimizada para piano acústico físico |
+| Visualizador en Vivo | HTML5 Canvas 2D + Web Audio AnalyserNode | Osciloscopio neón dual (Virtual + Mic) y Synthesia neón |
+| QA & Testing | Playwright (E2E Automated Testing) | Suite en Node.js y pruebas automatizadas en browser |
+| Fuentes | Outfit (Google Fonts / fontsource CDN) | 400, 600, 700, 800, 900 |
 | PWA | Service Worker + manifest.webmanifest | Cache-first, offline completo |
 | Empaquetado Android | Capacitor 7 | `@capacitor/android` ^7.0.0 |
 | Java (compilación) | Microsoft OpenJDK 21 | `C:\Program Files\Microsoft\jdk-21.0.12.8-hotspot` |
@@ -65,35 +67,45 @@ e:\Easy Piano\
 
 ---
 
-## 🎮 FUNCIONALIDADES IMPLEMENTADAS
+## 🎮 FUNCIONALIDADES IMPLEMENTADAS EN VERSIÓN 3.0 PRO
 
-### Sistema de Lecciones & Mapa de Nodos (Super Mario World / Duolingo)
-- **40 niveles** organizados en **9 etapas progresivas**
-- **Nodos 3D Interactivos (`.nodeBtn`)**:
-  - `done`: Verde esmeralda con checkmark `✓` y estrellas obtenidas (`★★★`).
-  - `current`: Dorado resplandeciente con animación `nodePulse` palpitante (`▶`).
-  - `locked`: Gris atenuado con ícono de candado `🔒`.
-- Etapa 1: Primeros pasos (notas básicas)
-- Etapa 2: Postura y técnica (digitación, postura de mano)
-- Etapa 3: Lectura musical (pentagrama, clave de Sol)
-- Etapa 4: Melodías reales (escalas, arpegios, canciones)
-- Etapa 5: Mano izquierda
-- Etapa 6: Canciones mágicas (Jingle Bells, Greensleeves, Cuando los Santos)
-- Etapa 7: Dos manos (bajos + melodía)
-- Etapa 8: Desafíos virtuosos (Para Elisa, Minueto, Canon en Re)
-- Etapa 9: Gran concierto (versiones finales de concierto)
+### 1. 👦 Avatar Interactivo de Mateo (Estilo GeoGuessr / Duolingo 3D)
+- **Diseño Vectorial Expresivo:** Rostro animado en SVG + CSS puro (ojos con parpadeo dinámico, mejillas sonrosadas y boca reactiva).
+- **Estados Emocionales en Vivo:**
+  - `idle`: Respiración suave y parpadeo natural.
+  - `listen`: Audífonos neón y cabeceo al ritmo de la audición.
+  - `playing`: Postura de concentración y manos listas.
+  - `happy`: Salto alegre y ojos brillantes `^ ^` al acertar notas.
+  - `fire`: Modo Super Saiyan con aura de fuego llameante, gafas oscuras de estrella de rock y gesto `🤘` en racha de 5+ notas.
+  - `oops`: Gesto comprensivo de ánimo con pulgar arriba `👍` y gota de sudor al fallar.
+  - `victory`: Salto de victoria sosteniendo el trofeo de oro `🏆` y confeti.
+- **Accesorios Progresivos según la Etapa:**
+  - *Etapas 1-2:* Gorra deportiva de aprendiz 🌱.
+  - *Etapas 3-5:* Audífonos de estudio gamer neón con LEDs pulsantes 🎧.
+  - *Etapas 6-8:* Corbatín de concertista y estrellas brillantes ✨.
+  - *Etapa 9:* Capa real púrpura y Corona Dorada de Gran Maestro 👑.
+- **Globo de Diálogo Dinámico:** Consejos pedagógicos y frases familiares personalizadas (Mateo, Seba, Fer, Bernardita).
+- **Interacción por Click / Toque:** Al tocar el avatar en el header o en la barra de compañero, Mateo reproduce un sonido amigable y comparte un consejo musical aleatorio.
 
-### Canciones Incluidas
-Martinillo, Estrellita, Himno de la Alegría, Cumpleaños Feliz, Noche de Paz, Campanitas, Cuando los Santos, Greensleeves, Para Elisa, Minueto en Sol, Canon en Re, Super Mario, Harry Potter, Baby Shark, Piratas del Caribe, y versiones a dos manos de las principales.
+### 2. 🎹 Teclado 3D Táctil Ultra-Realista
+- **Teclas Blancas:** Acabado marfil multicapa con bisel 3D, reflejos superiores y desplazamiento táctil (`translateY(6px)`).
+- **Teclas Negras:** Ébano satinado con bisel de luz cenital.
+- **Fieltro:** Rojo carmesí profundo con textura de paño de piano de gran cola.
+- **Feedback:** Efecto ripple divergente y lluvia de partículas arcade (`🎵`, `✨`, `⭐`, `🎹`).
 
-### Motor de Audio & Pitch Detection
-- **Síntesis:** 5 osciladores armónicos con ADSR y Low-Pass Filter.
-- **Detección por Micrófono:** Autocorrelación refinada con interpolación parabólica y filtro pasabajo de 1400 Hz para el piano real de Mateo.
+### 3. 🗺️ Mapa de Aprendizaje Gamificado (9 Etapas & 44 Niveles)
+- Nodos 3D interactivos con estados (`done` esmeralda, `current` oro con pulso neón, `locked` atenuado).
+- Tarjeta de perfil de Mateo en header con avatar interactivo, racha viva (`🔥`), contador de estrellas (`⭐`) y minutos practicados (`⏱`).
 
-### Efectos Arcade & Feedback Visual
-- **Partículas & Emojis Flotantes**: Emojis musicales (`🎵`, `🎶`, `✨`, `⭐`, `🎹`, `💫`) y chispas de colores al tocar notas o ser detectadas por el micrófono.
-- **Efecto Ripple (`.keyRipple`)**: Anillos divergentes concéntricos sobre las teclas activadas.
-- **Pentagrama Vivo**: SVG dinámico con cursor resplandeciente (`.staffCursor`) en degradado dorado/púrpura que señala la nota activa.
+### 4. 🎙️ Estudio Libre con Osciloscopio & Afinador en Tiempo Real
+- Visualizador de ondas de audio sobre Canvas en tiempo real para sintetizador y micrófono.
+- VU meter analógico y detector de frecuencia en Hz con afinación centesimal.
+
+### 5. 🎼 HUD Arcade de Práctica & Synthesia Neón
+- Notas cayendo con estelas de velocidad y esquinas redondeadas.
+- Clave de Sol estilizada con cursor de pentagrama en vivo.
+- Manos anatómicas vectoriales con iluminación en los dedos activos.
+- Modo paciente 🐢 y selector de tempo.
 
 ---
 
@@ -106,16 +118,21 @@ python -m http.server 8080
 # Abrir: http://localhost:8080
 ```
 
-### Reconstruir la APK Android
+### Sincronizar y Reconstruir la APK Android
 ```powershell
 # 1. Copiar activos a www/
-Copy-Item app.js www\ -Force
-Copy-Item styles.css www\ -Force
+cd "e:\Easy Piano"
 Copy-Item index.html www\ -Force
+Copy-Item styles.css www\ -Force
+Copy-Item app.js www\ -Force
+Copy-Item levels.js www\ -Force
+Copy-Item manifest.webmanifest www\ -Force
+Copy-Item sw.js www\ -Force
+Copy-Item icon-192.png www\ -Force
+Copy-Item icon-512.png www\ -Force
 
 # 2. Sincronizar con Capacitor Android
-cd "e:\Easy Piano"
-npx cap sync android
+node ./node_modules/@capacitor/cli/bin/capacitor sync android
 
 # 3. Compilar APK Debug
 $env:JAVA_HOME="C:\Program Files\Microsoft\jdk-21.0.12.8-hotspot"
@@ -129,29 +146,38 @@ Copy-Item "e:\Easy Piano\android\app\build\outputs\apk\debug\app-debug.apk" `
           "e:\Easy Piano\PianoFacil-Mateo.apk" -Force
 ```
 
-### Ejecutar Pruebas Automatizadas (Playwright)
-```powershell
-cd "e:\Easy Piano"
-node C:\Users\Wusch\.gemini\antigravity\brain\95be7e29-99b6-4943-a043-49146e6ecb78\scratch\run_playwright_tests.js
-```
-
 ---
 
 ## 👨‍👩‍👦 CONTEXTO FAMILIAR
 
 | Persona | Rol en la app |
-|---|---|
-| **Mateo** | El alumno — destinatario principal de la app |
-| **Seba (Sebastián)** | El papá — desarrolló el proyecto |
+| --- | --- |
+| **Mateo** | El alumno estrella — destinatario principal de la app |
+| **Seba (Sebastián)** | El papá — desarrolló el proyecto con amor |
 | **Fer** | La hermana de Mateo |
 | **Bernardita** | La mamá |
 
 ---
 
-## 📊 ESTADO ACTUAL (2026-08-13)
+## 📊 ESTADO ACTUAL (2026-08-14)
 
-- ✅ **PWA completa, modular y limpia**: Separación total de HTML, CSS y JS (`app.js`, `levels.js`, `styles.css`).
-- ✅ **Mapa de Lecciones Super Mario / Duolingo**: Renderizado interactivo de nodos 3D (`.mapGrid` y `.nodeBtn`).
-- ✅ **Feedback Arcade & Pentagrama Vivo**: Sistema de partículas, emojis, ondas divergentes `keyRipple` y cursor de pentagrama en tiempo real.
-- ✅ **QA Automático con Playwright**: Pruebas E2E ejecutadas y aprobadas con `0 ERRORES DE CONSOLA`.
-- ✅ **APK Android Nativa Compilada**: Generado `PianoFacil-Mateo.apk` (4.5 MB) verificado y listo para instalar en la tablet de Mateo.
+- ✅ **Avatar 3D Chibi de Mateo Estilo GeoGuessr implementado:**
+  - Modelado a partir de la foto real de Mateo y la referencia 3D blind box / GeoGuessr.
+  - Vestimenta de verano: polera roja, shorts grises y zapatillas blancas con rojo.
+  - Modelo 3D GLTF/GLB real cargado en Three.js con soporte PBR y sombras: [mateo.glb](file:///e:/Easy%20Piano/mateo.glb).
+  - Retrato PNG transparente para Modo Niño: [mateo_chibi_portrait.png](file:///e:/Easy%20Piano/mateo_chibi_portrait.png).
+- ✅ **Guías Educativas de Postura de Manos (hand_image_prompts.md):**
+  - Generadas en 3D educativo semi-realista con fondo transparente y guardadas en `assets/hand_guides/` y `www/assets/hand_guides/`:
+    - `hand_finger_1_to_5_right.png` (y `-portrait.png`) — Mano derecha con numeración 1 a 5 sobre teclas C-G.
+    - `hand_finger_1_to_5_left.png` (y `-portrait.png`) — Mano izquierda con numeración 5 a 1 sobre teclas C-G.
+    - `hand_posture_thumb_under.png` (y `-portrait.png`) — Técnica de paso de pulgar por debajo.
+    - `hand_relaxed_wrist_side.png` (y `-portrait.png`) — Postura neutra y relajada de muñeca con check verde.
+    - `hand_two_hands_small_span.png` (y `-portrait.png`) — Posición de ambas manos juntas en rango C.
+    - `hand_curve_tip_contact.png` (y `-portrait.png`) — Curvatura de dedos y apoyo de yemas con esfera guía.
+    - `hand_thumb_below.png` (y `-portrait.png`) — Contacto lateral del pulgar.
+- ✅ **Auditoría Multi-Agente & Correcciones Aplicadas:**
+  - Desanidamiento y reparación estructural de modales en `index.html`.
+  - Estilos CSS completos para Modo Niño, Neón Hints, Onboarding y Retratos en `styles.css`.
+  - Caché Service Worker offline `v3` actualizada con todos los scripts y assets en `sw.js`.
+  - Desbloqueo universal de AudioContext para dispositivos táctiles en `app.js`.
+- ✅ **APK Android Nativa Compilada:** [PianoFacil-Mateo.apk](file:///e:/Easy%20Piano/PianoFacil-Mateo.apk) (23.38 MB, construida exitosamente con Gradle y Microsoft OpenJDK 21, incluye todos los assets 3D y guías de manos embebidas para funcionamiento 100% offline).
