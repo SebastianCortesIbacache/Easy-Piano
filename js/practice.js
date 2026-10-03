@@ -694,24 +694,129 @@ if($('#demoBtn')) $('#demoBtn').addEventListener('click', function(){
 /* ============ MAPA Y RUTA CONDENSADA ============ */
 var selectedKidStage = null;
 var expandedNormalStages = {};
+var selectedLobbyStageFilter = 'all';
+
+function renderAdventureWorldSelector(prog, activeStageId){
+  var track = document.getElementById('worldsScrollTrack');
+  if(!track) return;
+  track.innerHTML = '';
+
+  var btnAll = document.getElementById('btnFilterAllWorlds');
+  if(btnAll){
+    btnAll.className = 'btnWorldFilter' + (selectedLobbyStageFilter === 'all' ? ' active' : '');
+    btnAll.onclick = function(){
+      if(typeof playUiSound === 'function') playUiSound('click');
+      selectedLobbyStageFilter = 'all';
+      renderPath();
+    };
+  }
+
+  STAGES.forEach(function(sg){
+    var lvls = LEVELS.filter(function(l){ return l.stage === sg.id; });
+    var worldStars = 0;
+    lvls.forEach(function(l){ worldStars += (prog[l.id] || 0); });
+    var maxStars = lvls.length * 3;
+    var isDone = stageDoneIn(prog, sg.id);
+    var isLocked = stageLocked(sg.id, prog);
+    var isCurrent = (sg.id === activeStageId);
+    var isSelected = (selectedLobbyStageFilter === sg.id);
+
+    var card = document.createElement('button');
+    card.type = 'button';
+    card.id = 'advWorldCard-' + sg.id;
+    card.className = 'worldCardBtn' + 
+      (isSelected ? ' is-selected' : '') +
+      (isCurrent ? ' is-current' : '') +
+      (isDone ? ' is-done' : '') +
+      (isLocked ? ' is-locked' : '');
+
+    var stateBadgeText = isDone ? '✅ Completado' : (isLocked ? '🔒 Bloqueado' : (isCurrent ? '🚀 En Curso' : '🔓 Abierto'));
+    var stateBadgeClass = isDone ? 'done' : (isLocked ? 'locked' : (isCurrent ? 'current' : 'open'));
+    var worldTitle = sg.worldName || sg.title.replace(/^Etapa\s*\d+\s*[·•-]\s*/i, '');
+    var pct = maxStars > 0 ? Math.round((worldStars / maxStars) * 100) : 0;
+
+    card.innerHTML = 
+      '<div class="wcbTopRow">' +
+        '<span class="wcbEmoji">' + sg.emoji + '</span>' +
+        '<span class="wcbStateBadge ' + stateBadgeClass + '">' + stateBadgeText + '</span>' +
+      '</div>' +
+      '<div class="wcbMainCol">' +
+        '<div class="wcbWorldNum">MUNDO ' + sg.id + '</div>' +
+        '<div class="wcbWorldName">' + worldTitle + '</div>' +
+        '<div class="wcbWorldDesc">' + sg.desc + '</div>' +
+      '</div>' +
+      '<div class="wcbFooter">' +
+        '<div class="wcbStarsBadge">' +
+          '<span class="wcbStarIcon">⭐</span> ' +
+          '<b>' + worldStars + '</b>/' + maxStars +
+        '</div>' +
+        '<div class="wcbMiniProgress">' +
+          '<div class="wcbProgressFill" style="width:' + pct + '%"></div>' +
+        '</div>' +
+      '</div>';
+
+    card.addEventListener('click', function(){
+      if(isLocked){
+        if(typeof playUiSound === 'function') playUiSound('click');
+        if(typeof toast === 'function') toast('🔒 Completa el Mundo ' + (sg.id - 1) + ' para desbloquear el Mundo ' + sg.id + ' (' + worldTitle + ')');
+        return;
+      }
+      if(typeof playUiSound === 'function') playUiSound('click');
+
+      selectedLobbyStageFilter = (selectedLobbyStageFilter === sg.id) ? 'all' : sg.id;
+      expandedNormalStages[sg.id] = true;
+      renderPath();
+
+      setTimeout(function(){
+        var stEl = document.getElementById('mapStage-' + sg.id);
+        if(stEl){
+          stEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          stEl.classList.add('active-stage-pulse');
+          setTimeout(function(){ stEl.classList.remove('active-stage-pulse'); }, 1600);
+        }
+      }, 50);
+    });
+
+    track.appendChild(card);
+  });
+}
 
 function renderPath(){
   var box = $('#pathBox'); if(!box) return; box.innerHTML = '';
   var prog = getPath();
   var st = courseStats(prog);
   var cont = continueLevel(prog);
-  var targetLvl = cont || LEVELS[0];
-  var activeStageId = cont ? cont.stage : 1;
+  var unmastered = !cont && typeof findNextLevelToMaster === 'function' ? findNextLevelToMaster(prog) : null;
+  var targetLvl = cont || unmastered || LEVELS[LEVELS.length - 1] || LEVELS[0];
+  var activeStageId = cont ? cont.stage : (unmastered ? unmastered.stage : 1);
 
-  // Actualizar Hero Card de Aventura V3
+  // 1. Selector Interactivo de Mundos Musicales (1 al 9)
+  try {
+    renderAdventureWorldSelector(prog, activeStageId);
+  } catch(e) {
+    console.warn('Error al renderizar el selector de mundos:', e);
+  }
+
+  // 2. Actualizar Hero Card de Aventura V3
   var heroNextTxt = document.getElementById('heroNextLevelTxt');
   if(heroNextTxt){
-    heroNextTxt.textContent = !cont ? '🎓 ¡Completaste los 44 niveles!' : ('Nivel ' + cont.id + ': ' + cont.title);
+    if(cont){
+      heroNextTxt.textContent = 'Nivel ' + cont.id + ': ' + cont.title;
+    } else if(unmastered){
+      heroNextTxt.textContent = 'Perfecciona Nivel ' + unmastered.id + ': ' + unmastered.title + ' (★' + (prog[unmastered.id] || 0) + '/3)';
+    } else {
+      heroNextTxt.textContent = '🎓 ¡Maestro del Piano! 44 niveles completados';
+    }
   }
   var heroBtn = document.getElementById('heroContinueBtn');
   if(heroBtn){
     heroBtn.onclick = function(){
-      if(typeof playUiSound === 'function') playUiSound('click');
+      if(typeof playUiSound === 'function'){
+        playUiSound(cont ? 'click' : 'victory');
+      }
+      if(!cont && !unmastered){
+        if(typeof toast === 'function') toast('🎓 ¡Felicidades! Has completado los 44 niveles de la Aventura.');
+      }
       startPractice(targetLvl);
     };
   }
@@ -721,6 +826,28 @@ function renderPath(){
   if(heroStreak){
     var dStats = (typeof loadDailyStats === 'function') ? loadDailyStats() : { streak: 0 };
     heroStreak.textContent = dStats.streak || 0;
+  }
+
+  // Banner informativo si hay filtro activo por mundo
+  if(selectedLobbyStageFilter !== 'all'){
+    var curFiltered = STAGES.filter(function(s){ return s.id === selectedLobbyStageFilter; })[0] || STAGES[0];
+    var filterBanner = document.createElement('div');
+    filterBanner.className = 'lobbyFilterActiveBanner';
+    filterBanner.innerHTML = 
+      '<div class="lfbLeft">' +
+        '<span class="lfbEmoji">' + curFiltered.emoji + '</span>' +
+        '<span>Viendo únicamente <b>Mundo ' + curFiltered.id + ': ' + (curFiltered.worldName || curFiltered.title) + '</b></span>' +
+      '</div>' +
+      '<button type="button" class="btn small ghost lfbResetBtn" id="btnResetFilterBanner">🌐 Ver todos los mundos</button>';
+    var resetBtn = filterBanner.querySelector('#btnResetFilterBanner');
+    if(resetBtn){
+      resetBtn.onclick = function(){
+        if(typeof playUiSound === 'function') playUiSound('click');
+        selectedLobbyStageFilter = 'all';
+        renderPath();
+      };
+    }
+    box.appendChild(filterBanner);
   }
 
   if(cont){
@@ -738,6 +865,11 @@ function renderPath(){
     var lvls = LEVELS.filter(function(l){ return l.stage === sg.id; });
     var done = stageDoneIn(prog, sg.id);
     var locked = stageLocked(sg.id, prog);
+    var isFilteredOut = (selectedLobbyStageFilter !== 'all' && selectedLobbyStageFilter !== sg.id);
+
+    var stageStars = 0;
+    lvls.forEach(function(l){ stageStars += (prog[l.id] || 0); });
+    var maxStageStars = lvls.length * 3;
     
     if(typeof expandedNormalStages[sg.id] === 'undefined'){
       expandedNormalStages[sg.id] = (sg.id === activeStageId);
@@ -745,7 +877,8 @@ function renderPath(){
     var isOpen = expandedNormalStages[sg.id];
 
     var mapContainer = document.createElement('div');
-    mapContainer.className = 'mapStageContainer' + (isOpen ? ' open' : ' collapsed') + (sg.id === activeStageId ? ' active-stage' : '');
+    mapContainer.id = 'mapStage-' + sg.id;
+    mapContainer.className = 'mapStageContainer' + (isOpen ? ' open' : ' collapsed') + (sg.id === activeStageId ? ' active-stage' : '') + (isFilteredOut ? ' stage-filtered-out' : '');
 
     var head = document.createElement('div');
     head.className = 'stageHead' + (sg.id === 1 ? ' s1' : '') + (isOpen ? ' open' : '');
@@ -754,11 +887,17 @@ function renderPath(){
     else if(locked) stState = '<span class="stageState">🔒 Bloqueada</span>';
     else stState = '<span class="stageState curr">🚀 En Progreso</span>';
     
+    var worldTag = sg.worldName ? '<span class="stageWorldTag">Mundo ' + sg.id + ' · ' + sg.worldName + '</span>' : '';
+    var starsTag = '<span class="stageStarsTag">⭐ ' + stageStars + '/' + maxStageStars + '</span>';
     var toggleArrow = '<span class="stageToggleArrow">' + (isOpen ? '▲' : '▼') + '</span>';
 
     head.innerHTML = '<div class="stageEmoji">' + sg.emoji + '</div>' +
-      '<div class="stageHeadContent"><div class="stageTitle">' + sg.title + '</div><div class="stageDesc">' + sg.desc + '</div></div>' +
-      stState + toggleArrow;
+      '<div class="stageHeadContent">' +
+        worldTag +
+        '<div class="stageTitle">' + sg.title + '</div>' +
+        '<div class="stageDesc">' + sg.desc + '</div>' +
+      '</div>' +
+      starsTag + stState + toggleArrow;
 
     head.addEventListener('click', function(){
       playUiSound('click');

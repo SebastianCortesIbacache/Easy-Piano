@@ -1,6 +1,6 @@
 /* ==========================================================================
-   PIANOFÁCIL PRO · MÓDULO 2: MOTOR WEB AUDIO HI-FI & SÍNTESIS ACÚSTICA
-   Diseñado para Mateo · js/audio.js
+   EASY PIANO 3.0 · MÓDULO 2: MOTOR WEB AUDIO HI-FI & SÍNTESIS ACÚSTICA
+   js/audio.js
    ========================================================================== */
 
 var AC = null, master = null, masterAnalyser = null;
@@ -161,7 +161,7 @@ function startFamilyRecording(){
     _familyRecorder.start();
     _isFamilyRecording = true;
     updateFamilyRecButtons(true);
-    toast('🔴 ¡Grabando lo que toques, Mateo! 🎹');
+    toast('🔴 ¡Grabando lo que toques al piano! 🎹');
     return true;
   } catch(e){
     toast('⚠ Grabación no compatible en este navegador.');

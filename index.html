@@ -6,15 +6,32 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Easy Piano — Aventura Musical para Niños</title>
-<meta name="description" content="Aprende piano jugando con tu compañero musical: 9 mundos de aventura, partituras interactivas, canciones y reconocimiento Web MIDI y micrófono.">
-<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-title" content="Easy Piano 3.0">
+<meta name="application-name" content="Easy Piano 3.0">
+<meta name="theme-color" content="#090b14">
+<meta name="msapplication-TileColor" content="#090b14">
+<title>Easy Piano 3.0 — Aventura Musical para Niños</title>
+<meta name="description" content="Easy Piano 3.0 — Aventura musical interactiva para niños con 9 mundos mágicos, partituras interactivas, síntesis acústica Hi-Fi y soporte Web MIDI y micrófono.">
+<!-- Open Graph / Redes Sociales -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Easy Piano 3.0">
+<meta property="og:title" content="Easy Piano 3.0 — Aventura Musical para Niños">
+<meta property="og:description" content="Aprende piano jugando con tu compañero musical: 9 mundos de aventura, canciones y reconocimiento en vivo.">
+<meta property="og:image" content="assets/v3_design/easy_piano_logo.jpg">
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Easy Piano 3.0 — Aventura Musical para Niños">
+<meta name="twitter:description" content="Aprende piano jugando con tu compañero musical: 9 mundos de aventura, canciones y reconocimiento en vivo.">
+<meta name="twitter:image" content="assets/v3_design/easy_piano_logo.jpg">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="shortcut icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=11.0">
+<link rel="stylesheet" href="styles.css?v=12.0">
 <!-- THREE.JS WebGL 3D Avatar Engine (100% Offline Local) -->
 <script src="assets/vendor/three.min.js"></script>
 <script src="assets/vendor/GLTFLoader.js"></script>
@@ -35,8 +52,10 @@
   <div class="fnote n3">🎹</div>
   <div class="fnote n4">✨</div>
   <div class="loadCard">
-    <img src="assets/v3_design/easy_piano_logo.jpg" class="loadLogoImg" alt="Easy Piano">
-    <h1 class="loadTitle">Easy Piano</h1>
+    <div class="loadLogoGlowRing">
+      <img src="assets/v3_design/easy_piano_logo.jpg" class="loadLogoImg" alt="Easy Piano 3.0">
+    </div>
+    <h1 class="loadTitle">Easy Piano <span class="loadVerBadge">3.0</span></h1>
     <p class="loadSub">Preparando tu aventura musical… 🎶</p>
     <div class="soundWaves">
       <span></span><span></span><span></span><span></span><span></span>
@@ -48,20 +67,22 @@
 
 <header>
   <div class="brand">
-    <img src="assets/v3_design/easy_piano_logo.jpg" class="brandLogoImg" alt="Easy Piano Logo">
-    <div>
-      <h1>Easy Piano</h1>
+    <div class="brandLogoWrap">
+      <img src="assets/v3_design/easy_piano_logo.jpg" class="brandLogoImg" alt="Easy Piano 3.0 Logo">
+    </div>
+    <div class="brandTextWrap">
+      <h1>Easy Piano <span class="headerVerBadge">3.0</span></h1>
       <p class="subtitle">Aventura Musical · Nivel Maestro 🌟</p>
     </div>
   </div>
   
   <!-- BARRA DE PERFIL GAMIFICADO -->
   <div class="headerProfile">
-    <div class="gamerChip streak" id="headerStreak">🔥 0 Días</div>
-    <div class="gamerChip stars" id="headerStars">⭐ 0 Estrellas</div>
-    <button class="gamerChip missionsChip" id="missionsBtn" type="button">🎯 Misiones <span class="chipCount">0/3</span></button>
-    <div class="gamerChip" id="timeChip">⏱ 0 min</div>
-    <button class="btn small ghost" id="statsBtn" type="button">📊 Estadísticas</button>
+    <div class="gamerChip streak" id="headerStreak" title="Días seguidos practicando">🔥 0 Días</div>
+    <div class="gamerChip stars" id="headerStars" title="Total de estrellas ganadas">⭐ 0 Estrellas</div>
+    <button class="gamerChip missionsChip" id="missionsBtn" type="button" title="Misiones Diarias">🎯 Misiones <span class="chipCount">0/3</span></button>
+    <div class="gamerChip timeChip" id="timeChip" title="Tiempo de práctica acumulado">⏱ 0 min</div>
+    <button class="btn small ghost headerStatBtn" id="statsBtn" type="button" title="Ver Estadísticas">📊 Estadísticas</button>
   </div>
 
   <div class="headerActions">
@@ -162,6 +183,23 @@
           <img src="assets/v3_design/adventure_world_map.jpg" alt="Mapa de Aventura Musical" class="worldMapVisualImg">
           <div class="worldMapOverlayGlow"></div>
         </div>
+      </div>
+
+      <!-- BARRA INTERACTIVA DE MUNDOS MUSICALES (1 AL 9) -->
+      <div class="adventureWorldsBarCard" id="adventureWorldsBarCard">
+        <div class="worldsBarHeader">
+          <div class="wbhTitleCol">
+            <span class="wbhBadge">🏰 MUNDOS MUSICALES</span>
+            <h3 class="wbhHeading">Explora por Mundo (1 al 9)</h3>
+            <p class="wbhSubtitle">Salta rápidamente a cualquier mundo o filtra sus lecciones con un toque</p>
+          </div>
+          <div class="wbhActions">
+            <button type="button" class="btnWorldFilter active" id="btnFilterAllWorlds" data-stage="all">
+              <span class="btnWfIcon">🌐</span> Ver Todos los Mundos
+            </button>
+          </div>
+        </div>
+        <div class="worldsScrollTrack" id="worldsScrollTrack" role="region" aria-label="Selector de Mundos Musicales"></div>
       </div>
 
       <div class="badgesBar" id="badgesBar"></div>

@@ -1,6 +1,6 @@
 /* ==========================================================================
-   PIANOFÁCIL PRO · MÓDULO 5: MOTOR 3D THREE.JS, AVATAR & RETRATO OFICIAL
-   Diseñado para Mateo · js/avatar3d.js
+   EASY PIANO 3.0 · MÓDULO 5: MOTOR 3D THREE.JS, AVATAR & RETRATO OFICIAL
+   js/avatar3d.js
    ========================================================================== */
 
 var currentAvatarState = 'idle';
@@ -158,14 +158,14 @@ function toggleFloatingSpeechBubble(forceState){
     flBubble.classList.remove('bubble-closed');
     if(btn){
       btn.classList.remove('is-closed');
-      btn.title = 'Ocultar mensaje de Mateo';
+      btn.title = 'Ocultar mensaje del compañero';
       btn.setAttribute('aria-label', 'Ocultar mensaje');
     }
   } else {
     flBubble.classList.add('bubble-closed');
     if(btn){
       btn.classList.add('is-closed');
-      btn.title = 'Mostrar mensaje de Mateo';
+      btn.title = 'Mostrar mensaje del compañero';
       btn.setAttribute('aria-label', 'Mostrar mensaje');
     }
   }

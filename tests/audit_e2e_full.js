@@ -49,7 +49,7 @@ function createServer(port = 8099) {
 
 async function runAudit() {
   console.log('\n================================================================');
-  console.log('🎹 [AUDITORÍA INTEGRAL DE CALIDAD PRO] PianoFácil PRO');
+  console.log('🎹 [AUDITORÍA INTEGRAL DE CALIDAD PRO] Easy Piano 3.0');
   console.log('Target URL: http://127.0.0.1:8099/index.html?v=' + Date.now());
   console.log('================================================================\n');
 

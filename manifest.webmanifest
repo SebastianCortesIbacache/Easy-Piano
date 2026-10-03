@@ -1,22 +1,36 @@
 {
-  "name": "Easy Piano — Aventura Musical",
-  "short_name": "Easy Piano",
-  "description": "Aprende piano jugando con tu compañero musical: 9 mundos de aventura, partituras interactivas, canciones y reconocimiento Web MIDI y micrófono.",
+  "name": "Easy Piano 3.0 — Aventura Musical",
+  "short_name": "Easy Piano 3.0",
+  "description": "Easy Piano 3.0 — Aventura musical interactiva para niños con 9 mundos mágicos, partituras interactivas, síntesis acústica Hi-Fi y soporte Web MIDI y micrófono.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0e1018",
-  "theme_color": "#0e1018",
+  "background_color": "#090b14",
+  "theme_color": "#090b14",
   "orientation": "landscape",
+  "categories": [
+    "education",
+    "music",
+    "games"
+  ],
   "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

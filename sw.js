@@ -1,7 +1,7 @@
 /* ============================================================
-   Service Worker (PWA offline support) - PianoFácil PRO
+   Service Worker (PWA offline support) - Easy Piano 3.0
 ============================================================= */
-var CACHE = 'pianofacil-pro-v13';
+var CACHE = 'easy-piano-v3.0.0';
 var CORE = [
   './',
   './index.html',
@@ -21,6 +21,13 @@ var CORE = [
   './assets/vendor/DRACOLoader.js',
   './assets/vendor/OrbitControls.js',
   './assets/vendor/RGBELoader.js',
+  './assets/v3_design/easy_piano_logo.jpg',
+  './assets/v3_design/adventure_world_map.jpg',
+  './assets/v3_design/avatar_celebrating.jpg',
+  './assets/v3_design/avatar_encouraging.jpg',
+  './assets/v3_design/avatar_listening.jpg',
+  './assets/v3_design/avatar_pointing_key.jpg',
+  './assets/v3_design/avatar_stretching.jpg',
   './assets/hand_guides/hand_curve_tip_contact.png',
   './assets/hand_guides/hand_finger_1_to_5_left.png',
   './assets/hand_guides/hand_finger_1_to_5_right.png',
@@ -36,6 +43,7 @@ var CORE = [
   './assets/hand_guides/hand_thumb_below.png',
   './assets/hand_guides/hand_two_hands_small_span.png',
   './manifest.webmanifest',
+  './favicon.png',
   './icon-192.png',
   './icon-512.png',
   './mateo.glb',

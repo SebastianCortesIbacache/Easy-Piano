@@ -112,7 +112,18 @@ function nextLevelFor(prog){
     var lv = LEVELS[i];
     if((prog[lv.id] || 0) > 0) continue;
     if(stageLocked(lv.stage, prog)) continue;
+    if(i > 0 && (prog[LEVELS[i - 1].id] || 0) === 0) continue;
     return lv;
+  }
+  return null;
+}
+function findNextLevelToMaster(prog){
+  if(typeof LEVELS === 'undefined') return null;
+  for(var i = 0; i < LEVELS.length; i++){
+    var lv = LEVELS[i];
+    if((prog[lv.id] || 0) < 3 && !stageLocked(lv.stage, prog)){
+      return lv;
+    }
   }
   return null;
 }
@@ -121,8 +132,13 @@ function continueLevel(prog){
   var lastId = parseInt(storeGet('pf_last') || '0', 10);
   var last = null;
   if(lastId) last = LEVELS.filter(function(l){ return l.id === lastId; })[0] || null;
-  if(last && (prog[last.id] || 0) === 0 && !stageLocked(last.stage, prog)) return last;
-  return nextLevelFor(prog);
+  if(last && (prog[last.id] || 0) === 0 && !stageLocked(last.stage, prog)){
+    var idx = LEVELS.indexOf(last);
+    if(idx === 0 || (prog[LEVELS[idx - 1].id] || 0) > 0) return last;
+  }
+  var next = nextLevelFor(prog);
+  if(next) return next;
+  return findNextLevelToMaster(prog);
 }
 
 function renderBadges(){

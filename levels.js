@@ -151,15 +151,15 @@ var FING_PIRATAS=[1,2,3,3,3,4,5,5, 5,5,4,4,3,2,2,3];
 
 /* ============ ETAPAS Y NIVELES ============ */
 var STAGES=[
- {id:1,emoji:'🌱',title:'Etapa 1 · Primeros pasos',desc:'Tus dos primeras lecciones: conoce el piano sin miedo.'},
- {id:2,emoji:'🖐',title:'Etapa 2 · Postura y técnica',desc:'Numera tus dedos, relaja la mano y aprende la digitación correcta.'},
- {id:3,emoji:'📖',title:'Etapa 3 · Lectura musical',desc:'Aprende a leer notas y ritmos en el pentagrama.'},
- {id:4,emoji:'🚀',title:'Etapa 4 · Melodías reales',desc:'Escalas, arpegios y tus primeras canciones completas.'},
- {id:5,emoji:'🫲',title:'Etapa 5 · La mano izquierda',desc:'Despierta tu mano secreta y alterna las dos manos.'},
- {id:6,emoji:'✨',title:'Etapa 6 · Canciones mágicas',desc:'🔓 Melodías famosas que todos reconocen: ¡se desbloquean al llegar aquí!'},
- {id:7,emoji:'🤲',title:'Etapa 7 · Dos manos',desc:'Bajos y melodía trabajando en equipo por primera vez.'},
- {id:8,emoji:'🔥',title:'Etapa 8 · Desafíos virtuosos',desc:'Los clásicos más famosos del piano, con sostenidos y velocidad.'},
- {id:9,emoji:'🎓',title:'Etapa 9 · Gran concierto',desc:'Tus versiones de concierto. ¡La graduación final!'}
+ {id:1,emoji:'🌱',title:'Etapa 1 · Primeros pasos',worldName:'Ritmo y Do-Re-Mi',desc:'Tus dos primeras lecciones: conoce el piano sin miedo.'},
+ {id:2,emoji:'🖐',title:'Etapa 2 · Postura y técnica',worldName:'Postura y Técnica',desc:'Numera tus dedos, relaja la mano y aprende la digitación correcta.'},
+ {id:3,emoji:'📖',title:'Etapa 3 · Lectura musical',worldName:'Clave de Sol',desc:'Aprende a leer notas y ritmos en el pentagrama.'},
+ {id:4,emoji:'🚀',title:'Etapa 4 · Melodías reales',worldName:'Melodías Reales',desc:'Escalas, arpegios y tus primeras canciones completas.'},
+ {id:5,emoji:'🫲',title:'Etapa 5 · La mano izquierda',worldName:'Clave de Fa',desc:'Despierta tu mano secreta y alterna las dos manos.'},
+ {id:6,emoji:'✨',title:'Etapa 6 · Canciones mágicas',worldName:'Canciones Mágicas',desc:'🔓 Melodías famosas que todos reconocen: ¡se desbloquean al llegar aquí!'},
+ {id:7,emoji:'🤲',title:'Etapa 7 · Dos manos',worldName:'Dos Manos',desc:'Bajos y melodía trabajando en equipo por primera vez.'},
+ {id:8,emoji:'🔥',title:'Etapa 8 · Desafíos virtuosos',worldName:'Desafíos Virtuosos',desc:'Los clásicos más famosos del piano, con sostenidos y velocidad.'},
+ {id:9,emoji:'🎓',title:'Etapa 9 · Gran concierto',worldName:'Gran Concierto',desc:'Tus versiones de concierto. ¡La graduación final!'}
 ];
 var LEVELS=[
  {id:1,stage:1,title:'Tu primera nota',emoji:'👋',desc:'Toca Do (C4) tres veces, sin prisa.',bpm:80,

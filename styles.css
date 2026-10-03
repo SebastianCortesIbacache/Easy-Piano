@@ -1,6 +1,6 @@
 /* ==========================================================================
-   PIANOFÁCIL PRO — SISTEMA DE DISEÑO & ESTILOS HI-FI (APPLE ARCADE / SIMPLY PIANO)
-   Diseñado especialmente para Mateo · Versión 3.0 PRO
+   EASY PIANO 3.0 — SISTEMA DE DISEÑO & ESTILOS HI-FI (APPLE ARCADE / SIMPLY PIANO)
+   Aventura Musical para Niños · Versión 3.0
    ========================================================================== */
 
 :root {
@@ -98,7 +98,7 @@ body {
 }
 
 /* ==========================================================================
-   PANTALLA DE CARGA (LOADER LUXURY MATEO)
+   PANTALLA DE CARGA (LOADER LUXURY EASY PIANO 3.0)
    ========================================================================== */
 #loader {
   position: fixed;
@@ -109,26 +109,28 @@ body {
   justify-content: center;
   overflow: hidden;
   background:
-    radial-gradient(1300px 850px at 20% -10%, rgba(139, 108, 255, 0.4), transparent 60%),
-    radial-gradient(1100px 750px at 80% 110%, rgba(255, 181, 71, 0.28), transparent 60%),
+    radial-gradient(1300px 850px at 20% -10%, rgba(139, 108, 255, 0.35), transparent 60%),
+    radial-gradient(1100px 750px at 80% 110%, rgba(255, 181, 71, 0.25), transparent 60%),
     var(--bg);
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s ease;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), filter 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform, filter;
 }
 
 #loader.gone {
   opacity: 0;
-  transform: scale(1.05);
+  transform: scale(1.06);
+  filter: blur(8px);
   pointer-events: none;
 }
 
 .loadCard {
-  background: rgba(18, 22, 38, 0.86);
-  border: 1.5px solid rgba(255, 181, 71, 0.4);
+  background: rgba(16, 20, 36, 0.88);
+  border: 1.8px solid rgba(255, 215, 0, 0.45);
   border-radius: 32px;
-  padding: 44px 50px;
+  padding: 42px 48px;
   -webkit-backdrop-filter: blur(28px);
   backdrop-filter: blur(28px);
-  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.85), 0 0 50px rgba(255, 215, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.2);
   max-width: 520px;
   width: 90vw;
   text-align: center;
@@ -156,13 +158,29 @@ body {
 
 .loadTitle {
   font-size: 2.7rem;
-  font-weight: 800;
+  font-weight: 900;
   margin-top: 10px;
   letter-spacing: -0.5px;
-  background: linear-gradient(90deg, #ffb547, #fff2cb 45%, #8b6cff);
+  background: linear-gradient(135deg, #ffd700 0%, #fff3cd 35%, #ffb547 70%, #ff8038 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.loadVerBadge {
+  font-size: 1.05rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffb547, #ff5722);
+  color: #ffffff;
+  padding: 2px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(255, 87, 34, 0.45);
+  vertical-align: middle;
 }
 
 .loadSub {
@@ -183,10 +201,10 @@ body {
 
 .soundWaves span {
   width: 6px;
-  background: linear-gradient(180deg, var(--accent), var(--accent2));
+  background: linear-gradient(180deg, #ffd700, #ff8038);
   border-radius: 99px;
   animation: wave 1s ease-in-out infinite alternate;
-  box-shadow: 0 0 10px var(--accent-glow);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.55);
 }
 
 .soundWaves span:nth-child(1) { height: 10px; animation-delay: 0.1s; }
@@ -200,34 +218,44 @@ body {
   100% { transform: scaleY(1); }
 }
 
+/* Barra de Carga Dorada Luxury */
 .loadTrack {
   width: 100%;
-  height: 18px;
+  height: 20px;
   border-radius: 99px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(10, 14, 26, 0.85);
+  border: 1.5px solid rgba(255, 215, 0, 0.4);
   overflow: hidden;
   margin: 0 auto;
-  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.7), 0 0 16px rgba(255, 215, 0, 0.2);
   position: relative;
 }
 
 #loadFill {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #ffb547, #ff8038 45%, #8b6cff);
+  background: linear-gradient(90deg, #e69500 0%, #ffd700 28%, #fff4cc 50%, #ffb300 72%, #ffd54f 100%);
+  background-size: 200% 100%;
   border-radius: 99px;
-  box-shadow: 0 0 24px rgba(255, 181, 71, 0.9);
+  box-shadow: 0 0 24px rgba(255, 215, 0, 0.95), inset 0 1px 2px rgba(255, 255, 255, 0.75);
   transition: width 0.12s linear;
+  animation: goldShimmer 2.2s linear infinite;
+  position: relative;
+}
+
+@keyframes goldShimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
 }
 
 #loadPct {
   margin-top: 14px;
   font-weight: 800;
-  color: #ffd98a;
-  font-size: 1.4rem;
-  letter-spacing: 1px;
-  text-shadow: 0 0 16px rgba(255, 181, 71, 0.6);
+  color: #ffe599;
+  font-size: 1.35rem;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 18px rgba(255, 215, 0, 0.7);
+  font-variant-numeric: tabular-nums;
 }
 
 .fnote {
@@ -252,29 +280,42 @@ body {
 }
 
 /* ==========================================================================
-   HEADER GAMIFICADO & PERFIL DE MATEO PRO
+   HEADER GAMIFICADO & PERFIL EASY PIANO 3.0
    ========================================================================== */
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
-  padding: 6px clamp(12px, 3vw, 24px);
-  background: rgba(14, 18, 30, 0.85);
+  padding: 8px clamp(12px, 3vw, 24px);
+  background: rgba(14, 18, 30, 0.88);
   -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1.5px solid rgba(255, 215, 0, 0.18);
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+}
+
+.brandLogoWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brandTextWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .logo {
@@ -289,14 +330,29 @@ header {
 }
 
 header h1 {
-  font-size: 1.12rem;
-  font-weight: 800;
-  background: linear-gradient(90deg, var(--accent), #fff2ce 40%, var(--accent2));
+  font-size: 1.25rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffd700 0%, #fff3cd 38%, #ffb547 70%, #ff8038 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.headerVerBadge {
+  font-size: 0.64rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffb547, #ff5722);
+  color: #ffffff;
+  padding: 1.5px 6px;
+  border-radius: 99px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(255, 87, 34, 0.4);
+  vertical-align: middle;
 }
 
 .subtitle {
@@ -323,27 +379,45 @@ header h1 {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 4px 10px;
-  font-size: 0.76rem;
+  padding: 5px 12px;
+  font-size: 0.78rem;
   font-weight: 700;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
   transition: all 0.25s ease;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .gamerChip:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.09);
   border-color: var(--line-light);
+  transform: translateY(-1px);
 }
 
 .gamerChip.streak {
-  border-color: rgba(255, 181, 71, 0.4);
+  border: 1.2px solid rgba(255, 140, 0, 0.55);
   color: #ffd276;
-  background: linear-gradient(135deg, rgba(255, 181, 71, 0.12), rgba(255, 128, 56, 0.12));
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.18), rgba(255, 77, 109, 0.14));
+  box-shadow: 0 2px 10px rgba(255, 140, 0, 0.25);
 }
 
 .gamerChip.stars {
-  border-color: rgba(255, 210, 118, 0.4);
-  color: #ffe494;
+  border: 1.2px solid rgba(255, 215, 0, 0.6);
+  color: #ffe885;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.18), rgba(255, 181, 71, 0.14));
+  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.25);
+}
+
+.gamerChip.timeChip {
+  border: 1.2px solid rgba(77, 171, 247, 0.4);
+  color: #b3d7ff;
+  background: linear-gradient(135deg, rgba(77, 171, 247, 0.12), rgba(139, 108, 255, 0.12));
+}
+
+.headerStatBtn {
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 0.78rem;
 }
 
 .headerActions {
@@ -4713,17 +4787,42 @@ body.kid-mode.in-practice .pracCtrls {
 
 /* 1. Logos & Iconos de Marca */
 .brandLogoImg {
-  width: 38px;
-  height: 38px;
-  border-radius: 11px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   object-fit: cover;
-  box-shadow: 0 0 16px rgba(77, 171, 247, 0.65), 0 0 4px rgba(255, 215, 0, 0.8);
-  border: 1.5px solid rgba(255, 215, 0, 0.7);
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.8), 0 0 28px rgba(255, 181, 71, 0.4), inset 0 0 4px rgba(255, 255, 255, 0.5);
   display: block;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  animation: brandLogoGlow 3.2s ease-in-out infinite alternate;
 }
+
+@keyframes brandLogoGlow {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 0 20px rgba(255, 181, 71, 0.25);
+    border-color: #ffd700;
+  }
+  100% {
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.95), 0 0 35px rgba(255, 181, 71, 0.55);
+    border-color: #fff2b2;
+  }
+}
+
 .brandLogoImg:hover {
-  transform: scale(1.1) rotate(-4deg);
+  transform: scale(1.12) rotate(-3deg);
+  box-shadow: 0 0 24px rgba(255, 215, 0, 1), 0 0 45px rgba(255, 181, 71, 0.7);
+}
+
+.loadLogoGlowRing {
+  display: inline-block;
+  position: relative;
+  margin: 0 auto 16px;
+  border-radius: 30px;
+  padding: 4px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.95), rgba(255, 181, 71, 0.4) 50%, rgba(77, 171, 247, 0.85) 100%);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 215, 0, 0.55), 0 0 55px rgba(77, 171, 247, 0.35);
+  animation: logoFloatGlow 2.8s ease-in-out infinite alternate;
 }
 
 .loadLogoImg {
@@ -4731,11 +4830,19 @@ body.kid-mode.in-practice .pracCtrls {
   height: 104px;
   border-radius: 26px;
   object-fit: cover;
-  margin: 0 auto 16px;
   display: block;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 35px rgba(77, 171, 247, 0.75);
-  border: 2.5px solid rgba(255, 215, 0, 0.85);
-  animation: floatPiano 2.6s ease-in-out infinite alternate;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+@keyframes logoFloatGlow {
+  0% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 215, 0, 0.5), 0 0 40px rgba(77, 171, 247, 0.3);
+  }
+  100% {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.8), 0 0 45px rgba(255, 215, 0, 0.85), 0 0 65px rgba(77, 171, 247, 0.55);
+  }
 }
 
 /* 2. Hero Card de Aventura en Lobby */
@@ -4951,6 +5058,355 @@ body.kid-mode.in-practice .pracCtrls {
   pointer-events: none;
 }
 
+/* 3B. Barra Interactiva de Mundos Musicales (1 al 9) */
+.adventureWorldsBarCard {
+  background: rgba(18, 22, 38, 0.85);
+  border: 1.5px solid rgba(255, 181, 71, 0.35);
+  border-radius: 24px;
+  padding: 20px 22px;
+  margin-bottom: 24px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+  position: relative;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.worldsBarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.wbhTitleCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.wbhBadge {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #ffb547;
+  letter-spacing: 1.2px;
+}
+
+.wbhHeading {
+  margin: 2px 0 3px;
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: #f8f9fa;
+}
+
+.wbhSubtitle {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #a4adca;
+}
+
+.wbhActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btnWorldFilter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #e9ecef;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnWorldFilter:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.btnWorldFilter.active {
+  background: linear-gradient(135deg, rgba(77, 171, 247, 0.3), rgba(255, 181, 71, 0.3));
+  border-color: #ffd43b;
+  color: #fff;
+  box-shadow: 0 0 16px rgba(255, 212, 59, 0.3);
+}
+
+.worldsScrollTrack {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 6px 4px 14px;
+  max-width: 100%;
+  box-sizing: border-box;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 181, 71, 0.4) rgba(255, 255, 255, 0.05);
+}
+
+.worldsScrollTrack::-webkit-scrollbar {
+  height: 6px;
+}
+.worldsScrollTrack::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 99px;
+}
+.worldsScrollTrack::-webkit-scrollbar-thumb {
+  background: rgba(255, 181, 71, 0.4);
+  border-radius: 99px;
+}
+.worldsScrollTrack::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 181, 71, 0.7);
+}
+
+/* Tarjeta individual de mundo en la barra interactiva */
+.worldCardBtn {
+  flex: 0 0 185px;
+  scroll-snap-align: start;
+  background: linear-gradient(145deg, rgba(26, 32, 54, 0.95), rgba(15, 19, 34, 0.98));
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 14px 14px 12px;
+  text-align: left;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 155px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.worldCardBtn:hover:not(.is-locked) {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(255, 181, 71, 0.65);
+  box-shadow: 0 14px 28px rgba(255, 181, 71, 0.25);
+}
+
+.worldCardBtn:active:not(.is-locked) {
+  transform: translateY(1px) scale(0.98);
+}
+
+.worldCardBtn.is-selected {
+  border-color: #ffd43b;
+  background: linear-gradient(145deg, rgba(46, 36, 75, 0.96), rgba(25, 20, 48, 0.98));
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.45);
+}
+
+.worldCardBtn.is-current {
+  border-color: #4dabf7;
+  box-shadow: 0 0 20px rgba(77, 171, 247, 0.35);
+}
+
+.worldCardBtn.is-done {
+  border-color: rgba(61, 220, 132, 0.4);
+}
+
+.worldCardBtn.is-locked {
+  opacity: 0.65;
+  filter: grayscale(0.5);
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.wcbTopRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.wcbEmoji {
+  font-size: 1.7rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+.wcbStateBadge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+
+.wcbStateBadge.done {
+  background: rgba(61, 220, 132, 0.2);
+  border: 1px solid rgba(61, 220, 132, 0.45);
+  color: #a8f5cc;
+}
+.wcbStateBadge.current {
+  background: rgba(77, 171, 247, 0.2);
+  border: 1px solid rgba(77, 171, 247, 0.5);
+  color: #a5d8ff;
+  animation: pulseCurrentBadge 2s ease-in-out infinite;
+}
+@keyframes pulseCurrentBadge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+.wcbStateBadge.open {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ced4da;
+}
+.wcbStateBadge.locked {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #868e96;
+}
+
+.wcbMainCol {
+  flex: 1;
+  margin-bottom: 10px;
+}
+
+.wcbWorldNum {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #ffb547;
+  letter-spacing: 0.8px;
+}
+
+.wcbWorldName {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.25;
+  margin: 2px 0 4px;
+}
+
+.wcbWorldDesc {
+  font-size: 0.75rem;
+  color: #adb5bd;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.wcbFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.wcbStarsBadge {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #ffd43b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.wcbStarIcon {
+  font-size: 0.9rem;
+}
+
+.wcbMiniProgress {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.wcbProgressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffb547, #ffd43b);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+/* Filtro Activo Banner en #pathBox */
+.lobbyFilterActiveBanner {
+  background: linear-gradient(135deg, rgba(77, 171, 247, 0.18), rgba(255, 181, 71, 0.15));
+  border: 1.5px solid rgba(255, 212, 59, 0.4);
+  border-radius: 18px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.lfbLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: #f8f9fa;
+}
+
+.lfbEmoji {
+  font-size: 1.5rem;
+}
+
+.lfbResetBtn {
+  margin-left: auto;
+}
+
+/* Ocultar etapas filtradas manteniendo la presencia en el DOM */
+.mapStageContainer.stage-filtered-out {
+  display: none !important;
+}
+
+/* Efecto de salto suave y pulso en etapa */
+@keyframes stageHighlightPulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 215, 0, 0); }
+  50% { transform: scale(1.02); box-shadow: 0 0 35px rgba(255, 215, 0, 0.65); border-color: #ffd43b; }
+  100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
+}
+
+.active-stage-pulse {
+  animation: stageHighlightPulse 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Tags de mundo y estrellas en el encabezado de etapa */
+.stageWorldTag {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #ffb547;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.stageStarsTag {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #ffd43b;
+  background: rgba(255, 212, 59, 0.12);
+  border: 1px solid rgba(255, 212, 59, 0.3);
+  padding: 4px 10px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
 /* 4. Adaptabilidad Mobile */
 @media (max-width: 680px) {
   .adventureHeroCard {
@@ -4974,5 +5430,35 @@ body.kid-mode.in-practice .pracCtrls {
   }
   .worldMapVisualWrap {
     height: 140px;
+  }
+  .adventureWorldsBarCard {
+    padding: 16px 14px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+  .worldsBarHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .wbhHeading {
+    font-size: 1.05rem;
+  }
+  .wbhSubtitle {
+    font-size: 0.8rem;
+  }
+  .worldCardBtn {
+    flex: 0 0 155px;
+    min-height: 142px;
+    padding: 12px 10px;
+  }
+  .wcbEmoji {
+    font-size: 1.45rem;
+  }
+  .wcbWorldName {
+    font-size: 0.88rem;
+  }
+  .wcbWorldDesc {
+    font-size: 0.7rem;
   }
 }

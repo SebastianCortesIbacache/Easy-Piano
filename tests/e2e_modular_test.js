@@ -57,7 +57,7 @@ async function runTests() {
     await page.waitForTimeout(800);
 
     const title = await page.title();
-    if (title.includes('PianoFácil PRO')) {
+    if (title.includes('Easy Piano') || title.includes('PianoFácil PRO')) {
       testsPassed.push(`Test 1: Página cargada correctamente (${title})`);
       console.log('  ✅ ' + testsPassed[testsPassed.length - 1]);
     } else {
