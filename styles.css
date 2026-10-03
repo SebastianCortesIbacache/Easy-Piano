@@ -5462,3 +5462,624 @@ body.kid-mode.in-practice .pracCtrls {
     font-size: 0.7rem;
   }
 }
+
+/* ==========================================================================
+   EASY PIANO 3.0: SISTEMA DE DISEÑO FIEL A MOCKUP (MEDIA_1791013336132)
+   Aprende • Toca • Disfruta
+   ========================================================================== */
+
+/* 1. Header Global con Navegación por Píldoras y Perfil */
+header .brand {
+  gap: 12px;
+}
+.brandLogoWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(255, 167, 38, 0.45);
+  border: 1.5px solid rgba(255, 183, 77, 0.6);
+  background: #ffa726;
+  flex-shrink: 0;
+}
+.brandLogoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.brandTextWrap h1 {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+  line-height: 1.1;
+  background: none;
+  -webkit-background-clip: unset;
+}
+.brandTextWrap .subtitle {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #ffa726;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.headerNav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.7);
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+.headerNavPill {
+  border: 0;
+  background: transparent;
+  color: #94a3b8;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+.headerNavPill:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+.headerNavPill.active {
+  background: linear-gradient(135deg, #ffa726 0%, #ff8f00 100%);
+  color: #1a0f00;
+  box-shadow: 0 4px 14px rgba(255, 167, 38, 0.45);
+  font-weight: 800;
+}
+
+.headerRightWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.headerUserChip {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(21, 39, 77, 0.85);
+  color: #ffffff;
+  padding: 4px 14px 4px 4px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  font-family: inherit;
+}
+.headerUserChip:hover {
+  background: rgba(30, 58, 110, 0.95);
+  border-color: rgba(255, 183, 77, 0.5);
+  transform: translateY(-1px);
+}
+.headerUserAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid #ffa726;
+  display: block;
+}
+.headerUserName {
+  font-size: 0.82rem;
+  color: #e2e8f0;
+  white-space: nowrap;
+}
+.headerUserName b {
+  color: #ffffff;
+}
+.headerUserName small {
+  color: #ffa726;
+  margin-left: 2px;
+  font-size: 0.7rem;
+}
+
+.headerAuxQuickBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* 2. Consola de Videojuego en el Lobby (#pathView) */
+.lobbyConsoleCard {
+  background: linear-gradient(160deg, #0c1830 0%, #080f20 100%);
+  border: 1.5px solid rgba(41, 182, 246, 0.25);
+  border-radius: 24px;
+  padding: 20px;
+  margin: 12px 0 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 40px rgba(41, 182, 246, 0.08) inset;
+  position: relative;
+  overflow: hidden;
+}
+.lobbyConsoleBody {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* Sidebar Dock Izquierdo */
+.sidebarDock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 145px;
+  flex-shrink: 0;
+}
+.dockBtn {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 29, 56, 0.7);
+  color: #cbd5e1;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: left;
+}
+.dockBtn:hover {
+  background: rgba(28, 48, 88, 0.9);
+  color: #ffffff;
+  transform: translateX(3px);
+}
+.dockBtn.active {
+  background: linear-gradient(135deg, #ffa726 0%, #ff8f00 100%);
+  color: #1a0f00;
+  border-color: #ffb74d;
+  box-shadow: 0 6px 18px rgba(255, 167, 38, 0.45);
+  font-weight: 800;
+}
+.dockIcon {
+  font-size: 1.15rem;
+}
+
+/* Hero Feature Card */
+.lobbyHeroFeatureCard {
+  flex: 1;
+  background: linear-gradient(145deg, #132247 0%, #0e1933 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 24px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+.heroMainCol {
+  max-width: 58%;
+  z-index: 2;
+}
+.heroLevelBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(41, 182, 246, 0.16);
+  border: 1px solid rgba(41, 182, 246, 0.4);
+  color: #38bdf8;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+.heroFeatureTitle {
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+.heroFeatureSub {
+  font-size: 0.92rem;
+  color: #94a3b8;
+  line-height: 1.45;
+  margin-bottom: 20px;
+}
+.btnHeroPlayGold {
+  background: linear-gradient(135deg, #ffa726 0%, #ff8f00 100%);
+  color: #1a0f00;
+  border: 0;
+  font-family: inherit;
+  font-size: 1.15rem;
+  font-weight: 900;
+  padding: 12px 28px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 25px rgba(255, 167, 38, 0.55), 0 2px 0 rgba(255, 255, 255, 0.4) inset;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btnHeroPlayGold:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(255, 167, 38, 0.7);
+  background: linear-gradient(135deg, #ffb74d 0%, #ffa000 100%);
+}
+.heroPlayIcon {
+  font-size: 1.1rem;
+}
+
+/* Columna de Mascota Apoyada en Piano */
+.heroMascotCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+.heroSpeechBubble {
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 0.88rem;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  margin-bottom: 8px;
+  position: relative;
+  animation: bubbleFloat 2.5s ease-in-out infinite alternate;
+}
+.heroSpeechBubble::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #ffffff;
+}
+@keyframes bubbleFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+.heroMascotWrap {
+  width: 140px;
+  height: 140px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+}
+.heroMascotImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Progreso y Carrusel de Niveles */
+.lobbyProgressCarouselSection {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.lobbyProgressHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.progLeftCol {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.progLabel {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #ffd276;
+  white-space: nowrap;
+}
+.progTrack {
+  width: 180px;
+  height: 12px;
+  background: rgba(10, 16, 32, 0.8);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.progTrack #courseFill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffa726, #ffd54f);
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(255, 167, 38, 0.7);
+  transition: width 0.3s ease;
+}
+.progCountTxt {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #cbd5e1;
+}
+.progCheerBadge {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.12);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  padding: 4px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Carrusel de Niveles (< 1 2 [3] 4 5 6 7 8 9 10 >) */
+.levelCarouselBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  background: rgba(10, 18, 38, 0.65);
+  padding: 8px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.carouselArrowBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.carouselArrowBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+.carouselPillsTrack {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 4px 0;
+  align-items: center;
+}
+.carouselPillsTrack::-webkit-scrollbar {
+  display: none;
+}
+.carouselPill {
+  min-width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(18, 32, 60, 0.8);
+  color: #cbd5e1;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.carouselPill:hover {
+  background: rgba(30, 54, 98, 0.95);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+.carouselPill.active {
+  background: linear-gradient(135deg, #ffa726 0%, #ff8f00 100%);
+  color: #1a0f00;
+  font-weight: 900;
+  box-shadow: 0 0 16px rgba(255, 167, 38, 0.65);
+  border-color: #ffd54f;
+  transform: scale(1.12);
+}
+.carouselPill.done {
+  border-color: rgba(74, 222, 128, 0.5);
+  color: #4ade80;
+}
+
+/* 3. HUD Pedagógico de 3 Columnas (#practice) */
+.practiceHudGrid {
+  display: grid;
+  grid-template-columns: 240px 1fr 240px;
+  gap: 18px;
+  align-items: stretch;
+  margin: 12px 0 18px;
+}
+
+/* Columna 1: Mascota señalando con bocadillo */
+.practiceMascotCol {
+  background: rgba(15, 29, 56, 0.65);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.mascotSpeechBubble {
+  background: #ffffff;
+  color: #0f172a;
+  padding: 12px 14px;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.35;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  position: relative;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.mascotSpeechBubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 30px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #ffffff;
+}
+.mascotFigureWrap {
+  width: 140px;
+  height: 140px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+.mascotFigureImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Columna 2: Lectura de Partitura */
+.practiceStaffCol {
+  background: #0f1d38;
+  border: 1.5px solid rgba(41, 182, 246, 0.35);
+  border-radius: 20px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5), 0 0 30px rgba(41, 182, 246, 0.12) inset;
+}
+.staffCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #38bdf8;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.staffBoxWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+/* Columna 3: Post-It Amarillo de Consejos */
+.practiceTipCol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stickyNoteCard {
+  background: linear-gradient(145deg, #fff3b0 0%, #fee685 100%);
+  color: #5d4037;
+  border-radius: 14px;
+  padding: 22px 18px 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: rotate(-1.5deg);
+  position: relative;
+  width: 100%;
+  transition: transform 0.2s ease;
+}
+.stickyNoteCard:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+.stickyPin {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.3rem;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.3));
+}
+.stickyHeader {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #795548;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.stickyBody {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  font-weight: 600;
+  color: #4e342e;
+}
+
+/* 4. Teclado de Piano Neón con Tecla Activa en Verde Menta (#00E676) */
+.key.white {
+  border-radius: 0 0 12px 12px;
+}
+.key.black {
+  border-radius: 0 0 8px 8px;
+}
+.key.white.hint {
+  background: linear-gradient(180deg, #e8fff2 0%, #a7f3d0 35%, #00e676 100%) !important;
+  box-shadow: 0 0 0 3.5px #00e676, 0 0 35px 12px rgba(0, 230, 118, 0.85), inset 0 2px 5px rgba(255, 255, 255, 0.9) !important;
+  color: #064e3b !important;
+}
+.key.black.hint {
+  background: linear-gradient(180deg, #064e3b 0%, #00e676 100%) !important;
+  box-shadow: 0 0 0 3px #00e676, 0 0 30px 10px rgba(0, 230, 118, 0.85) !important;
+}
+
+/* 5. Adaptabilidad Responsive */
+@media (max-width: 900px) {
+  .headerNav {
+    display: none;
+  }
+  .lobbyConsoleBody {
+    flex-direction: column;
+  }
+  .sidebarDock {
+    flex-direction: row;
+    width: 100%;
+    overflow-x: auto;
+  }
+  .dockBtn {
+    flex: 1;
+    justify-content: center;
+  }
+  .heroMainCol {
+    max-width: 100%;
+  }
+  .heroMascotCol {
+    display: none;
+  }
+  .practiceHudGrid {
+    grid-template-columns: 1fr;
+  }
+  .practiceMascotCol, .practiceTipCol {
+    display: none;
+  }
+}
+

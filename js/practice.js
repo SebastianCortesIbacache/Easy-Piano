@@ -298,11 +298,19 @@ function startPractice(lv){
   $('#handCard').hidden = !ui.hand;
   $('#staffCard').hidden = !ui.score;
   if(ui.hand) setupHands(lv);
-  if(ui.score) renderStaff($('#staffBox'), lv.notes[0], settings.staffNames, lv.notes, 0);
+  renderStaff($('#staffBox'), lv.notes[0], settings.staffNames, lv.notes, 0);
   updatePracticeUI();
   startMetronome();
   setAvatarState('idle', 'Preparando ' + lv.title + '… 🎶', 0);
   try{ loadHandGuideForLevel(lv); }catch(e){}
+
+  // Actualizar Post-It Amarillo pedagógico y diálogo del compañero
+  var tipEl = document.getElementById('stickyTipBody');
+  if(tipEl){
+    tipEl.textContent = lv.lesson || (lv.handAll === 'I' ? 'Las notas se tocan con la mano izquierda en esta lección. Mantén los dedos relajados y curvados. 😊' : 'Las notas se tocan con la mano derecha en esta lección. Mantén los dedos relajados y curvados. 😊');
+  }
+  var msb = document.getElementById('mascotSpeechTxt');
+  if(msb) msb.textContent = '¡Listo para tocar! Escucha con atención o prepárate 🎹';
 
   // Mantener vista fija en la parte superior para ver partitura y teclas al mismo tiempo
   window.scrollTo({ top: 0, behavior: 'instant' });
@@ -464,7 +472,7 @@ function setHint(note){
   }
   if(el) positionArrow(el); else hideArrow();
   try{ animateNeonHint(note.midi); }catch(e){}
-  if(ui.score) renderStaff($('#staffBox'), note, settings.staffNames, lv.notes, practice.idx);
+  renderStaff($('#staffBox'), note, settings.staffNames, lv.notes, practice.idx);
   var fing = (lv.fing && lv.fing[practice.idx]) || 0;
   var which = currentHand();
   if(ui.hand) setHandFinger(fing, which);
@@ -476,6 +484,13 @@ function setHint(note){
       tag.className = which === 'I' ? 'ih' : 'dh';
       tag.textContent = which === 'I' ? '🫲 Mano Izquierda' : '🖐 Mano Derecha';
     }else tag.hidden = true;
+  }
+
+  // Actualizar diálogo de la mascota señalando (Columna 1)
+  var msb = document.getElementById('mascotSpeechTxt');
+  if(msb){
+    var pcName = (settings && settings.sys === 'letters') ? pc : SOL[pc];
+    msb.textContent = (practice.streak >= 3) ? ('¡Excelente! Ahora toca la nota ' + pcName + '.') : ('¡Muy bien! Ahora toca la nota ' + pcName + '.');
   }
 }
 
@@ -695,6 +710,61 @@ if($('#demoBtn')) $('#demoBtn').addEventListener('click', function(){
 var selectedKidStage = null;
 var expandedNormalStages = {};
 var selectedLobbyStageFilter = 'all';
+var carouselStartLvl = 1;
+
+function renderLevelCarousel(prog, currentLevelId){
+  var track = document.getElementById('carouselPillsTrack');
+  if(!track) return;
+  track.innerHTML = '';
+  
+  if(currentLevelId >= carouselStartLvl + 10 || currentLevelId < carouselStartLvl){
+    carouselStartLvl = Math.max(1, Math.min(LEVELS.length - 9, Math.floor((currentLevelId - 1) / 10) * 10 + 1));
+  }
+  
+  var prevBtn = document.getElementById('carouselPrevBtn');
+  var nextBtn = document.getElementById('carouselNextBtn');
+  if(prevBtn){
+    prevBtn.onclick = function(){
+      if(typeof playUiSound === 'function') playUiSound('click');
+      carouselStartLvl = Math.max(1, carouselStartLvl - 5);
+      renderLevelCarousel(prog, currentLevelId);
+    };
+  }
+  if(nextBtn){
+    nextBtn.onclick = function(){
+      if(typeof playUiSound === 'function') playUiSound('click');
+      carouselStartLvl = Math.min(Math.max(1, LEVELS.length - 9), carouselStartLvl + 5);
+      renderLevelCarousel(prog, currentLevelId);
+    };
+  }
+
+  var endLvl = Math.min(LEVELS.length, carouselStartLvl + 9);
+  for(var id = carouselStartLvl; id <= endLvl; id++){
+    (function(lId){
+      var lv = LEVELS.filter(function(l){ return l.id === lId; })[0];
+      if(!lv) return;
+      var stars = prog[lId] || 0;
+      var isCur = (lId === currentLevelId);
+      var gi = LEVELS.indexOf(lv);
+      var isUnlocked = (gi === 0 || (prog[LEVELS[gi - 1].id] || 0) > 0);
+      
+      var pill = document.createElement('button');
+      pill.type = 'button';
+      pill.className = 'carouselPill' + (isCur ? ' active' : '') + (stars > 0 ? ' done' : '') + (!isUnlocked ? ' locked' : '');
+      pill.textContent = lId;
+      pill.title = lv.title + (stars > 0 ? ' (★' + stars + ')' : '');
+      pill.onclick = function(){
+        if(!isUnlocked){
+          if(typeof toast === 'function') toast('🔒 Completa el nivel anterior para desbloquear.');
+          return;
+        }
+        if(typeof playUiSound === 'function') playUiSound('click');
+        startPractice(lv);
+      };
+      track.appendChild(pill);
+    })(id);
+  }
+}
 
 function renderAdventureWorldSelector(prog, activeStageId){
   var track = document.getElementById('worldsScrollTrack');
@@ -797,7 +867,7 @@ function renderPath(){
     console.warn('Error al renderizar el selector de mundos:', e);
   }
 
-  // 2. Actualizar Hero Card de Aventura V3
+  // 2. Actualizar Hero Card de Aventura V3 & Consola del Lobby
   var heroNextTxt = document.getElementById('heroNextLevelTxt');
   if(heroNextTxt){
     if(cont){
@@ -820,6 +890,39 @@ function renderPath(){
       startPractice(targetLvl);
     };
   }
+
+  // Actualizar elementos de la Hero Feature Card del Lobby Console
+  var badgeTxt = document.getElementById('heroLevelBadgeTxt');
+  if(badgeTxt){
+    var stObj = STAGES[targetLvl.stage - 1] || STAGES[0];
+    var stName = stObj.worldName || stObj.title.replace(/^Etapa\s*\d+\s*[·•-]\s*/i, '');
+    badgeTxt.textContent = 'Nivel ' + targetLvl.id + ' de ' + LEVELS.length + ' · Etapa ' + targetLvl.stage + ' (' + stName + ') · Lectura musical';
+  }
+  var hfTitle = document.getElementById('heroFeatureTitle');
+  if(hfTitle) hfTitle.textContent = targetLvl.title;
+  var hfSub = document.getElementById('heroFeatureSub');
+  if(hfSub) hfSub.textContent = targetLvl.lesson ? targetLvl.lesson : 'Descubre el ritmo, toca y avanza con confianza.';
+
+  var fNote = (targetLvl.notes && targetLvl.notes[0]) ? targetLvl.notes[0] : null;
+  var fMidi = fNote ? fNote.midi : 60;
+  var fPc = midiToPC(fMidi);
+  var fLabel = (settings && settings.sys === 'letters') ? fPc : SOL[fPc];
+  var goldPlayBtnTxt = document.getElementById('heroPlayBtnTxt');
+  if(goldPlayBtnTxt) goldPlayBtnTxt.textContent = 'Tocar: ' + fLabel;
+  var btnGold = document.getElementById('btnHeroPlayGold');
+  if(btnGold){
+    btnGold.onclick = function(){
+      if(typeof playUiSound === 'function') playUiSound('click');
+      startPractice(targetLvl);
+    };
+  }
+
+  try {
+    renderLevelCarousel(prog, targetLvl.id);
+  } catch(e) {
+    console.warn('Error al renderizar carrusel de niveles:', e);
+  }
+
   var heroStars = document.getElementById('heroStarsVal');
   if(heroStars) heroStars.textContent = st.stars;
   var heroStreak = document.getElementById('heroStreakVal');

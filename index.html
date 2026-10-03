@@ -68,28 +68,41 @@
 <header>
   <div class="brand">
     <div class="brandLogoWrap">
-      <img src="assets/v3_design/easy_piano_logo.jpg" class="brandLogoImg" alt="Easy Piano 3.0 Logo">
+      <img src="assets/v3_design/app_icon_golden.jpg" class="brandLogoImg" alt="Easy Piano Logo">
     </div>
     <div class="brandTextWrap">
-      <h1>Easy Piano <span class="headerVerBadge">3.0</span></h1>
-      <p class="subtitle">Aventura Musical · Nivel Maestro 🌟</p>
+      <h1>Easy Piano</h1>
+      <p class="subtitle">APRENDE • TOCA • DISFRUTA</p>
     </div>
   </div>
   
-  <!-- BARRA DE PERFIL GAMIFICADO -->
-  <div class="headerProfile">
+  <!-- NAVEGACIÓN SUPERIOR FIEL AL MOCKUP (INICIO, MI APRENDIZAJE, LOGROS, CONFIGURACIÓN) -->
+  <nav class="headerNav" aria-label="Navegación Principal">
+    <button class="headerNavPill active" id="tabNavHome" type="button"><span>🏠</span> Inicio</button>
+    <button class="headerNavPill" id="tabNavLearn" type="button"><span>📊</span> Mi aprendizaje</button>
+    <button class="headerNavPill" id="tabNavBadges" type="button"><span>🏆</span> Logros</button>
+    <button class="headerNavPill" id="tabNavSettings" type="button"><span>⚙️</span> Configuración</button>
+  </nav>
+
+  <!-- PERFIL DE USUARIO DERECHO FIEL AL MOCKUP -->
+  <div class="headerRightWrap">
+    <button class="headerUserChip" id="headerUserChip" type="button" title="Perfil del Pequeño Pianista">
+      <img src="assets/v3_design/avatar_pointing_red.jpg" class="headerUserAvatar" alt="Avatar">
+      <span class="headerUserName">¡Hola! <b>Pequeño Pianista</b> <small>▼</small></span>
+    </button>
+  </div>
+
+  <!-- BARRA AUXILIAR DE GAMIFICACIÓN COMPATIBLE -->
+  <div class="headerAuxQuickBar" id="headerAuxQuickBar">
     <div class="gamerChip streak" id="headerStreak" title="Días seguidos practicando">🔥 0 Días</div>
     <div class="gamerChip stars" id="headerStars" title="Total de estrellas ganadas">⭐ 0 Estrellas</div>
     <button class="gamerChip missionsChip" id="missionsBtn" type="button" title="Misiones Diarias">🎯 Misiones <span class="chipCount">0/3</span></button>
-    <div class="gamerChip timeChip" id="timeChip" title="Tiempo de práctica acumulado">⏱ 0 min</div>
-    <button class="btn small ghost headerStatBtn" id="statsBtn" type="button" title="Ver Estadísticas">📊 Estadísticas</button>
-  </div>
-
-  <div class="headerActions">
-    <button class="btn installBtn" id="installBtn" hidden type="button">📲 Instalar App</button>
+    <button class="btn small ghost headerStatBtn" id="statsBtn" type="button" title="Ver Estadísticas">📊 Stats</button>
     <button class="btn small ghost" id="duelBtn" type="button" title="Duelo Musical Familiar">⚔️ Duelo</button>
     <button class="btn small ghost" id="parentsBtn" type="button" title="Panel para Padres">👨‍👩‍👧 Padres</button>
     <button class="btn small ghost" id="kidModeBtn" type="button">🧸 Modo Niño</button>
+    <button class="btn installBtn" id="installBtn" hidden type="button">📲 Instalar</button>
+    <div class="gamerChip timeChip" id="timeChip" hidden title="Tiempo">⏱ 0 min</div>
   </div>
 </header>
 
@@ -140,29 +153,90 @@
   <!-- MODO CURSO / MAPA DE APRENDIZAJE -->
   <section class="panel" id="learnPanel">
     <div id="pathView">
-      <!-- HERO CARD: CONTINUAR AVENTURA (V3 VIDEOJUEGO) -->
-      <div class="adventureHeroCard" id="adventureHeroCard">
-        <div class="heroAvatarSide">
-          <div class="heroAvatarGlowRing">
-            <img src="assets/v3_design/avatar_celebrating.jpg" alt="Compañero Musical" class="heroAvatarImg" id="heroAvatarImg">
+      <!-- CONSOLA PRINCIPAL DE LOBBY ESTILO VIDEOJUEGO (DOCK + HERO CARD + CAROUSEL) -->
+      <div class="lobbyConsoleCard" id="lobbyConsoleCard">
+        <div class="lobbyConsoleBody">
+          <!-- 1. MENÚ LATERAL / DOCK IZQUIERDO -->
+          <aside class="sidebarDock" id="sidebarDock" aria-label="Secciones rápidas">
+            <button class="dockBtn active" id="sbmRhythms" type="button" data-dock="rhythms" title="Ritmos: negras y blancas">
+              <span class="dockIcon">🎵</span>
+              <span class="dockLabel">Ritmos</span>
+            </button>
+            <button class="dockBtn" id="sbmFavorites" type="button" data-dock="favorites" title="Canciones favoritas">
+              <span class="dockIcon">⭐</span>
+              <span class="dockLabel">Canciones</span>
+            </button>
+            <button class="dockBtn" id="sbmAchievements" type="button" data-dock="achievements" title="Tus logros">
+              <span class="dockIcon">🏆</span>
+              <span class="dockLabel">Logros</span>
+            </button>
+            <button class="dockBtn" id="sbmMiniGames" type="button" data-dock="games" title="Juegos musicales">
+              <span class="dockIcon">🎮</span>
+              <span class="dockLabel">Juegos</span>
+            </button>
+          </aside>
+
+          <!-- 2. HERO FEATURE CARD (TARJETA DE MISIÓN PRINCIPAL) -->
+          <div class="lobbyHeroFeatureCard" id="lobbyHeroFeatureCard">
+            <div class="heroMainCol">
+              <div class="heroLevelBadge" id="heroLevelBadge">
+                <span class="hlbIcon">🎵</span>
+                <span id="heroLevelBadgeTxt">Nivel 1 de 44 · Etapa 1 · Lectura musical</span>
+              </div>
+              <h2 class="heroFeatureTitle" id="heroFeatureTitle">Ritmos: negras y blancas</h2>
+              <p class="heroFeatureSub" id="heroFeatureSub">Descubre el ritmo, toca y avanza con confianza.</p>
+              
+              <div class="heroActionRow">
+                <button class="btn btnHeroPlayGold" id="btnHeroPlayGold" type="button">
+                  <span class="heroPlayIcon">▶</span>
+                  <span class="heroPlayLabel" id="heroPlayBtnTxt">Tocar: Do</span>
+                </button>
+                <button class="btn btnHeroPrimary" id="heroContinueBtn" type="button" style="display:none;" aria-hidden="true">
+                  <span class="btnHeroIcon">🚀</span>
+                  <span class="btnHeroTexts">
+                    <strong class="btnHeroMain">CONTINUAR AVENTURA</strong>
+                    <small class="btnHeroSub" id="heroNextLevelTxt">Cargando tu siguiente nivel...</small>
+                  </span>
+                </button>
+                <div class="heroQuickBadges">
+                  <div class="heroStatBadge"><span class="hsbIcon">⭐</span> <b id="heroStarsVal">0</b> Estrellas</div>
+                  <div class="heroStatBadge"><span class="hsbIcon">🔥</span> <b id="heroStreakVal">0</b> Días</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ILUSTRACIÓN DEL NIÑO APOYADO EN EL PIANO CON BOCADILLO -->
+            <div class="heroMascotCol">
+              <div class="heroSpeechBubble" id="heroSpeechBubble">
+                <span>¡Tú puedes!</span>
+              </div>
+              <div class="heroMascotWrap">
+                <img src="assets/v3_design/avatar_leaning_piano_red.jpg" alt="Mascota en el piano" class="heroMascotImg" id="heroMascotImg">
+              </div>
+            </div>
           </div>
         </div>
-        <div class="heroContentSide">
-          <div class="heroTagLine">🌟 ¡TU AVENTURA MUSICAL!</div>
-          <h2 class="heroTitle" id="heroWelcomeTitle">¡Hola, Pequeño Maestro! 👋</h2>
-          <p class="heroSub" id="heroWelcomeSub">Avanza en tu viaje del piano, gana estrellas doradas y desbloquea nuevas canciones mágicas.</p>
-          <div class="heroActionRow">
-            <button class="btn btnHeroPrimary" id="heroContinueBtn" type="button">
-              <span class="btnHeroIcon">🚀</span>
-              <span class="btnHeroTexts">
-                <strong class="btnHeroMain">CONTINUAR AVENTURA</strong>
-                <small class="btnHeroSub" id="heroNextLevelTxt">Cargando tu siguiente nivel...</small>
-              </span>
-            </button>
-            <div class="heroQuickBadges">
-              <div class="heroStatBadge"><span class="hsbIcon">⭐</span> <b id="heroStarsVal">0</b> Estrellas</div>
-              <div class="heroStatBadge"><span class="hsbIcon">🔥</span> <b id="heroStreakVal">0</b> Días</div>
+
+        <!-- 3. BARRA DE PROGRESO Y CARRUSEL DE NIVELES (INFERIOR DEL LOBBY) -->
+        <div class="lobbyProgressCarouselSection">
+          <div class="lobbyProgressHeaderRow">
+            <div class="progLeftCol">
+              <span class="progLabel">⭐ Tu progreso</span>
+              <div class="progTrack"><div id="courseFill"></div></div>
+              <span class="progCountTxt" id="courseTxt">0/44</span>
             </div>
+            <div class="progCheerBadge" id="progCheerBadge">
+              <span>⭐ ¡Gran trabajo! Sigues avanzando. 😄</span>
+            </div>
+          </div>
+
+          <!-- CARRUSEL SELECTOR DE NIVELES: < 1 2 [3] 4 5 6 7 8 9 10 > -->
+          <div class="levelCarouselBar" id="levelCarouselBar">
+            <button class="carouselArrowBtn" id="carouselPrevBtn" type="button" title="Anteriores">‹</button>
+            <div class="carouselPillsTrack" id="carouselPillsTrack">
+              <!-- Renderizado dinámico de píldoras de niveles -->
+            </div>
+            <button class="carouselArrowBtn" id="carouselNextBtn" type="button" title="Siguientes">›</button>
           </div>
         </div>
       </div>
@@ -225,46 +299,65 @@
         </div>
       </div>
 
-      <!-- COMPAÑERO AVATAR MUSICAL ESTILO GEOGUESSR -->
-      <div class="companionBar" id="companionBar">
-        <div class="companionAvatar" id="companionAvatarSvg">
-          <img src="mateo_chibi_portrait.png" class="companionPortrait" alt="Compañero Musical">
+      <!-- HUD PEDAGÓGICO DE 3 COLUMNAS FIEL AL MOCKUP -->
+      <div class="practiceHudGrid" id="practiceHudGrid">
+        <!-- COLUMNA 1: AVATAR NIÑO SEÑALANDO CON BOCADILLO -->
+        <div class="practiceMascotCol" id="practiceMascotCol">
+          <div class="mascotSpeechBubble" id="mascotSpeechBubble">
+            <span class="msbText" id="mascotSpeechTxt">¡Muy bien! Ahora toca la nota Sol.</span>
+          </div>
+          <div class="mascotFigureWrap">
+            <img src="assets/v3_design/avatar_pointing_red.jpg" alt="Mascota señalando el piano" class="mascotFigureImg" id="mascotFigureImg">
+          </div>
         </div>
-        <div class="avatarSpeech" id="avatarSpeech">
-          <span class="speechName">Guía:</span>
-          <span id="speechTxt">¡Listo para tocar! Escucha o toca la primera nota 🎹</span>
+
+        <!-- COLUMNA 2: TARJETA DE LECTURA DE PARTITURA -->
+        <div class="practiceStaffCol" id="practiceStaffCol">
+          <div class="staffCardHeader">
+            <span class="staffHeaderIcon">📖</span>
+            <span class="staffHeaderText">LECTURA DE PARTITURA</span>
+          </div>
+          <div class="staffBoxWrap">
+            <div id="staffBox"></div>
+          </div>
+          <div class="noteBadgeWrap">
+            <div id="handTag" hidden></div>
+            <div id="noteBadge">Toca: <b id="noteName">—</b></div>
+          </div>
+          <div class="progress"><div id="progFill"></div></div>
+          <div class="stats">
+            <div class="stat">Progreso <b id="statProg">0/0</b></div>
+            <div class="stat">Racha <b id="statStreak">0</b></div>
+            <div class="stat">Precisión <b id="statAcc">—</b></div>
+          </div>
+        </div>
+
+        <!-- COLUMNA 3: POST-IT AMARILLO DE CONSEJO / RECUERDA -->
+        <div class="practiceTipCol" id="practiceTipCol">
+          <div class="stickyNoteCard" id="stickyNoteCard">
+            <div class="stickyPin">📌</div>
+            <div class="stickyHeader">💡 Recuerda:</div>
+            <div class="stickyBody" id="stickyTipBody">
+              Las notas se tocan con la mano derecha en esta lección. Mantén los dedos relajados y curvados. 😊
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="lesson" id="lessonBox" hidden></div>
-      <button class="lessonToggle" id="lessonToggle" type="button" hidden aria-expanded="false">💡 Ver consejo</button>
-
-      <div class="teachRow" id="teachRow" hidden>
-        <div class="teachCard" id="handCard" hidden>
-          <div class="teachLabel">🖐 DIGITACIÓN & GUÍA POV</div>
-          <div class="handCardBody">
-            <div id="handsBox"></div>
-            <div id="handGuideImgSlot" class="handGuideImgSlot" hidden></div>
-          </div>
+      <!-- COMPATIBILIDAD CON ELEMENTOS LEGACY (OCULTOS) -->
+      <div id="companionBar" style="display:none;" aria-hidden="true">
+        <div id="companionAvatarSvg"></div>
+        <div id="avatarSpeech"><span id="speechTxt"></span></div>
+      </div>
+      <div class="lesson" id="lessonBox" style="display:none;" aria-hidden="true"></div>
+      <button class="lessonToggle" id="lessonToggle" type="button" style="display:none;" aria-hidden="true"></button>
+      <div class="teachRow" id="teachRow" style="display:none;" aria-hidden="true">
+        <div class="teachCard" id="handCard">
+          <div id="handsBox"></div>
+          <div id="handGuideImgSlot"></div>
           <div id="handTxt"></div>
         </div>
-        <div class="teachCard" id="staffCard" hidden>
-          <div class="teachLabel">📖 LECTURA DE PARTITURA</div>
-          <div id="staffBox"></div>
-        </div>
-      </div>
-
-      <div class="noteBadgeWrap">
-        <div id="handTag" hidden></div>
-        <div id="noteBadge">Toca: <b id="noteName">—</b></div>
-      </div>
-
-      <div class="progress"><div id="progFill"></div></div>
-
-      <div class="stats">
-        <div class="stat">Progreso <b id="statProg">0/0</b></div>
-        <div class="stat">Racha <b id="statStreak">0</b></div>
-        <div class="stat">Precisión <b id="statAcc">—</b></div>
+        <div class="teachCard" id="staffCard"></div>
       </div>
     </div>
   </section>

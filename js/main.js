@@ -7,6 +7,8 @@
 function setMode(mode){
   var tabL = $('#tabLearn'); if(tabL) tabL.classList.toggle('active', mode === 'learn');
   var tabF = $('#tabFree'); if(tabF) tabF.classList.toggle('active', mode === 'free');
+  var navH = $('#tabNavHome'); if(navH) navH.classList.toggle('active', mode === 'learn');
+  var navS = $('#tabNavSettings'); if(navS) navS.classList.toggle('active', mode === 'free');
   var lp = $('#learnPanel'); if(lp) lp.hidden = (mode !== 'learn');
   var fp = $('#freePanel'); if(fp) fp.hidden = (mode !== 'free');
   if(mode === 'free' && typeof exitPractice === 'function') exitPractice();
@@ -20,6 +22,71 @@ if($('#tabLearn')) $('#tabLearn').addEventListener('click', function(){
 if($('#tabFree')) $('#tabFree').addEventListener('click', function(){
   if(typeof playUiSound === 'function') playUiSound('click');
   setMode('free');
+});
+
+// Píldoras de Navegación Superior Fieles al Mockup
+if($('#tabNavHome')) $('#tabNavHome').addEventListener('click', function(){
+  if(typeof playUiSound === 'function') playUiSound('click');
+  if(typeof practice !== 'undefined' && practice.active && typeof exitPractice === 'function') exitPractice();
+  setMode('learn');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+if($('#tabNavLearn')) $('#tabNavLearn').addEventListener('click', function(){
+  if(typeof playUiSound === 'function') playUiSound('click');
+  setMode('learn');
+  var el = document.getElementById('adventureWorldsBarCard') || document.getElementById('pathBox');
+  if(el) el.scrollIntoView({ behavior: 'smooth' });
+});
+if($('#tabNavBadges')) $('#tabNavBadges').addEventListener('click', function(){
+  if(typeof playUiSound === 'function') playUiSound('click');
+  var b = document.getElementById('badgesBar');
+  if(b) b.scrollIntoView({ behavior: 'smooth' });
+});
+if($('#tabNavSettings')) $('#tabNavSettings').addEventListener('click', function(){
+  if(typeof playUiSound === 'function') playUiSound('click');
+  setMode('free');
+});
+
+// Chip de Usuario
+if($('#headerUserChip')) $('#headerUserChip').addEventListener('click', function(){
+  if(typeof playUiSound === 'function') playUiSound('click');
+  var sb = document.getElementById('statsBtn');
+  if(sb) sb.click();
+});
+
+// Dock / Menú Lateral de la Consola
+if($('#sbmRhythms')) $('#sbmRhythms').addEventListener('click', function(){
+  if(typeof playUiSound === 'function') playUiSound('click');
+  document.querySelectorAll('.dockBtn').forEach(function(b){ b.classList.remove('active'); });
+  this.classList.add('active');
+  if(typeof selectedLobbyStageFilter !== 'undefined'){
+    selectedLobbyStageFilter = 1;
+    if(typeof renderPath === 'function') renderPath();
+  }
+});
+if($('#sbmFavorites')) $('#sbmFavorites').addEventListener('click', function(){
+  if(typeof playUiSound === 'function') playUiSound('click');
+  document.querySelectorAll('.dockBtn').forEach(function(b){ b.classList.remove('active'); });
+  this.classList.add('active');
+  if(typeof toast === 'function') toast('⭐ Mostrando canciones y melodías favoritas');
+  var songNodes = document.querySelectorAll('.nodeItem.is-song');
+  if(songNodes && songNodes.length && songNodes[0]){
+    songNodes[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+});
+if($('#sbmAchievements')) $('#sbmAchievements').addEventListener('click', function(){
+  if(typeof playUiSound === 'function') playUiSound('click');
+  document.querySelectorAll('.dockBtn').forEach(function(b){ b.classList.remove('active'); });
+  this.classList.add('active');
+  var b = document.getElementById('badgesBar');
+  if(b) b.scrollIntoView({ behavior: 'smooth' });
+});
+if($('#sbmMiniGames')) $('#sbmMiniGames').addEventListener('click', function(){
+  if(typeof playUiSound === 'function') playUiSound('click');
+  document.querySelectorAll('.dockBtn').forEach(function(b){ b.classList.remove('active'); });
+  this.classList.add('active');
+  var d = document.getElementById('duelBtn');
+  if(d) d.click();
 });
 
 /* ============ TECLADO FÍSICO PC ============ */
