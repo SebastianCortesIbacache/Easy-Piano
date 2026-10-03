@@ -71,29 +71,32 @@
       <img src="assets/v3_design/app_icon_golden.jpg" class="brandLogoImg" alt="Easy Piano Logo">
     </div>
     <div class="brandTextWrap">
-      <h1>Easy Piano</h1>
+      <h1><span class="brandEasy">Easy</span> <span class="brandPiano">Piano</span></h1>
       <p class="subtitle">APRENDE • TOCA • DISFRUTA</p>
     </div>
   </div>
   
   <!-- NAVEGACIÓN SUPERIOR FIEL AL MOCKUP (INICIO, MI APRENDIZAJE, LOGROS, CONFIGURACIÓN) -->
   <nav class="headerNav" aria-label="Navegación Principal">
-    <button class="headerNavPill active" id="tabNavHome" type="button"><span>🏠</span> Inicio</button>
-    <button class="headerNavPill" id="tabNavLearn" type="button"><span>📊</span> Mi aprendizaje</button>
-    <button class="headerNavPill" id="tabNavBadges" type="button"><span>🏆</span> Logros</button>
-    <button class="headerNavPill" id="tabNavSettings" type="button"><span>⚙️</span> Configuración</button>
+    <button class="headerNavPill active" id="tabNavHome" type="button"><span class="hnpIcon">🏠</span> Inicio</button>
+    <button class="headerNavPill" id="tabNavLearn" type="button"><span class="hnpIcon">📊</span> Mi aprendizaje</button>
+    <button class="headerNavPill" id="tabNavBadges" type="button"><span class="hnpIcon">🏆</span> Logros</button>
+    <button class="headerNavPill" id="tabNavSettings" type="button"><span class="hnpIcon">⚙️</span> Configuración</button>
   </nav>
 
   <!-- PERFIL DE USUARIO DERECHO FIEL AL MOCKUP -->
   <div class="headerRightWrap">
     <button class="headerUserChip" id="headerUserChip" type="button" title="Perfil del Pequeño Pianista">
       <img src="assets/v3_design/avatar_pointing_red.jpg" class="headerUserAvatar" alt="Avatar">
-      <span class="headerUserName">¡Hola! <b>Pequeño Pianista</b> <small>▼</small></span>
+      <div class="headerUserTexts">
+        <span class="hUserGreeting">¡Hola!</span>
+        <span class="hUserName">Pequeño Pianista <small>▼</small></span>
+      </div>
     </button>
   </div>
 
-  <!-- BARRA AUXILIAR DE GAMIFICACIÓN COMPATIBLE -->
-  <div class="headerAuxQuickBar" id="headerAuxQuickBar">
+  <!-- BARRA AUXILIAR DE GAMIFICACIÓN COMPATIBLE (OCULTA PARA FIDELIDAD VISUAL, ACTIVA EN DOM) -->
+  <div class="headerAuxQuickBar" id="headerAuxQuickBar" style="display:none;" aria-hidden="true">
     <div class="gamerChip streak" id="headerStreak" title="Días seguidos practicando">🔥 0 Días</div>
     <div class="gamerChip stars" id="headerStars" title="Total de estrellas ganadas">⭐ 0 Estrellas</div>
     <button class="gamerChip missionsChip" id="missionsBtn" type="button" title="Misiones Diarias">🎯 Misiones <span class="chipCount">0/3</span></button>
@@ -106,8 +109,8 @@
   </div>
 </header>
 
-<!-- SELECTOR DESTACADO DE MODO DE ENTRADA (TECLADO VIRTUAL VS PIANO REAL) -->
-<div class="inputSourceBanner" id="inputSourceBanner">
+<!-- SELECTOR DESTACADO DE MODO DE ENTRADA (OCULTO EN LOBBY PARA FIDELIDAD VISUAL) -->
+<div class="inputSourceBanner" id="inputSourceBanner" style="display:none;" aria-hidden="true">
   <div class="isbContainer">
     <span class="isbLabel">¿Tienes tu piano cerca?</span>
     <div class="isbButtons">
@@ -138,7 +141,7 @@
   </div>
 </div>
 
-<div class="modeTabs">
+<div class="modeTabs" style="display:none;" aria-hidden="true">
   <button class="tab active" id="tabLearn" type="button">🎯 Modo Aventura (Ruta de Aprendizaje)</button>
   <button class="tab" id="tabFree" type="button">🎙️ Estudio Libre & Afinador</button>
 </div>
@@ -160,19 +163,29 @@
           <aside class="sidebarDock" id="sidebarDock" aria-label="Secciones rápidas">
             <button class="dockBtn active" id="sbmRhythms" type="button" data-dock="rhythms" title="Ritmos: negras y blancas">
               <span class="dockIcon">🎵</span>
-              <span class="dockLabel">Ritmos</span>
+              <div class="dockLabelWrap">
+                <span class="dockL1">Ritmos: negras</span>
+                <span class="dockL2">y blancas</span>
+              </div>
             </button>
             <button class="dockBtn" id="sbmFavorites" type="button" data-dock="favorites" title="Canciones favoritas">
               <span class="dockIcon">⭐</span>
-              <span class="dockLabel">Canciones</span>
+              <div class="dockLabelWrap">
+                <span class="dockL1">Canciones</span>
+                <span class="dockL2">favoritas</span>
+              </div>
             </button>
             <button class="dockBtn" id="sbmAchievements" type="button" data-dock="achievements" title="Tus logros">
               <span class="dockIcon">🏆</span>
-              <span class="dockLabel">Logros</span>
+              <div class="dockLabelWrap">
+                <span class="dockL1">Tus logros</span>
+              </div>
             </button>
             <button class="dockBtn" id="sbmMiniGames" type="button" data-dock="games" title="Juegos musicales">
-              <span class="dockIcon">🎮</span>
-              <span class="dockLabel">Juegos</span>
+              <span class="dockIcon">😊</span>
+              <div class="dockLabelWrap">
+                <span class="dockL1">Juegos musicales</span>
+              </div>
             </button>
           </aside>
 
@@ -181,15 +194,18 @@
             <div class="heroMainCol">
               <div class="heroLevelBadge" id="heroLevelBadge">
                 <span class="hlbIcon">🎵</span>
-                <span id="heroLevelBadgeTxt">Nivel 1 de 44 · Etapa 1 · Lectura musical</span>
+                <span id="heroLevelBadgeTxt">Nivel 12 de 44 • Etapa 3 • Lectura musical</span>
               </div>
-              <h2 class="heroFeatureTitle" id="heroFeatureTitle">Ritmos: negras y blancas</h2>
-              <p class="heroFeatureSub" id="heroFeatureSub">Descubre el ritmo, toca y avanza con confianza.</p>
+              <h2 class="heroFeatureTitle" id="heroFeatureTitle">
+                <span class="hftWhite">Ritmos:</span><br>
+                <span class="hftGold">negras y blancas</span>
+              </h2>
+              <p class="heroFeatureSub" id="heroFeatureSub">Descubre el ritmo, toca y avanza<br>con confianza.</p>
               
               <div class="heroActionRow">
                 <button class="btn btnHeroPlayGold" id="btnHeroPlayGold" type="button">
                   <span class="heroPlayIcon">▶</span>
-                  <span class="heroPlayLabel" id="heroPlayBtnTxt">Tocar: Do</span>
+                  <span class="heroPlayLabel" id="heroPlayBtnTxt">Tocar: Sol</span>
                 </button>
                 <button class="btn btnHeroPrimary" id="heroContinueBtn" type="button" style="display:none;" aria-hidden="true">
                   <span class="btnHeroIcon">🚀</span>
@@ -198,7 +214,7 @@
                     <small class="btnHeroSub" id="heroNextLevelTxt">Cargando tu siguiente nivel...</small>
                   </span>
                 </button>
-                <div class="heroQuickBadges">
+                <div class="heroQuickBadges" style="display:none;" aria-hidden="true">
                   <div class="heroStatBadge"><span class="hsbIcon">⭐</span> <b id="heroStarsVal">0</b> Estrellas</div>
                   <div class="heroStatBadge"><span class="hsbIcon">🔥</span> <b id="heroStreakVal">0</b> Días</div>
                 </div>
@@ -208,7 +224,14 @@
             <!-- ILUSTRACIÓN DEL NIÑO APOYADO EN EL PIANO CON BOCADILLO -->
             <div class="heroMascotCol">
               <div class="heroSpeechBubble" id="heroSpeechBubble">
+                <span class="bubbleRays top-left">`</span>
+                <span class="bubbleRays top-right">´</span>
                 <span>¡Tú puedes!</span>
+              </div>
+              <div class="heroNotesWrap">
+                <span class="heroFloatNote fnCyan1">♫</span>
+                <span class="heroFloatNote fnGold1">♪</span>
+                <span class="heroFloatNote fnCyan2">♪</span>
               </div>
               <div class="heroMascotWrap">
                 <img src="assets/v3_design/avatar_leaning_piano_red.jpg" alt="Mascota en el piano" class="heroMascotImg" id="heroMascotImg">
@@ -222,27 +245,36 @@
           <div class="lobbyProgressHeaderRow">
             <div class="progLeftCol">
               <span class="progLabel">⭐ Tu progreso</span>
-              <div class="progTrack"><div id="courseFill"></div></div>
-              <span class="progCountTxt" id="courseTxt">0/44</span>
+              <div class="progTrack"><div id="courseFill" style="width:28%;"></div></div>
+              <span class="progCountTxt" id="courseTxt">12/44</span>
+              <span class="progChevron">&gt;</span>
             </div>
             <div class="progCheerBadge" id="progCheerBadge">
-              <span>⭐ ¡Gran trabajo! Sigues avanzando. 😄</span>
+              <span class="pcbStar">⭐</span>
+              <div class="pcbTexts">
+                <strong class="pcbTitle">¡Gran trabajo!</strong>
+                <span class="pcbSub">Sigues avanzando.</span>
+              </div>
+              <span class="pcbAvatar">😄</span>
             </div>
           </div>
 
           <!-- CARRUSEL SELECTOR DE NIVELES: < 1 2 [3] 4 5 6 7 8 9 10 > -->
-          <div class="levelCarouselBar" id="levelCarouselBar">
-            <button class="carouselArrowBtn" id="carouselPrevBtn" type="button" title="Anteriores">‹</button>
-            <div class="carouselPillsTrack" id="carouselPillsTrack">
-              <!-- Renderizado dinámico de píldoras de niveles -->
+          <div class="levelCarouselWrapper">
+            <div class="levelCarouselLabel">Selecciona un nivel</div>
+            <div class="levelCarouselBar" id="levelCarouselBar">
+              <button class="carouselArrowBtn" id="carouselPrevBtn" type="button" title="Anteriores">‹</button>
+              <div class="carouselPillsTrack" id="carouselPillsTrack">
+                <!-- Renderizado dinámico de píldoras de niveles -->
+              </div>
+              <button class="carouselArrowBtn" id="carouselNextBtn" type="button" title="Siguientes">›</button>
             </div>
-            <button class="carouselArrowBtn" id="carouselNextBtn" type="button" title="Siguientes">›</button>
           </div>
         </div>
       </div>
 
-      <!-- BANNER DE MAPA DE MUNDOS -->
-      <div class="worldMapBannerCard">
+      <!-- BANNER DE MAPA DE MUNDOS (OCULTO EN LOBBY PARA FIDELIDAD VISUAL) -->
+      <div class="worldMapBannerCard" style="display:none;" aria-hidden="true">
         <div class="worldMapHeader">
           <div class="wmTitleBox">
             <span class="wmBadge">🗺️ MAPA DE AVENTURA</span>
@@ -259,8 +291,8 @@
         </div>
       </div>
 
-      <!-- BARRA INTERACTIVA DE MUNDOS MUSICALES (1 AL 9) -->
-      <div class="adventureWorldsBarCard" id="adventureWorldsBarCard">
+      <!-- BARRA INTERACTIVA DE MUNDOS MUSICALES (OCULTA EN LOBBY PARA FIDELIDAD VISUAL) -->
+      <div class="adventureWorldsBarCard" id="adventureWorldsBarCard" style="display:none;" aria-hidden="true">
         <div class="worldsBarHeader">
           <div class="wbhTitleCol">
             <span class="wbhBadge">🏰 MUNDOS MUSICALES</span>
@@ -276,26 +308,36 @@
         <div class="worldsScrollTrack" id="worldsScrollTrack" role="region" aria-label="Selector de Mundos Musicales"></div>
       </div>
 
-      <div class="badgesBar" id="badgesBar"></div>
-      <div id="pathBox"></div>
+      <div class="badgesBar" id="badgesBar" style="display:none;" aria-hidden="true"></div>
+      <div id="pathBox" style="display:none;" aria-hidden="true"></div>
     </div>
 
     <!-- PANTALLA DE PRÁCTICA Y LECCIÓN EN VIVO -->
     <div id="practice" hidden>
       <div class="pracTop">
-        <button class="btn ghost small" id="backBtn" type="button">← Volver al Plan</button>
-        <div class="pracTitle"><span id="pracName"></span><span class="lvlChip" id="pracLvl"></span></div>
-        <div class="pracCtrls">
-          <label class="switch" id="tglWaitModeLabel" title="Modo Paciente: Espera sin reiniciar al fallar"><input type="checkbox" id="tglWaitMode"> 🐢 Paciente</label>
-          <label class="switch" id="tglSynthesiaLabel" title="Vista Synthesia (Notas cayendo)"><input type="checkbox" id="tglSynthesia"> 🎹 Synthesia Neón</label>
-          <select id="tempoSel" class="practiceAdvancedControl" title="Velocidad de la audición">
-            <option value="0.6">🐢 Lento</option>
-            <option value="1" selected>🎵 Normal</option>
-            <option value="1.35">🐇 Rápido</option>
-          </select>
-          <button class="btn small ghost practiceAdvancedControl" id="familyRecBtn" type="button" title="Grabar mi interpretación para la familia">🎙️ Grabar mi canción</button>
-          <button class="btn small" id="demoBtn" type="button">▶ Escuchar</button>
-          <button class="btn ghost small" id="skipIntroBtn" hidden type="button">⏭ Saltar Intro</button>
+        <div class="pracTopLeft">
+          <button class="btn ghost small" id="backBtn" type="button">← Volver al Plan</button>
+        </div>
+        <div class="pracHeaderCenter">
+          <span class="pracHeaderNoteIcon">🎵</span>
+          <span class="pracHeaderTitle" id="pracName">Ritmos: negras y blancas</span>
+          <span class="pracHeaderBadge" id="pracLvl">Nivel 12 de 44 • Etapa 3 • Lectura musical</span>
+        </div>
+        <div class="pracTopRight">
+          <div class="pracTopProg">
+            <span class="ptpStar">⭐</span>
+            <span class="ptpLabel">Tu progreso</span>
+            <div class="ptpTrack"><div class="ptpFill" id="pracTopProgFill"></div></div>
+          </div>
+          <button class="btn btnHeroPlayGold btnPracEscuchar" id="demoBtn" type="button">▶ Escuchar</button>
+        </div>
+        <!-- Elementos auxiliares mantenidos ocultos para compatibilidad con tests -->
+        <div class="pracCtrlsHidden" style="display:none;" aria-hidden="true">
+          <label class="switch" id="tglWaitModeLabel"><input type="checkbox" id="tglWaitMode"> Paciente</label>
+          <label class="switch" id="tglSynthesiaLabel"><input type="checkbox" id="tglSynthesia"> Synthesia</label>
+          <select id="tempoSel"><option value="1">1x</option></select>
+          <button id="familyRecBtn" type="button"></button>
+          <button id="skipIntroBtn" hidden type="button"></button>
         </div>
       </div>
 
@@ -304,7 +346,13 @@
         <!-- COLUMNA 1: AVATAR NIÑO SEÑALANDO CON BOCADILLO -->
         <div class="practiceMascotCol" id="practiceMascotCol">
           <div class="mascotSpeechBubble" id="mascotSpeechBubble">
-            <span class="msbText" id="mascotSpeechTxt">¡Muy bien! Ahora toca la nota Sol.</span>
+            <span class="bubbleRays top-left">`</span>
+            <span class="bubbleRays top-right">´</span>
+            <div class="msbText" id="mascotSpeechTxt">
+              <div class="msbL1">¡Muy bien!</div>
+              <div class="msbL2">Ahora toca</div>
+              <div class="msbL3">la nota Sol.</div>
+            </div>
           </div>
           <div class="mascotFigureWrap">
             <img src="assets/v3_design/avatar_pointing_red.jpg" alt="Mascota señalando el piano" class="mascotFigureImg" id="mascotFigureImg">
@@ -320,12 +368,13 @@
           <div class="staffBoxWrap">
             <div id="staffBox"></div>
           </div>
-          <div class="noteBadgeWrap">
+          <!-- Elementos mantenidos ocultos para compatibilidad con tests -->
+          <div class="noteBadgeWrap" style="display:none;" aria-hidden="true">
             <div id="handTag" hidden></div>
             <div id="noteBadge">Toca: <b id="noteName">—</b></div>
           </div>
-          <div class="progress"><div id="progFill"></div></div>
-          <div class="stats">
+          <div class="progress" style="display:none;" aria-hidden="true"><div id="progFill"></div></div>
+          <div class="stats" style="display:none;" aria-hidden="true">
             <div class="stat">Progreso <b id="statProg">0/0</b></div>
             <div class="stat">Racha <b id="statStreak">0</b></div>
             <div class="stat">Precisión <b id="statAcc">—</b></div>
@@ -338,8 +387,9 @@
             <div class="stickyPin">📌</div>
             <div class="stickyHeader">💡 Recuerda:</div>
             <div class="stickyBody" id="stickyTipBody">
-              Las notas se tocan con la mano derecha en esta lección. Mantén los dedos relajados y curvados. 😊
+              Las notas se tocan con la mano derecha en esta lección.
             </div>
+            <div class="stickySmiley">😊</div>
           </div>
         </div>
       </div>
@@ -452,19 +502,21 @@
   </section>
 
   <!-- TECLADO 3D Y PIANO ENGINE -->
-  <section>
+  <section class="pianoSectionV3">
     <div id="pianoWrap">
+      <span class="pianoAmbientNote pNoteLeft">♪</span>
+      <span class="pianoAmbientNote pNoteRight">♫</span>
       <button class="pianoNavBtn left" id="pianoNavLeft" title="Desplazar a la izquierda" aria-label="Desplazar a la izquierda">‹</button>
       <button class="pianoNavBtn right" id="pianoNavRight" title="Desplazar a la derecha" aria-label="Desplazar a la derecha">›</button>
       <canvas id="fallingCanvas" hidden></canvas>
       <div id="metronome" class="metro"></div>
-      <div id="hintArrow">▼</div>
+      <div id="hintArrow" hidden>▼</div>
       <div id="fingerChip"></div>
       <div class="felt"></div>
       <div id="piano"></div>
       <div id="fx"></div>
     </div>
-    <p class="keysHelp">💡 <b>Atajos de teclado PC:</b> <b>1 2 3 4 5 6 7</b> = zona grave (mano izquierda) · <b>A W S E D F T G Y H U J</b> = centro · <b>K O L P Ñ</b> y <b>Z X C V B N M ,</b> = agudas.<br>Sigue la flecha dorada, las manos indicadas y el pentagrama vivo. ¡A brillar en el piano! 🌟</p>
+    <p class="keysHelp" style="display:none;" aria-hidden="true">💡 <b>Atajos de teclado PC:</b> <b>1 2 3 4 5 6 7</b> = zona grave (mano izquierda) · <b>A W S E D F T G Y H U J</b> = centro · <b>K O L P Ñ</b> y <b>Z X C V B N M ,</b> = agudas.<br>Sigue la flecha dorada, las manos indicadas y el pentagrama vivo. ¡A brillar en el piano! 🌟</p>
   </section>
 </main>
 

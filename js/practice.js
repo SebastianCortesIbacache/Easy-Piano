@@ -34,26 +34,26 @@ function renderStaff(container, note, showName, notesList, activeIndex){
 
   var s = '<svg viewBox="0 0 280 120" width="270" height="116" class="staffSvg">';
   s += '<defs>';
-  s += '  <linearGradient id="cGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3ddc84"/><stop offset="100%" stop-color="#24a85f"/></linearGradient>';
-  s += '  <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffb547"/><stop offset="100%" stop-color="#ff8038"/></linearGradient>';
+  s += '  <linearGradient id="cGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00e676"/><stop offset="100%" stop-color="#00c853"/></linearGradient>';
+  s += '  <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffa726"/><stop offset="100%" stop-color="#fb8c00"/></linearGradient>';
   s += '  <filter id="neonGlow"><feGaussianBlur stdDeviation="3.5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
   s += '</defs>';
 
-  // 5 líneas del pentagrama
+  // 5 líneas del pentagrama (blancas nítidas fieles al mockup)
   for(var i = 0; i < 5; i++){
-    s += '<line x1="12" y1="' + (30 + i * 10) + '" x2="268" y2="' + (30 + i * 10) + '" stroke="#6a7089" stroke-width="1.4"/>';
+    s += '<line x1="12" y1="' + (30 + i * 10) + '" x2="268" y2="' + (30 + i * 10) + '" stroke="rgba(255, 255, 255, 0.75)" stroke-width="1.3"/>';
   }
   // Barra final del compás
-  s += '<line x1="268" y1="30" x2="268" y2="70" stroke="#6a7089" stroke-width="1.8"/>';
+  s += '<line x1="268" y1="30" x2="268" y2="70" stroke="rgba(255, 255, 255, 0.75)" stroke-width="1.8"/>';
 
-  // Clave musical
-  s += '<text x="12" y="' + clefY + '" font-size="' + clefFontSize + '" fill="#cdd2e4" font-family="serif" style="user-select:none;">' + clefChar + '</text>';
+  // Clave musical en blanco puro
+  s += '<text x="12" y="' + clefY + '" font-size="' + clefFontSize + '" fill="#ffffff" font-family="serif" style="user-select:none;">' + clefChar + '</text>';
 
-  // Compás 4/4 o 3/4
+  // Compás 4/4 o 3/4 en blanco puro
   var timeSig = (lv && lv.timeSig) ? lv.timeSig : '4/4';
   var num = timeSig.charAt(0) || '4', den = timeSig.charAt(2) || '4';
-  s += '<text x="44" y="48" font-size="19" font-weight="900" fill="#a4adca" font-family="Outfit,sans-serif">' + num + '</text>';
-  s += '<text x="44" y="68" font-size="19" font-weight="900" fill="#a4adca" font-family="Outfit,sans-serif">' + den + '</text>';
+  s += '<text x="44" y="48" font-size="19" font-weight="900" fill="#ffffff" font-family="Outfit,sans-serif">' + num + '</text>';
+  s += '<text x="44" y="68" font-size="19" font-weight="900" fill="#ffffff" font-family="Outfit,sans-serif">' + den + '</text>';
 
   // Determinar notas a dibujar: compás deslizante de hasta 4 notas
   var drawList = [];
@@ -93,11 +93,13 @@ function renderStaff(container, note, showName, notesList, activeIndex){
     var hollow = (dur >= 2), hasStem = (dur < 4), isEighth = (dur < 1);
     var sharp = midiToPC(n.midi).indexOf('#') >= 0;
 
-    var color = item.isCurrent ? '#3ddc84' : (item.isPast ? '#64748b' : '#ffb547');
-    var grad = item.isCurrent ? 'url(#cGrad)' : (item.isPast ? '#64748b' : 'url(#goldGrad)');
+    // Paleta de colores pedagógicos fieles a Easy Piano 3.0 (Sol4 verde, La4 naranja, Si4 naranja, Do5 amarillo)
+    var v3Colors = ['#00e676', '#ffa726', '#ffa726', '#ffd54f'];
+    var color = item.isCurrent ? '#00e676' : (item.isPast ? '#64748b' : (v3Colors[d] || '#ffa726'));
+    var grad = color;
 
     if(item.isCurrent){
-      s += '<line class="staffCursor" x1="' + nx + '" y1="18" x2="' + nx + '" y2="92" stroke="' + grad + '" stroke-width="2.5" stroke-dasharray="4 2"/>';
+      s += '<line class="staffCursor" x1="' + nx + '" y1="18" x2="' + nx + '" y2="92" stroke="#00e676" stroke-width="1.8" stroke-dasharray="3 3" opacity="0"/>';
     }
 
     if(!isBass){
@@ -144,19 +146,19 @@ function renderStaff(container, note, showName, notesList, activeIndex){
 
     var headFilter = item.isCurrent ? 'filter="url(#neonGlow)"' : '';
     s += '<ellipse cx="' + nx + '" cy="' + ny + '" rx="7.5" ry="5.5" transform="rotate(-18 ' + nx + ' ' + ny + ')" ' +
-         (hollow ? ('fill="#181c2d" stroke="' + color + '" stroke-width="2.2"') : ('fill="' + grad + '"')) +
+         (hollow ? ('fill="#0b1736" stroke="' + color + '" stroke-width="2.2"') : ('fill="' + grad + '"')) +
          ' ' + headFilter + '/>';
 
     if(item.isPast){
-      s += '<text x="' + nx + '" y="' + (ny - 12) + '" text-anchor="middle" fill="#3ddc84" font-size="10" font-weight="900">✓</text>';
+      s += '<text x="' + nx + '" y="' + (ny - 12) + '" text-anchor="middle" fill="#00e676" font-size="10" font-weight="900">✓</text>';
     }
 
     if(showName){
       var pc2 = midiToPC(n.midi);
-      var label = (settings && settings.sys === 'solfege') ? SOL[pc2] : pc2;
-      var lblColor = item.isCurrent ? '#3ddc84' : (item.isPast ? '#8892b0' : '#ffb547');
-      var lblWeight = item.isCurrent ? '900' : '700';
-      var lblSize = item.isCurrent ? '13' : '11';
+      var label = (settings && settings.sys === 'letters') ? pc2 : SOL[pc2];
+      var lblColor = color;
+      var lblWeight = '900';
+      var lblSize = '13';
       s += '<text x="' + nx + '" y="112" text-anchor="middle" fill="' + lblColor + '" font-size="' + lblSize + '" font-family="Outfit,sans-serif" font-weight="' + lblWeight + '">' + label + midiToOct(n.midi) + '</text>';
     }
   }
@@ -274,7 +276,7 @@ function startPractice(lv){
   practice = { active: true, level: lv, idx: 0, hits: 0, misses: 0, streak: 0, bestStreak: 0, demo: false, intro: true, lastTouchT: performance.now() };
   storeSet('pf_last', String(lv.id));
   $('#pathView').hidden = true; $('#practice').hidden = false;
-  $('#pracName').textContent = lv.emoji + ' ' + lv.title;
+  $('#pracName').textContent = lv.title;
   $('#pracLvl').textContent = 'Nivel ' + lv.id + ' de ' + LEVELS.length + ' · ' + STAGES[lv.stage - 1].title;
   $('#demoBtn').textContent = '▶ Escuchar';
   if($('#skipIntroBtn')) $('#skipIntroBtn').hidden = false;
@@ -307,7 +309,7 @@ function startPractice(lv){
   // Actualizar Post-It Amarillo pedagógico y diálogo del compañero
   var tipEl = document.getElementById('stickyTipBody');
   if(tipEl){
-    tipEl.textContent = lv.lesson || (lv.handAll === 'I' ? 'Las notas se tocan con la mano izquierda en esta lección. Mantén los dedos relajados y curvados. 😊' : 'Las notas se tocan con la mano derecha en esta lección. Mantén los dedos relajados y curvados. 😊');
+    tipEl.textContent = lv.tip || (lv.handAll === 'I' ? 'Las notas se tocan con la mano izquierda en esta lección.' : 'Las notas se tocan con la mano derecha en esta lección.');
   }
   var msb = document.getElementById('mascotSpeechTxt');
   if(msb) msb.textContent = '¡Listo para tocar! Escucha con atención o prepárate 🎹';
@@ -490,7 +492,8 @@ function setHint(note){
   var msb = document.getElementById('mascotSpeechTxt');
   if(msb){
     var pcName = (settings && settings.sys === 'letters') ? pc : SOL[pc];
-    msb.textContent = (practice.streak >= 3) ? ('¡Excelente! Ahora toca la nota ' + pcName + '.') : ('¡Muy bien! Ahora toca la nota ' + pcName + '.');
+    var l1 = (practice.streak >= 3) ? '¡Excelente!' : '¡Muy bien!';
+    msb.innerHTML = '<div class="msbL1">' + l1 + '</div><div class="msbL2">Ahora toca</div><div class="msbL3">la nota ' + pcName + '.</div>';
   }
 }
 
@@ -894,14 +897,19 @@ function renderPath(){
   // Actualizar elementos de la Hero Feature Card del Lobby Console
   var badgeTxt = document.getElementById('heroLevelBadgeTxt');
   if(badgeTxt){
-    var stObj = STAGES[targetLvl.stage - 1] || STAGES[0];
-    var stName = stObj.worldName || stObj.title.replace(/^Etapa\s*\d+\s*[·•-]\s*/i, '');
-    badgeTxt.textContent = 'Nivel ' + targetLvl.id + ' de ' + LEVELS.length + ' · Etapa ' + targetLvl.stage + ' (' + stName + ') · Lectura musical';
+    badgeTxt.textContent = 'Nivel ' + targetLvl.id + ' de ' + LEVELS.length + ' • Etapa ' + targetLvl.stage + ' • Lectura musical';
   }
   var hfTitle = document.getElementById('heroFeatureTitle');
-  if(hfTitle) hfTitle.textContent = targetLvl.title;
+  if(hfTitle){
+    if(targetLvl.title.includes(':')){
+      var parts = targetLvl.title.split(':');
+      hfTitle.innerHTML = '<span class="hftWhite">' + parts[0] + ':</span><br><span class="hftGold">' + parts.slice(1).join(':').trim() + '</span>';
+    } else {
+      hfTitle.innerHTML = '<span class="hftWhite">' + targetLvl.title + '</span>';
+    }
+  }
   var hfSub = document.getElementById('heroFeatureSub');
-  if(hfSub) hfSub.textContent = targetLvl.lesson ? targetLvl.lesson : 'Descubre el ritmo, toca y avanza con confianza.';
+  if(hfSub) hfSub.textContent = targetLvl.sub || 'Descubre el ritmo, toca y avanza con confianza.';
 
   var fNote = (targetLvl.notes && targetLvl.notes[0]) ? targetLvl.notes[0] : null;
   var fMidi = fNote ? fNote.midi : 60;
@@ -1056,7 +1064,7 @@ function renderPath(){
   });
 
   if($('#courseFill')) $('#courseFill').style.width = (st.done / LEVELS.length * 100) + '%';
-  if($('#courseTxt')) $('#courseTxt').textContent = st.done + '/' + LEVELS.length + ' niveles';
+  if($('#courseTxt')) $('#courseTxt').textContent = st.done + '/' + LEVELS.length;
   if($('#headerStars')) $('#headerStars').innerHTML = '⭐ ' + st.stars + ' Estrellas';
   renderBadges();
   try{ renderKidPathMini(); }catch(e){}

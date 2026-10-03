@@ -5597,19 +5597,130 @@ header .brand {
 }
 
 /* 2. Consola de Videojuego en el Lobby (#pathView) */
+/* ==========================================================================
+   EASY PIANO 3.0 — SISTEMA VISUAL PIXEL-PERFECT (FIEL A media_1791013336132.jpg)
+   ========================================================================== */
+
+/* 1. Header Fiel al Mockup */
+.brandEasy {
+  color: #ffffff;
+  font-weight: 900;
+}
+.brandPiano {
+  color: #ffa726;
+  font-weight: 900;
+}
+.brandLogoWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(255, 167, 38, 0.35);
+}
+.brandLogoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+header .subtitle {
+  color: #38bdf8 !important;
+  font-size: 0.68rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.2px !important;
+  margin: 2px 0 0 !important;
+}
+.headerNav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.headerNavPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.headerNavPill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+.headerNavPill.active {
+  background: #ffa726 !important;
+  color: #111827 !important;
+  border-color: #ffb74d !important;
+  font-weight: 900 !important;
+  box-shadow: 0 4px 14px rgba(255, 167, 38, 0.4);
+}
+.headerUserChip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 4px 14px 4px 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.headerUserAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid #ffa726;
+  object-fit: cover;
+  display: block;
+}
+.headerUserTexts {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.hUserGreeting {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  line-height: 1.1;
+  font-weight: 600;
+}
+.hUserName {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+}
+.hUserName small {
+  color: #94a3b8;
+  font-size: 0.72rem;
+  margin-left: 2px;
+}
+
+/* Ocultar widget flotante para no tapar la consola ni el teclado */
+#floatingMateoWidget {
+  display: none !important;
+}
+
+/* 2. Consola Principal del Lobby (Top Screen) */
 .lobbyConsoleCard {
-  background: linear-gradient(160deg, #0c1830 0%, #080f20 100%);
-  border: 1.5px solid rgba(41, 182, 246, 0.25);
+  background: linear-gradient(165deg, #091329 0%, #060d1e 100%);
+  border: 1.5px solid rgba(41, 182, 246, 0.22);
   border-radius: 24px;
-  padding: 20px;
-  margin: 12px 0 20px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 40px rgba(41, 182, 246, 0.08) inset;
+  padding: 24px 26px;
+  margin: 8px 0 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(41, 182, 246, 0.06) inset;
   position: relative;
   overflow: hidden;
 }
 .lobbyConsoleBody {
   display: flex;
-  gap: 20px;
+  gap: 22px;
   align-items: stretch;
 }
 
@@ -5617,55 +5728,59 @@ header .brand {
 .sidebarDock {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  width: 145px;
+  gap: 10px;
+  width: 195px;
   flex-shrink: 0;
 }
 .dockBtn {
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(15, 29, 56, 0.7);
-  color: #cbd5e1;
-  border-radius: 14px;
-  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(14, 25, 52, 0.8);
+  color: #ffffff;
+  border-radius: 16px;
+  padding: 14px 16px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-family: inherit;
-  font-size: 0.88rem;
-  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   text-align: left;
 }
 .dockBtn:hover {
   background: rgba(28, 48, 88, 0.9);
-  color: #ffffff;
   transform: translateX(3px);
 }
 .dockBtn.active {
-  background: linear-gradient(135deg, #ffa726 0%, #ff8f00 100%);
-  color: #1a0f00;
-  border-color: #ffb74d;
-  box-shadow: 0 6px 18px rgba(255, 167, 38, 0.45);
-  font-weight: 800;
+  background: #ffa726 !important;
+  color: #111827 !important;
+  border-color: #ffb74d !important;
+  box-shadow: 0 6px 18px rgba(255, 167, 38, 0.45) !important;
 }
 .dockIcon {
-  font-size: 1.15rem;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+.dockLabelWrap {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.88rem;
+  line-height: 1.25;
+  font-weight: 800;
 }
 
 /* Hero Feature Card */
 .lobbyHeroFeatureCard {
   flex: 1;
-  background: linear-gradient(145deg, #132247 0%, #0e1933 100%);
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 24px 28px;
+  background: linear-gradient(135deg, #0e1d3e 0%, #0a142c 100%);
+  border: 1.5px solid rgba(41, 182, 246, 0.25);
+  border-radius: 22px;
+  padding: 26px 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
-  overflow: hidden;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  overflow: visible;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.45);
 }
 .heroMainCol {
   max-width: 58%;
@@ -5675,37 +5790,42 @@ header .brand {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(41, 182, 246, 0.16);
-  border: 1px solid rgba(41, 182, 246, 0.4);
-  color: #38bdf8;
-  font-size: 0.78rem;
-  font-weight: 800;
-  padding: 4px 12px;
+  background: rgba(14, 28, 62, 0.8);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #7dd3fc;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 5px 14px;
   border-radius: 999px;
   margin-bottom: 12px;
 }
 .heroFeatureTitle {
-  font-size: 1.85rem;
+  font-size: 2.1rem;
   font-weight: 900;
-  color: #ffffff;
-  line-height: 1.2;
-  margin-bottom: 8px;
+  line-height: 1.15;
+  margin-bottom: 10px;
   letter-spacing: -0.5px;
 }
+.hftWhite {
+  color: #ffffff;
+}
+.hftGold {
+  color: #ffa726;
+}
 .heroFeatureSub {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: #94a3b8;
   line-height: 1.45;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 .btnHeroPlayGold {
-  background: linear-gradient(135deg, #ffa726 0%, #ff8f00 100%);
-  color: #1a0f00;
+  background: linear-gradient(135deg, #ffa726 0%, #ff9800 100%);
+  color: #111827;
   border: 0;
   font-family: inherit;
   font-size: 1.15rem;
   font-weight: 900;
-  padding: 12px 28px;
+  padding: 12px 30px;
   border-radius: 999px;
   cursor: pointer;
   display: inline-flex;
@@ -5717,7 +5837,6 @@ header .brand {
 .btnHeroPlayGold:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 12px 30px rgba(255, 167, 38, 0.7);
-  background: linear-gradient(135deg, #ffb74d 0%, #ffa000 100%);
 }
 .heroPlayIcon {
   font-size: 1.1rem;
@@ -5733,13 +5852,14 @@ header .brand {
   flex-shrink: 0;
 }
 .heroSpeechBubble {
-  background: #ffffff;
-  color: #0f172a;
+  background: #0c1936;
+  border: 1.5px solid #38bdf8;
+  color: #ffffff;
   font-size: 0.88rem;
   font-weight: 800;
-  padding: 6px 14px;
+  padding: 6px 16px;
   border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
   margin-bottom: 8px;
   position: relative;
   animation: bubbleFloat 2.5s ease-in-out infinite alternate;
@@ -5752,100 +5872,163 @@ header .brand {
   transform: translateX(-50%);
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 6px solid #ffffff;
+  border-top: 6px solid #0c1936;
 }
-@keyframes bubbleFloat {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-4px); }
+.heroNotesWrap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.heroFloatNote {
+  position: absolute;
+  font-size: 1.4rem;
+  user-select: none;
+}
+.fnCyan1 {
+  color: #38bdf8;
+  top: 15px;
+  left: -12px;
+}
+.fnGold1 {
+  color: #ffa726;
+  top: 40px;
+  right: -10px;
+}
+.fnCyan2 {
+  color: #38bdf8;
+  bottom: 15px;
+  left: 10px;
 }
 .heroMascotWrap {
-  width: 140px;
-  height: 140px;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  width: 220px;
+  height: 160px;
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+  border: none;
+  background: transparent;
 }
 .heroMascotImg {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5));
 }
 
 /* Progreso y Carrusel de Niveles */
 .lobbyProgressCarouselSection {
   margin-top: 20px;
-  padding-top: 16px;
+  padding-top: 18px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 .lobbyProgressHeaderRow {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 16px;
   margin-bottom: 14px;
-  flex-wrap: wrap;
-  gap: 10px;
+  align-items: center;
 }
 .progLeftCol {
+  flex: 1;
+  background: rgba(14, 25, 52, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 12px 20px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 .progLabel {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   font-weight: 800;
-  color: #ffd276;
+  color: #ffffff;
   white-space: nowrap;
 }
 .progTrack {
-  width: 180px;
-  height: 12px;
-  background: rgba(10, 16, 32, 0.8);
+  flex: 1;
+  height: 10px;
+  background: #070d1a;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
 }
 .progTrack #courseFill {
   height: 100%;
-  background: linear-gradient(90deg, #ffa726, #ffd54f);
+  background: #ffa726;
   border-radius: 999px;
   box-shadow: 0 0 10px rgba(255, 167, 38, 0.7);
   transition: width 0.3s ease;
 }
 .progCountTxt {
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   font-weight: 800;
-  color: #cbd5e1;
+  color: #ffffff;
+  white-space: nowrap;
+}
+.progChevron {
+  color: #94a3b8;
+  font-size: 0.92rem;
+  font-weight: 800;
 }
 .progCheerBadge {
-  font-size: 0.84rem;
-  font-weight: 700;
-  color: #4ade80;
-  background: rgba(74, 222, 128, 0.12);
-  border: 1px solid rgba(74, 222, 128, 0.3);
-  padding: 4px 12px;
-  border-radius: 999px;
-  white-space: nowrap;
+  background: rgba(14, 25, 52, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pcbStar {
+  color: #ffa726;
+  font-size: 1.15rem;
+}
+.pcbTexts {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.pcbTitle {
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+.pcbSub {
+  color: #94a3b8;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.pcbAvatar {
+  font-size: 1.25rem;
 }
 
 /* Carrusel de Niveles (< 1 2 [3] 4 5 6 7 8 9 10 >) */
+.levelCarouselWrapper {
+  margin-top: 4px;
+}
+.levelCarouselLabel {
+  color: #cbd5e1;
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-align: left;
+}
 .levelCarouselBar {
   display: flex;
   align-items: center;
-  gap: 8px;
   justify-content: center;
-  background: rgba(10, 18, 38, 0.65);
-  padding: 8px 14px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 10px;
+  background: transparent;
+  padding: 0;
+  border: none;
 }
 .carouselArrowBtn {
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
   color: #cbd5e1;
   font-size: 1.2rem;
   cursor: pointer;
@@ -5856,12 +6039,12 @@ header .brand {
   font-family: inherit;
 }
 .carouselArrowBtn:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.14);
   color: #ffffff;
 }
 .carouselPillsTrack {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   overflow-x: auto;
   scrollbar-width: none;
   padding: 4px 0;
@@ -5871,14 +6054,14 @@ header .brand {
   display: none;
 }
 .carouselPill {
-  min-width: 36px;
-  height: 36px;
+  min-width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(18, 32, 60, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.08);
   color: #cbd5e1;
   font-family: inherit;
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   font-weight: 700;
   cursor: pointer;
   display: flex;
@@ -5887,108 +6070,222 @@ header .brand {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .carouselPill:hover {
-  background: rgba(30, 54, 98, 0.95);
+  background: rgba(255, 255, 255, 0.15);
   color: #ffffff;
-  transform: translateY(-2px);
 }
 .carouselPill.active {
-  background: linear-gradient(135deg, #ffa726 0%, #ff8f00 100%);
-  color: #1a0f00;
-  font-weight: 900;
-  box-shadow: 0 0 16px rgba(255, 167, 38, 0.65);
-  border-color: #ffd54f;
-  transform: scale(1.12);
+  background: #ffa726 !important;
+  color: #111827 !important;
+  font-weight: 900 !important;
+  box-shadow: 0 0 16px rgba(255, 167, 38, 0.7) !important;
+  border: none !important;
+  transform: none !important;
 }
 .carouselPill.done {
   border-color: rgba(74, 222, 128, 0.5);
   color: #4ade80;
 }
 
-/* 3. HUD Pedagógico de 3 Columnas (#practice) */
-.practiceHudGrid {
-  display: grid;
-  grid-template-columns: 240px 1fr 240px;
-  gap: 18px;
-  align-items: stretch;
-  margin: 12px 0 18px;
+/* 3. Pantalla de Práctica HUD (Bottom Screen) */
+#practice {
+  background: linear-gradient(165deg, #091329 0%, #060d1e 100%);
+  border: 1.5px solid rgba(41, 182, 246, 0.22);
+  border-radius: 24px;
+  padding: 20px 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  margin: 8px 0 16px;
+}
+.pracTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 4px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 16px;
+}
+#backBtn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+#backBtn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+.pracHeaderCenter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pracHeaderNoteIcon {
+  font-size: 1.25rem;
+}
+.pracHeaderTitle {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+.pracHeaderBadge {
+  background: rgba(28, 48, 92, 0.8);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #7dd3fc;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.pracTopRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.pracTopProg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ptpStar {
+  color: #ffa726;
+  font-size: 0.95rem;
+}
+.ptpLabel {
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.ptpTrack {
+  width: 90px;
+  height: 8px;
+  background: #070d1a;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.ptpFill {
+  height: 100%;
+  background: #ffa726;
+  border-radius: 999px;
+}
+.btnPracEscuchar {
+  background: linear-gradient(135deg, #ffa726 0%, #ff9800 100%);
+  color: #111827;
+  border: 0;
+  font-size: 0.95rem;
+  font-weight: 900;
+  padding: 8px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(255, 167, 38, 0.45);
 }
 
-/* Columna 1: Mascota señalando con bocadillo */
+/* HUD Pedagógico de 3 Columnas */
+.practiceHudGrid {
+  display: grid;
+  grid-template-columns: 210px 1fr 210px;
+  gap: 20px;
+  align-items: center;
+  margin: 10px 0 16px;
+}
+
+/* Columna 1: Mascota señalando con bocadillo (Sin marco oscuro exterior) */
 .practiceMascotCol {
-  background: rgba(15, 29, 56, 0.65);
-  border: 1.5px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  padding: 16px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   position: relative;
 }
 .mascotSpeechBubble {
-  background: #ffffff;
-  color: #0f172a;
-  padding: 12px 14px;
+  background: #0b1a38;
+  border: 1.5px solid #29b6f6;
+  color: #ffffff;
+  padding: 10px 14px;
   border-radius: 16px;
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-size: 0.85rem;
   line-height: 1.35;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 16px rgba(41, 182, 246, 0.25);
   position: relative;
-  width: 100%;
-  margin-bottom: 12px;
+  max-width: 165px;
+  margin: 0 auto 10px;
+  text-align: center;
 }
 .mascotSpeechBubble::after {
   content: '';
   position: absolute;
-  bottom: -8px;
-  left: 30px;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid #ffffff;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #0b1a38;
+}
+.msbL1 {
+  font-weight: 900;
+  color: #ffffff;
+}
+.msbL2 {
+  color: #ffffff;
+}
+.msbL3 {
+  color: #ffffff;
+  font-weight: 800;
 }
 .mascotFigureWrap {
-  width: 140px;
-  height: 140px;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+  width: 185px;
+  height: 215px;
+  border-radius: 0;
+  overflow: visible;
+  border: none;
+  box-shadow: none;
+  background: transparent;
 }
 .mascotFigureImg {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
+  border-radius: 20px;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.6));
+}
+
+#toast {
+  display: none !important;
 }
 
 /* Columna 2: Lectura de Partitura */
 .practiceStaffCol {
-  background: #0f1d38;
-  border: 1.5px solid rgba(41, 182, 246, 0.35);
+  background: #081329;
+  border: 1.5px solid rgba(41, 182, 246, 0.4);
   border-radius: 20px;
-  padding: 16px 20px;
+  padding: 18px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5), 0 0 30px rgba(41, 182, 246, 0.12) inset;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5), 0 0 35px rgba(41, 182, 246, 0.12) inset;
 }
 .staffCardHeader {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #38bdf8;
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
   text-transform: uppercase;
 }
 .staffBoxWrap {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 6px;
 }
 
 /* Columna 3: Post-It Amarillo de Consejos */
@@ -5998,12 +6295,12 @@ header .brand {
   justify-content: center;
 }
 .stickyNoteCard {
-  background: linear-gradient(145deg, #fff3b0 0%, #fee685 100%);
-  color: #5d4037;
+  background: linear-gradient(145deg, #fff9b0 0%, #fee577 100%);
+  color: #4e342e;
   border-radius: 14px;
-  padding: 22px 18px 18px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 2px 4px rgba(0, 0, 0, 0.1);
-  transform: rotate(-1.5deg);
+  padding: 22px 18px 20px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.15);
+  transform: rotate(2.5deg);
   position: relative;
   width: 100%;
   transition: transform 0.2s ease;
@@ -6013,29 +6310,60 @@ header .brand {
 }
 .stickyPin {
   position: absolute;
-  top: -12px;
+  top: -14px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1.3rem;
-  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.3));
+  font-size: 1.4rem;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.35));
 }
 .stickyHeader {
   font-size: 0.95rem;
   font-weight: 900;
-  color: #795548;
+  color: #4e342e;
   margin-bottom: 8px;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 .stickyBody {
-  font-size: 0.85rem;
+  font-size: 0.86rem;
   line-height: 1.45;
   font-weight: 600;
-  color: #4e342e;
+  color: #5d4037;
+}
+.stickySmiley {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 1.1rem;
 }
 
 /* 4. Teclado de Piano Neón con Tecla Activa en Verde Menta (#00E676) */
+.pianoSectionV3 {
+  position: relative;
+  margin-top: 10px;
+}
+#pianoWrap {
+  position: relative;
+  overflow: visible;
+}
+.pianoAmbientNote {
+  position: absolute;
+  font-size: 1.6rem;
+  color: #38bdf8;
+  opacity: 0.8;
+  pointer-events: none;
+}
+.pNoteLeft {
+  left: -28px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.pNoteRight {
+  right: -28px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 .key.white {
   border-radius: 0 0 12px 12px;
 }
@@ -6043,13 +6371,17 @@ header .brand {
   border-radius: 0 0 8px 8px;
 }
 .key.white.hint {
-  background: linear-gradient(180deg, #e8fff2 0%, #a7f3d0 35%, #00e676 100%) !important;
-  box-shadow: 0 0 0 3.5px #00e676, 0 0 35px 12px rgba(0, 230, 118, 0.85), inset 0 2px 5px rgba(255, 255, 255, 0.9) !important;
+  background: linear-gradient(180deg, #d1fae5 0%, #6ee7b7 35%, #00e676 100%) !important;
+  box-shadow: 0 0 0 3.5px #00e676, 0 0 45px 16px rgba(0, 230, 118, 0.95), inset 0 2px 6px rgba(255, 255, 255, 0.9) !important;
   color: #064e3b !important;
+}
+.key.white.hint .kname {
+  color: #064e3b !important;
+  font-weight: 900 !important;
 }
 .key.black.hint {
   background: linear-gradient(180deg, #064e3b 0%, #00e676 100%) !important;
-  box-shadow: 0 0 0 3px #00e676, 0 0 30px 10px rgba(0, 230, 118, 0.85) !important;
+  box-shadow: 0 0 0 3px #00e676, 0 0 35px 12px rgba(0, 230, 118, 0.9) !important;
 }
 
 /* 5. Adaptabilidad Responsive */
@@ -6083,3 +6415,68 @@ header .brand {
   }
 }
 
+
+
+
+/* ==========================================================================
+   ESTÉTICA FIEL 100% EASY PIANO 3.0 (MOCKUP OFICIAL)
+   ========================================================================== */
+.staffCursor {
+  display: none !important;
+  opacity: 0 !important;
+  animation: none !important;
+}
+
+.neonHint {
+  display: none !important;
+}
+
+.khint {
+  display: none !important;
+}
+
+#hintArrow {
+  display: none !important;
+}
+
+.heroMascotImg {
+  -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 72%, transparent 100%) !important;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 72%, transparent 100%) !important;
+}
+
+.mascotFigureImg {
+  -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 72%, transparent 100%) !important;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 72%, transparent 100%) !important;
+}
+
+.bubbleRays {
+  position: absolute;
+  color: #ffd54f !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.bubbleRays.top-left {
+  top: -9px;
+  left: 10px;
+  transform: rotate(-25deg);
+}
+
+.bubbleRays.top-right {
+  top: -9px;
+  right: 10px;
+  transform: rotate(25deg);
+}
+
+.mascotSpeechBubble {
+  background: #0b1a38 !important;
+  border: 1.5px solid #29b6f6 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 0 22px rgba(41, 182, 246, 0.35) !important;
+}
+
+.mascotSpeechBubble::after {
+  border-top-color: #29b6f6 !important;
+}

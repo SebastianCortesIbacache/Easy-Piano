@@ -58,10 +58,15 @@ server.listen(8097, '127.0.0.1', async () => {
     return !l || l.classList.contains('gone');
   }, { timeout: 10000 });
 
-  // Desactivar kid-mode y onboarding para mostrar la consola principal
+  // Desactivar kid-mode y onboarding para mostrar la consola principal en Nivel 12 (fiel al mockup)
   await page.evaluate(() => {
     localStorage.setItem('pf_onboarding_done', 'true');
     localStorage.setItem('pf_kid_mode', 'false');
+    // Simular progreso hasta el Nivel 12 para mostrar Ritmos: negras y blancas
+    const mockProg = {};
+    for (let i = 1; i <= 11; i++) mockProg[i] = 3;
+    localStorage.setItem('pf_path', JSON.stringify(mockProg));
+    localStorage.setItem('pf_last', '12');
     document.body.classList.remove('kid-mode');
     const ob = document.getElementById('onboardingModal');
     if (ob) ob.hidden = true;

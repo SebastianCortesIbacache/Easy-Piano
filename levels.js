@@ -194,6 +194,8 @@ var LEVELS=[
   lesson:'Las notas suben por el pentagrama como por una escalera: línea, espacio, línea, espacio… ¡Sigue hasta el Do agudo!',
   seq:[['E4',1],['F4',1],['G4',1],['A4',1],['B4',1],['C5',2],['B4',1],['A4',1],['G4',2]]},
  {id:12,stage:3,title:'Ritmos: negras y blancas',emoji:'⏱️',desc:'Cada figura dura un tiempo distinto.',bpm:90,ui:{score:true},
+  tip:'Las notas se tocan con la mano derecha en esta lección.',
+   sub:'Descubre el ritmo, toca y avanza con confianza.',
   lesson:'La negra (cabeza rellena ♩) dura 1 tiempo. La blanca (círculo abierto) dura 2: mantén la tecla más.',
   seq:[['G4',1],['A4',1],['B4',1],['C5',1],['B4',2],['G4',2],['E4',1],['F4',1],['G4',3]]},
  {id:13,stage:3,title:'El Do central',emoji:'🎯',desc:'La línea adicional.',bpm:90,ui:{score:true},

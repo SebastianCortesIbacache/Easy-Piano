@@ -57,11 +57,15 @@ server.listen(8096, '127.0.0.1', async () => {
     localStorage.setItem('pf_onboarding_done', 'true');
     const ob = document.getElementById('onboardingModal');
     if (ob) ob.hidden = true;
-    startPractice(LEVELS[0]);
+    const lvl12 = LEVELS.find(l => l.id === 12) || LEVELS[11];
+    startPractice(lvl12);
     skipIntro();
+    if (typeof hideMsgNow === 'function') hideMsgNow();
+    const bigMsg = document.getElementById('bigMsg');
+    if (bigMsg) bigMsg.style.display = 'none';
     const cd = document.getElementById('countdownOverlay');
     if (cd) cd.classList.remove('show');
-    setHint(LEVELS[0].notes[0]); // Tecla activa
+    setHint(lvl12.notes[0]); // Tecla activa Sol4 (MIDI 67)
   });
   await page.waitForTimeout(600);
 
