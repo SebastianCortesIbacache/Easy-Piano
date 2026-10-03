@@ -5,8 +5,8 @@
 
 :root {
   /* Paleta Base Obsidian & Espacio Profundo */
-  --bg: #090b14;
-  --bg-surface: #101424;
+  --bg: #091326;
+  --bg-surface: #0e1e40;
   --bg-card: rgba(20, 25, 42, 0.72);
   --bg-card-hover: rgba(28, 35, 58, 0.85);
   
@@ -66,18 +66,17 @@ body {
   position: relative;
 }
 
-/* Aurora & Mesh Background */
+/* Fondo Azul Medianoche Oficial con Resplandor Fiel al Mockup 3.0 */
 .bg {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(1200px 750px at 15% -10%, rgba(139, 108, 255, 0.28), transparent 60%),
-    radial-gradient(1100px 700px at 85% 15%, rgba(255, 181, 71, 0.2), transparent 60%),
-    radial-gradient(900px 650px at 50% 105%, rgba(0, 229, 255, 0.14), transparent 60%),
-    radial-gradient(700px 500px at 10% 80%, rgba(61, 220, 132, 0.12), transparent 55%),
-    var(--bg);
+    radial-gradient(1400px 900px at 50% 15%, #122858 0%, #0a1634 50%, #060e22 100%),
+    radial-gradient(900px 700px at 80% 50%, rgba(26, 60, 130, 0.4), transparent 70%),
+    radial-gradient(900px 700px at 20% 70%, rgba(18, 45, 105, 0.4), transparent 70%),
+    #060e22;
   background-attachment: fixed;
 }
 
@@ -6479,4 +6478,193 @@ header .subtitle {
 
 .mascotSpeechBubble::after {
   border-top-color: #29b6f6 !important;
+}
+
+
+/* ==========================================================================
+   TEMA AZUL MEDIANOCHE 100% FIEL AL MOCKUP OFICIAL EASY PIANO 3.0
+   ========================================================================== */
+body {
+  background-color: #060e22 !important;
+  color: #f8fafc;
+}
+
+.lobbyConsoleCard {
+  background: linear-gradient(170deg, #0d1e40 0%, #09142c 100%) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.35) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), 0 0 50px rgba(14, 116, 233, 0.18) !important;
+}
+
+#practice {
+  background: linear-gradient(170deg, #0d1e40 0%, #09142c 100%) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.35) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), 0 0 50px rgba(14, 116, 233, 0.18) !important;
+}
+
+.lobbyHeroFeatureCard {
+  background: linear-gradient(145deg, #102654 0%, #0b1a3c 100%) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.38) !important;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.55), 0 0 35px rgba(56, 189, 248, 0.12) inset !important;
+}
+
+.practiceStaffCol {
+  background: linear-gradient(180deg, #0a1736 0%, #071026 100%) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.4) !important;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.55), 0 0 35px rgba(56, 189, 248, 0.16) inset !important;
+}
+
+.sidebarDock .dockBtn:not(.active) {
+  background: #0d1c3a !important;
+  border: 1px solid rgba(56, 189, 248, 0.22) !important;
+  color: #e2e8f0 !important;
+}
+
+.sidebarDock .dockBtn:not(.active):hover {
+  background: #132854 !important;
+  border-color: rgba(56, 189, 248, 0.4) !important;
+}
+
+.headerNavBtn:not(.active) {
+  background: #0d1b38 !important;
+  border: 1px solid rgba(56, 189, 248, 0.22) !important;
+  color: #e2e8f0 !important;
+}
+
+.headerNavBtn:not(.active):hover {
+  background: #132852 !important;
+  border-color: rgba(56, 189, 248, 0.38) !important;
+}
+
+.headerUserChip {
+  background: #0d1b38 !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+}
+
+.carouselPill:not(.active) {
+  background: #0d1c3a !important;
+  border: 1px solid rgba(56, 189, 248, 0.22) !important;
+  color: #e2e8f0 !important;
+}
+
+.progLeftCol, .progCheerBadge {
+  background: #0b1836 !important;
+  border: 1px solid rgba(56, 189, 248, 0.22) !important;
+}
+
+#pianoWrap {
+  background: #071024 !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.3) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 35px rgba(56, 189, 248, 0.12) !important;
+}
+
+.heroSpeechBubble, .mascotSpeechBubble {
+  background: #0b1a38 !important;
+  border: 1.5px solid #29b6f6 !important;
+}
+
+/* ==========================================================================
+   TEMA AZUL MEDIANOCHE 100% FIEL AL MOCKUP OFICIAL EASY PIANO 3.0
+   ========================================================================== */
+html, body {
+  background: #0a1838 !important;
+  background-color: #0a1838 !important;
+  color: #f8fafc;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(1500px 900px at 50% 15%, #163674 0%, #0d214c 45%, #07132e 100%),
+    radial-gradient(1000px 800px at 85% 65%, rgba(37, 99, 235, 0.35), transparent 70%),
+    radial-gradient(1000px 800px at 15% 75%, rgba(30, 64, 175, 0.35), transparent 70%),
+    #07132e !important;
+  background-attachment: fixed;
+}
+
+.lobbyConsoleCard {
+  background: linear-gradient(170deg, #0e244e 0%, #0a1a38 100%) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.38) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), 0 0 50px rgba(29, 78, 216, 0.25) !important;
+}
+
+#practice {
+  background: linear-gradient(170deg, #0e244e 0%, #0a1a38 100%) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.38) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), 0 0 50px rgba(29, 78, 216, 0.25) !important;
+}
+
+.lobbyHeroFeatureCard {
+  background: linear-gradient(145deg, #122f64 0%, #0d2248 100%) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.42) !important;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.55), 0 0 40px rgba(56, 189, 248, 0.16) inset !important;
+}
+
+/* Resplandor azul detrás de Mateo en el Hero Card */
+.heroMascotWrap {
+  background: radial-gradient(circle at center, rgba(37, 99, 235, 0.55) 0%, rgba(30, 64, 175, 0.3) 45%, transparent 75%) !important;
+  border-radius: 50% !important;
+}
+
+.practiceStaffCol {
+  background: linear-gradient(180deg, #0c2044 0%, #081630 100%) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.55), 0 0 35px rgba(56, 189, 248, 0.18) inset !important;
+}
+
+/* Resplandor azul detrás de Mateo señalando */
+.mascotFigureWrap {
+  background: radial-gradient(circle at center, rgba(37, 99, 235, 0.55) 0%, rgba(30, 64, 175, 0.3) 45%, transparent 75%) !important;
+  border-radius: 50% !important;
+}
+
+.sidebarDock .dockBtn:not(.active) {
+  background: #0f244c !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+  color: #e2e8f0 !important;
+}
+
+.sidebarDock .dockBtn:not(.active):hover {
+  background: #173872 !important;
+  border-color: rgba(56, 189, 248, 0.45) !important;
+}
+
+.headerNavBtn:not(.active) {
+  background: #0e2248 !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+  color: #e2e8f0 !important;
+}
+
+.headerNavBtn:not(.active):hover {
+  background: #163670 !important;
+  border-color: rgba(56, 189, 248, 0.45) !important;
+}
+
+.headerUserChip {
+  background: #0e2248 !important;
+  border: 1px solid rgba(56, 189, 248, 0.28) !important;
+}
+
+.carouselPill:not(.active) {
+  background: #0f244c !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+  color: #e2e8f0 !important;
+}
+
+.progLeftCol, .progCheerBadge {
+  background: #0c1f44 !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+}
+
+#pianoWrap {
+  background: #081632 !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.35) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 40px rgba(37, 99, 235, 0.2) !important;
+}
+
+.heroSpeechBubble, .mascotSpeechBubble {
+  background: #0c2046 !important;
+  border: 1.5px solid #29b6f6 !important;
 }
