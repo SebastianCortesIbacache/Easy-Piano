@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PianoFácil PRO · Guía Oficial & Infografía Completa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark: #090c16;
+    --card-bg: rgba(22, 28, 48, 0.7);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --gold: #ffb547;
+    --gold-glow: rgba(255, 181, 71, 0.4);
+    --cyan: #00e5ff;
+    --cyan-glow: rgba(0, 229, 255, 0.35);
+    --pink: #ff4d6d;
+    --green: #00e676;
+    --purple: #b388ff;
+    --txt: #f0f4fc;
+    --sub: #94a3b8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Outfit', -apple-system, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--txt);
+    line-height: 1.6;
+    padding: 30px 20px;
+    background-image: 
+      radial-gradient(circle at 10% 15%, rgba(0, 229, 255, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 90% 85%, rgba(255, 181, 71, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(179, 136, 255, 0.05) 0%, transparent 50%);
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Barra de herramientas / Botón Imprimir */
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    padding: 12px 20px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    position: sticky;
+    top: 15px;
+    z-index: 100;
+  }
+
+  .toolTitle {
+    font-weight: 700;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .printBtn {
+    background: linear-gradient(135deg, var(--gold), #ff8a00);
+    color: #090c16;
+    font-weight: 800;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 14px var(--gold-glow);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .printBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--gold-glow);
+  }
+
+  /* HERO HEADER */
+  .hero {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(180deg, rgba(22, 28, 48, 0.9) 0%, rgba(12, 16, 28, 0.9) 100%);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--cyan), var(--gold), var(--pink));
+  }
+
+  .heroLogo {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    animation: bounce 2s infinite ease-in-out;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .heroTitle {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffffff 0%, var(--gold) 60%, var(--pink) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .heroSub {
+    font-size: 1.25rem;
+    color: #e2e8f0;
+    max-width: 750px;
+    margin: 0 auto 24px auto;
+    font-weight: 400;
+  }
+
+  .heroBadges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .badge {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .badge.cyan { border-color: var(--cyan); color: var(--cyan); background: rgba(0, 229, 255, 0.08); }
+  .badge.gold { border-color: var(--gold); color: var(--gold); background: rgba(255, 181, 71, 0.08); }
+  .badge.green { border-color: var(--green); color: var(--green); background: rgba(0, 230, 118, 0.08); }
+  .badge.pink { border-color: var(--pink); color: var(--pink); background: rgba(255, 77, 109, 0.08); }
+
+  /* SECCIONES Y GRID */
+  .sectionTitle {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 40px 0 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 10px;
+  }
+
+  .sectionTitle span {
+    font-size: 1.6rem;
+  }
+
+  .grid2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .grid3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .grid4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    padding: 24px;
+    transition: transform 0.2s, border-color 0.2s;
+    position: relative;
+  }
+
+  .sectionSubtitle {
+    color: var(--sub);
+    margin-bottom: 15px;
+  }
+
+  .footerSub {
+    margin-top: 4px;
+    font-size: 0.8rem;
+  }
+
+  .card:hover {
+    border-color: rgba(255, 181, 71, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .cardIcon {
+    font-size: 2.2rem;
+    margin-bottom: 14px;
+    display: inline-block;
+  }
+
+  .cardTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+
+  .cardDesc {
+    font-size: 0.95rem;
+    color: var(--sub);
+    line-height: 1.55;
+  }
+
+  /* MAPA DE LOS 9 MUNDOS */
+  .worldTrack {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  .worldItem {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 16px 20px;
+    gap: 16px;
+    transition: all 0.2s;
+  }
+
+  .worldItem:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--gold);
+  }
+
+  .worldNum {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold), #ff6b4a);
+    color: #090c16;
+    font-weight: 900;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .worldContent {
+    flex: 1;
+  }
+
+  .worldName {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .worldDetails {
+    font-size: 0.88rem;
+    color: var(--sub);
+    margin-top: 2px;
+  }
+
+  .worldBadge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: rgba(255, 181, 71, 0.15);
+    color: var(--gold);
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 181, 71, 0.3);
+  }
+
+  /* PASOS DE SESIÓN DE PRÁCTICA */
+  .sessionSteps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .stepCard {
+    background: linear-gradient(145deg, rgba(22, 28, 48, 0.8) 0%, rgba(14, 18, 32, 0.8) 100%);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+  }
+
+  .stepBadge {
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    background: var(--cyan);
+    color: #090c16;
+    font-weight: 900;
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .stepTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 10px 0 6px 0;
+    color: #fff;
+  }
+
+  .stepText {
+    font-size: 0.9rem;
+    color: var(--sub);
+  }
+
+  /* GALERÍA DE CAPTURAS E IMÁGENES */
+  .mediaGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .mediaCard {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .mediaCard img {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    background: #060810;
+    padding: 10px;
+    display: block;
+  }
+
+  .mediaCaption {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* TABLA TÉCNICA */
+  .techTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+  }
+
+  .techTable th, .techTable td {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 0.92rem;
+  }
+
+  .techTable th {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--gold);
+    font-weight: 700;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .techTable tr:not(:last-child) td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .techTable code {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--cyan);
+    background: rgba(0, 229, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--sub);
+    font-size: 0.9rem;
+  }
+
+  /* ESTILOS DE IMPRESIÓN (PDF / PRINT) */
+  @media print {
+    body {
+      background: #ffffff !important;
+      color: #1a202c !important;
+      padding: 0 !important;
+    }
+    .toolbar { display: none !important; }
+    .hero {
+      background: #f8fafc !important;
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: none !important;
+      color: #0f172a !important;
+    }
+    .heroTitle {
+      background: none !important;
+      color: #0f172a !important;
+      -webkit-background-clip: initial !important;
+    }
+    .card, .worldItem, .stepCard, .techTable {
+      background: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: none !important;
+      color: #1e293b !important;
+    }
+    .cardTitle, .worldName, .stepTitle, .sectionTitle {
+      color: #0f172a !important;
+    }
+    .cardDesc, .worldDetails, .stepText, .footer {
+      color: #475569 !important;
+    }
+    .worldNum {
+      background: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+    .badge {
+      border: 1px solid #cbd5e1 !important;
+      color: #334155 !important;
+      background: #f1f5f9 !important;
+    }
+    .mediaCard img {
+      background: #ffffff !important;
+    }
+    .mediaCard {
+      border: 1px solid #cbd5e1 !important;
+    }
+    .mediaCaption {
+      color: #334155 !important;
+      background: #f8fafc !important;
+    }
+    .techTable th {
+      background: #f1f5f9 !important;
+      color: #0f172a !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- BARRA DE ACCIÓN -->
+  <div class="toolbar">
+    <div class="toolTitle">
+      <span>🎹</span> PianoFácil PRO · Ficha Técnica & Guía de Uso
+    </div>
+    <button class="printBtn" onclick="window.print()">🖨️ Imprimir / Guardar en PDF</button>
+  </div>
+
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <div class="heroLogo">🎹✨</div>
+    <h1 class="heroTitle">PianoFácil PRO para Mateo</h1>
+    <p class="heroSub">Plataforma educativa gamificada de piano real, con síntesis acústica Web Audio, detección inteligente por micrófono, avatar 3D reactivo y progresión adaptativa de 9 mundos.</p>
+    <div class="heroBadges">
+      <span class="badge gold">⭐ Versión 9.0 PRO</span>
+      <span class="badge cyan">📱 APK Android 59.6 MB</span>
+      <span class="badge green">📶 100% Offline & Local</span>
+      <span class="badge pink">🧸 Modo Niño Adaptativo</span>
+      <span class="badge">🖐 POV Manos & Solfeo Do-Re-Mi</span>
+    </div>
+  </header>
+
+  <!-- 4 PILARES DEL MÉTODO -->
+  <h2 class="sectionTitle"><span>🏛️</span> Los 4 Pilares del Método Pedagógico</h2>
+  <div class="grid4">
+    <div class="card">
+      <div class="cardIcon">🎤</div>
+      <h3 class="cardTitle">Detección Guiada</h3>
+      <p class="cardDesc">Reconoce las notas del piano acústico en tiempo real con una ventana de tolerancia de ±55 cents, filtrando armónicos y ruidos del ambiente.</p>
+    </div>
+    <div class="card">
+      <div class="cardIcon">🐢</div>
+      <h3 class="cardTitle">Modo Paciente</h3>
+      <p class="cardDesc">Pedagogía positiva sin castigos: si Mateo se equivoca, la app ilumina en dorado la tecla correcta con su dedo guía sin reiniciar la canción.</p>
+    </div>
+    <div class="card">
+      <div class="cardIcon">🎯</div>
+      <h3 class="cardTitle">Misiones Diarias</h3>
+      <p class="cardDesc">3 retos diarios calculados dinámicamente que premian el hábito y desbloquean un cofre con fanfarria y medallas formativas.</p>
+    </div>
+    <div class="card">
+      <div class="cardIcon">🤖</div>
+      <h3 class="cardTitle">Compañero 3D</h3>
+      <p class="cardDesc">Avatar 3D en WebGL (Three.js 100% local) que reacciona con expresiones de alegría, concentración, fuego por racha o motivación.</p>
+    </div>
+  </div>
+
+  <!-- PROGRESIÓN: LOS 9 MUNDOS -->
+  <h2 class="sectionTitle"><span>🗺️</span> Mapa de Progresión: 9 Mundos y 44 Lecciones</h2>
+  <p class="sectionSubtitle">Una ruta estructurada que acompaña a Mateo desde su primera nota hasta la interpretación a dos manos.</p>
+  
+  <div class="worldTrack">
+    <div class="worldItem">
+      <div class="worldNum">1</div>
+      <div class="worldContent">
+        <div class="worldName">🌱 Mundo 1: Primeros Pasos (Do Central) <span class="worldBadge">4 Lecciones</span></div>
+        <div class="worldDetails">Ubicación del Do 4, familiarización con el teclado real, ritmo de pulsación y postura de la mano derecha.</div>
+      </div>
+    </div>
+    
+    <div class="worldItem">
+      <div class="worldNum">2</div>
+      <div class="worldContent">
+        <div class="worldName">🌿 Mundo 2: El Trío Mágico (Do - Re - Mi) <span class="worldBadge">5 Lecciones</span></div>
+        <div class="worldDetails">Uso de los dedos 1, 2 y 3. Primeras alternancias melódicas y lectura inicial en pentagrama en clave de Sol.</div>
+      </div>
+    </div>
+
+    <div class="worldItem">
+      <div class="worldNum">3</div>
+      <div class="worldContent">
+        <div class="worldName">🖐 Mundo 3: La Mano Completa (Do a Sol) <span class="worldBadge">5 Lecciones</span></div>
+        <div class="worldDetails">Incorporación de los dedos 4 (anular) y 5 (meñique). Coordinación de los 5 dedos sobre las teclas blancas.</div>
+      </div>
+    </div>
+
+    <div class="worldItem">
+      <div class="worldNum">4</div>
+      <div class="worldContent">
+        <div class="worldName">⭐ Mundo 4: Mis Primeras Canciones Famosas <span class="worldBadge">5 Lecciones</span></div>
+        <div class="worldDetails">Repertorio infantil clásico: <i>Estrellita Dónde Estás</i>, <i>Oda a la Alegría</i> y <i>Campanita del Lugar</i>.</div>
+      </div>
+    </div>
+
+    <div class="worldItem">
+      <div class="worldNum">5</div>
+      <div class="worldContent">
+        <div class="worldName">🌊 Mundo 5: Explorando los Graves (Mano Izquierda) <span class="worldBadge">5 Lecciones</span></div>
+        <div class="worldDetails">Clave de Fa, notas graves (Do 3 a Sol 3) y digitación especializada para la mano izquierda.</div>
+      </div>
+    </div>
+
+    <div class="worldItem">
+      <div class="worldNum">6</div>
+      <div class="worldContent">
+        <div class="worldName">👐 Mundo 6: Ambas Manos en Sincronía <span class="worldBadge">5 Lecciones</span></div>
+        <div class="worldDetails">Coordinación bimanual: alternancia de frases entre la mano izquierda (acompañamiento) y derecha (melodía).</div>
+      </div>
+    </div>
+
+    <div class="worldItem">
+      <div class="worldNum">7</div>
+      <div class="worldContent">
+        <div class="worldName">⚡ Mundo 7: El Misterio de las Teclas Negras <span class="worldBadge">5 Lecciones</span></div>
+        <div class="worldDetails">Sostenidos (#) y Bemoles (b). Comprensión visual y auditiva de los semitonos en el piano.</div>
+      </div>
+    </div>
+
+    <div class="worldItem">
+      <div class="worldNum">8</div>
+      <div class="worldContent">
+        <div class="worldName">🚀 Mundo 8: Ritmo y Agilidad <span class="worldBadge">5 Lecciones</span></div>
+        <div class="worldDetails">Dinámicas de tempo más ágiles, precisión rítmica con metrónomo y control de la duración de notas.</div>
+      </div>
+    </div>
+
+    <div class="worldItem">
+      <div class="worldNum">9</div>
+      <div class="worldContent">
+        <div class="worldName">👑 Mundo 9: El Gran Recital de Mateo <span class="worldBadge">5 Lecciones</span></div>
+        <div class="worldDetails">Obras completas de graduación, medalla de Maestro Pianista y desbloqueo del Trofeo de Oro.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLUJO DE PRÁCTICA -->
+  <h2 class="sectionTitle"><span>🔄</span> Flujo de una Sesión de Práctica Ideal</h2>
+  <div class="sessionSteps">
+    <div class="stepCard">
+      <span class="stepBadge">Paso 1</span>
+      <h3 class="stepTitle">🧭 Primera Misión</h3>
+      <p class="stepText">Colocar el dispositivo en el atril, adoptar postura de manos en "burbuja" y calibrar el micrófono con el Do Central.</p>
+    </div>
+
+    <div class="stepCard">
+      <span class="stepBadge">Paso 2</span>
+      <h3 class="stepTitle">🎯 Misiones Diarias</h3>
+      <p class="stepText">Revisar los 3 objetivos del día (2 canciones, 5 estrellas y 5 minutos de tiempo acumulado).</p>
+    </div>
+
+    <div class="stepCard">
+      <span class="stepBadge">Paso 3</span>
+      <h3 class="stepTitle">⏱️ Cuenta 3-2-1</h3>
+      <p class="stepText">Escuchar la demostración melódica y prepararse con la cuenta regresiva visual y sonora.</p>
+    </div>
+
+    <div class="stepCard">
+      <span class="stepBadge">Paso 4</span>
+      <h3 class="stepTitle">🎙️ Grabación Familiar</h3>
+      <p class="stepText">Grabar la interpretación para reproducirla y compartirla con papá Seba, Fer y Bernardita.</p>
+    </div>
+  </div>
+
+  <!-- RECURSOS Y GALERÍA -->
+  <h2 class="sectionTitle"><span>📸</span> Elementos Visuales y Ergonómicos</h2>
+  <div class="mediaGrid">
+    <div class="mediaCard">
+      <img src="piano_hand_posture_1786427260354.png" alt="Postura de manos">
+      <div class="mediaCaption">🖐 Guía POV de digitación y curvatura de dedos</div>
+    </div>
+    <div class="mediaCard">
+      <img src="mateo_chibi_portrait.png" alt="Mateo Avatar">
+      <div class="mediaCaption">✨ Mateo: Compañero 3D con emociones dinámicas</div>
+    </div>
+    <div class="mediaCard">
+      <img src="screenshot_phone_landscape.png" alt="Modo Landscape">
+      <div class="mediaCaption">📱 Teclado acústico enmarcado proporcional (~20% pantalla)</div>
+    </div>
+  </div>
+
+  <!-- NOVEDADES RECIENTES (FASES 1, 2 Y 3) -->
+  <h2 class="sectionTitle"><span>✨</span> Novedades de la Versión 9.0 (Fases 1, 2 y 3)</h2>
+  <div class="grid3">
+    <div class="card">
+      <div class="cardIcon">🎯</div>
+      <h3 class="cardTitle">Fase 1: Motor & Calidad</h3>
+      <p class="cardDesc">• Detección dirigida por nota esperada (±55 cents).<br>• Cero reseteos por fallos (Modo Paciente).<br>• Cuenta regresiva 3-2-1 animada.<br>• Limpieza total de flujos de micrófono.</p>
+    </div>
+    <div class="card">
+      <div class="cardIcon">❤️</div>
+      <h3 class="cardTitle">Fase 2: Gamificación & Familia</h3>
+      <p class="cardDesc">• Misiones Diarias y Cofre de Recompensas.<br>• Grabadora de canciones para la familia.<br>• Mini-tutorial interactivo "Primera Misión".<br>• Pausas inteligentes a los 15 minutos.</p>
+    </div>
+    <div class="card">
+      <div class="cardIcon">🛡️</div>
+      <h3 class="cardTitle">Fase 3: Offline & Control</h3>
+      <p class="cardDesc">• Three.js 100% local (cero dependencias CDN).<br>• Panel de control para padres con PIN de multiplicación.<br>• Modo Duelo Musical por turnos (Mateo vs Fer).<br>• Service Worker v9 con precaché total.</p>
+    </div>
+  </div>
+
+  <!-- ESPECIFICACIONES TÉCNICAS -->
+  <h2 class="sectionTitle"><span>⚙️</span> Ficha Técnica de Arquitectura</h2>
+  <table class="techTable">
+    <thead>
+      <tr>
+        <th>Componente</th>
+        <th>Tecnología / Implementación</th>
+        <th>Propósito</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>Motor de Audio</b></td>
+        <td><code>Web Audio API</code> + Síntesis aditiva 6 armónicos + Compressor</td>
+        <td>Timbre de piano acústico realista con latencia ultra baja.</td>
+      </tr>
+      <tr>
+        <td><b>Detección de Pitch</b></td>
+        <td>Autocorrelación optimizada + Ventana guiada <code>±55 cents</code></td>
+        <td>Afinación y validación precisa de notas en piano real.</td>
+      </tr>
+      <tr>
+        <td><b>Renderizado 3D</b></td>
+        <td><code>Three.js r128</code> + GLTFLoader local + WebGL</td>
+        <td>Avatar interactivo de Mateo con expresiones reactivas.</td>
+      </tr>
+      <tr>
+        <td><b>Empaquetado Móvil</b></td>
+        <td><code>Capacitor 7</code> + Android SDK 34 + Gradle 8.11</td>
+        <td>Generación de APK nativo optimizado para tablet y celular.</td>
+      </tr>
+      <tr>
+        <td><b>Soporte Offline</b></td>
+        <td><code>Service Worker v9</code> + Cache Storage</td>
+        <td>Funcionamiento 100% autónomo sin requerir internet.</td>
+      </tr>
+      <tr>
+        <td><b>Persistencia</b></td>
+        <td><code>LocalStorage JSON</code> seguro</td>
+        <td>Guarda estrellas, insignias, estadísticas y tiempo diario.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p><b>PianoFácil PRO</b> · Diseñado con cariño y pedagogía musical para Mateo 🎹🌟</p>
+    <p class="footerSub">Desarrollado para Android, Tablet, Web y Desktop · Versión 9.0 PRO</p>
+  </footer>
+
+</div>
+
+</body>
+</html>

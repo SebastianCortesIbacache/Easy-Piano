@@ -1,16 +1,24 @@
 {
-  "name": "pianofacil-mateo",
-  "version": "1.0.0",
-  "description": "PianoFácil PWA para Mateo empaquetada como APK de Android",
+  "name": "pianofacil-pro",
+  "version": "2.0.0",
+  "description": "PianoFácil PRO - PWA de aprendizaje de piano para niños y principiantes empaquetada con Capacitor 7",
   "main": "index.html",
   "scripts": {
-    "build": "echo Building web assets"
+    "dev": "vite",
+    "build": "npm run build:web",
+    "build:web": "node scripts/sync_www.js",
+    "preview": "vite preview",
+    "build:apk": "npm run build:web && npx cap sync android && cd android && gradlew.bat assembleDebug && cd .. && node -e \"const fs=require('fs'); fs.copyFileSync('android/app/build/outputs/apk/debug/app-debug.apk', 'PianoFacil-v2.apk'); fs.copyFileSync('android/app/build/outputs/apk/debug/app-debug.apk', 'PianoFacil-Mateo.apk'); console.log('✅ APK v2.0 lista: PianoFacil-v2.apk');\"",
+    "test:responsive": "node tests/test_mobile_responsive.js",
+    "test:audit": "node tests/audit_e2e_full.js"
   },
   "dependencies": {
     "@capacitor/android": "^7.0.0",
     "@capacitor/core": "^7.0.0"
   },
   "devDependencies": {
-    "@capacitor/cli": "^7.0.0"
+    "@capacitor/cli": "^7.0.0",
+    "playwright": "^1.62.1",
+    "vite": "^8.3.2"
   }
 }

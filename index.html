@@ -2,23 +2,26 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PianoFácil PRO · Mateo</title>
-<meta name="description" content="PWA educativa de piano interactiva y gamificada para Mateo con partituras en vivo, lecciones progresivas, audio synth y afinador por micrófono.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>PianoFácil PRO — Aprende Piano Jugando</title>
+<meta name="description" content="PWA educativa de piano interactiva y gamificada para niños y principiantes con partituras en vivo, lecciones progresivas, audio synth y afinador por micrófono.">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-<!-- THREE.JS WebGL 3D Avatar Engine -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
+<link rel="stylesheet" href="styles.css?v=11.0">
+<!-- THREE.JS WebGL 3D Avatar Engine (100% Offline Local) -->
+<script src="assets/vendor/three.min.js"></script>
+<script src="assets/vendor/GLTFLoader.js"></script>
+<script src="assets/vendor/DRACOLoader.js"></script>
 <!-- Controls and HDR loader for better PBR lighting -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
+<script src="assets/vendor/OrbitControls.js"></script>
+<script src="assets/vendor/RGBELoader.js"></script>
 </head>
 <body>
 
@@ -34,7 +37,7 @@
   <div class="loadCard">
     <div class="loadPiano">🎹</div>
     <h1 class="loadTitle">PianoFácil PRO</h1>
-    <p class="loadSub">Preparando las lecciones, canciones y partituras para Mateo… 🎶</p>
+    <p class="loadSub">Preparando las lecciones, canciones y partituras para comenzar… 🎶</p>
     <div class="soundWaves">
       <span></span><span></span><span></span><span></span><span></span>
     </div>
@@ -48,26 +51,61 @@
     <div class="logo">🎹</div>
     <div>
       <h1>PianoFácil PRO</h1>
-      <p class="subtitle">Curso de piano de Mateo · Nivel Maestro 🌟</p>
+      <p class="subtitle">Curso de piano para niños · Nivel Maestro 🌟</p>
     </div>
   </div>
   
-  <!-- BARRA DE PERFIL GAMIFICADO DE MATEO -->
+  <!-- BARRA DE PERFIL GAMIFICADO -->
   <div class="headerProfile">
     <div class="gamerChip streak" id="headerStreak">🔥 0 Días</div>
     <div class="gamerChip stars" id="headerStars">⭐ 0 Estrellas</div>
+    <button class="gamerChip missionsChip" id="missionsBtn" type="button">🎯 Misiones <span class="chipCount">0/3</span></button>
     <div class="gamerChip" id="timeChip">⏱ 0 min</div>
     <button class="btn small ghost" id="statsBtn" type="button">📊 Estadísticas</button>
   </div>
 
   <div class="headerActions">
     <button class="btn installBtn" id="installBtn" hidden type="button">📲 Instalar App</button>
+    <button class="btn small ghost" id="duelBtn" type="button" title="Duelo Musical Familiar">⚔️ Duelo</button>
+    <button class="btn small ghost" id="parentsBtn" type="button" title="Panel para Padres">👨‍👩‍👧 Padres</button>
     <button class="btn small ghost" id="kidModeBtn" type="button">🧸 Modo Niño</button>
   </div>
 </header>
 
+<!-- SELECTOR DESTACADO DE MODO DE ENTRADA (TECLADO VIRTUAL VS PIANO REAL) -->
+<div class="inputSourceBanner" id="inputSourceBanner">
+  <div class="isbContainer">
+    <span class="isbLabel">¿Tienes tu piano cerca?</span>
+    <div class="isbButtons">
+      <button class="isbBtn active" id="inputModeVirtual" type="button" title="Toca las teclas del piano en la pantalla">
+        <span class="isbIcon">🎹</span>
+        <span class="isbInfo">
+          <strong class="isbTitle">En pantalla</strong>
+          <small class="isbSub">Tocar en tablet / PC</small>
+        </span>
+      </button>
+      <button class="isbBtn" id="inputModeMic" type="button" title="Usa el micrófono para escuchar tu piano acústico real">
+        <span class="isbIcon">🎤</span>
+        <span class="isbInfo">
+          <strong class="isbTitle">Piano Acústico</strong>
+          <small class="isbSub">Escucha con micrófono</small>
+        </span>
+        <span class="isbDot" id="isbMicIndicator" hidden></span>
+      </button>
+      <button class="isbBtn" id="inputModeMidi" type="button" title="Conecta tu piano digital por cable USB o Bluetooth MIDI">
+        <span class="isbIcon">🔌</span>
+        <span class="isbInfo">
+          <strong class="isbTitle">Teclado Digital (MIDI)</strong>
+          <small class="isbSub" id="isbMidiStatusTxt">USB o Bluetooth</small>
+        </span>
+        <span class="isbDot" id="isbMidiIndicator" hidden></span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="modeTabs">
-  <button class="tab active" id="tabLearn" type="button">🎯 Modo Aventura (Plan de Mateo)</button>
+  <button class="tab active" id="tabLearn" type="button">🎯 Modo Aventura (Ruta de Aprendizaje)</button>
   <button class="tab" id="tabFree" type="button">🎙️ Estudio Libre & Afinador</button>
 </div>
 
@@ -83,7 +121,7 @@
     <div id="pathView">
       <div class="courseTop">
         <div>
-          <h2>¡Hola, Mateo! 👋 Este es tu camino del piano</h2>
+          <h2>¡Hola! 👋 Este es tu camino del piano</h2>
           <p class="sub noMb">9 etapas con canciones famosas que se desbloquean al avanzar. Gana estrellas, colecciona insignias y domina el teclado 🏆.</p>
         </div>
         <div class="courseProg">
@@ -101,33 +139,40 @@
         <button class="btn ghost small" id="backBtn" type="button">← Volver al Plan</button>
         <div class="pracTitle"><span id="pracName"></span><span class="lvlChip" id="pracLvl"></span></div>
         <div class="pracCtrls">
-          <label class="switch" title="Modo Paciente: Espera sin reiniciar al fallar"><input type="checkbox" id="tglWaitMode"> 🐢 Paciente</label>
-          <label class="switch" title="Vista Synthesia (Notas cayendo)"><input type="checkbox" id="tglSynthesia"> 🎹 Synthesia Neón</label>
-          <select id="tempoSel" title="Velocidad de la audición">
+          <label class="switch" id="tglWaitModeLabel" title="Modo Paciente: Espera sin reiniciar al fallar"><input type="checkbox" id="tglWaitMode"> 🐢 Paciente</label>
+          <label class="switch" id="tglSynthesiaLabel" title="Vista Synthesia (Notas cayendo)"><input type="checkbox" id="tglSynthesia"> 🎹 Synthesia Neón</label>
+          <select id="tempoSel" class="practiceAdvancedControl" title="Velocidad de la audición">
             <option value="0.6">🐢 Lento</option>
             <option value="1" selected>🎵 Normal</option>
             <option value="1.35">🐇 Rápido</option>
           </select>
+          <button class="btn small ghost practiceAdvancedControl" id="familyRecBtn" type="button" title="Grabar mi interpretación para la familia">🎙️ Grabar mi canción</button>
           <button class="btn small" id="demoBtn" type="button">▶ Escuchar</button>
           <button class="btn ghost small" id="skipIntroBtn" hidden type="button">⏭ Saltar Intro</button>
         </div>
       </div>
 
-      <!-- COMPAÑERO AVATAR DE MATEO ESTILO GEOGUESSR -->
+      <!-- COMPAÑERO AVATAR MUSICAL ESTILO GEOGUESSR -->
       <div class="companionBar" id="companionBar">
-        <div class="companionAvatar" id="companionAvatarSvg"></div>
+        <div class="companionAvatar" id="companionAvatarSvg">
+          <img src="mateo_chibi_portrait.png" class="companionPortrait" alt="Compañero Musical">
+        </div>
         <div class="avatarSpeech" id="avatarSpeech">
-          <span class="speechName">Mateo:</span>
+          <span class="speechName">Guía:</span>
           <span id="speechTxt">¡Listo para tocar! Escucha o toca la primera nota 🎹</span>
         </div>
       </div>
 
       <div class="lesson" id="lessonBox" hidden></div>
+      <button class="lessonToggle" id="lessonToggle" type="button" hidden aria-expanded="false">💡 Ver consejo</button>
 
       <div class="teachRow" id="teachRow" hidden>
         <div class="teachCard" id="handCard" hidden>
-          <div class="teachLabel">🖐 DEDOS SUGERIDOS</div>
-          <div id="handsBox"></div>
+          <div class="teachLabel">🖐 DIGITACIÓN & GUÍA POV</div>
+          <div class="handCardBody">
+            <div id="handsBox"></div>
+            <div id="handGuideImgSlot" class="handGuideImgSlot" hidden></div>
+          </div>
           <div id="handTxt"></div>
         </div>
         <div class="teachCard" id="staffCard" hidden>
@@ -168,6 +213,7 @@
         <div class="sourceSel">
           <button class="srcBtn active" id="srcPiano" type="button">🎹 Piano en pantalla / Teclado PC</button>
           <button class="srcBtn" id="srcMic" type="button">🎤 Micrófono (Piano acústico real)</button>
+          <button class="srcBtn" id="srcMidi" type="button">🔌 Teclado Digital (USB / Bluetooth MIDI)</button>
         </div>
 
         <div id="micPanel" hidden>
@@ -189,6 +235,20 @@
           <div class="detBox">
             <div>Nota detectada: <b id="detNote">—</b></div>
             <div id="detHz">— Hz</div>
+          </div>
+        </div>
+
+        <div id="midiPanel" hidden>
+          <div class="micHeaderRow">
+            <span class="statusText" id="midiPanelStatus">⚪ <b>Esperando conexión:</b> Conecta tu teclado con cable USB o Bluetooth MIDI.</span>
+          </div>
+          <div class="midiCtrls" style="margin-top:10px;">
+            <label class="switch">
+              <input type="checkbox" id="tglMidiSynth" checked> 🔊 Reproducir sonido en la app al tocar teclas MIDI
+            </label>
+            <p class="sub" style="margin:6px 0 0; font-size:0.82rem; color:#a4adca;">
+              Recomendado si tu teclado digital no tiene altavoces propios o tocas con audífonos.
+            </p>
           </div>
         </div>
       </div>
@@ -221,13 +281,15 @@
           <span id="recStatus">Listo para grabar</span>
         </div>
       </div>
-      <p class="micTip">💡 Mateo, el piano en pantalla siempre suena con síntesis acústica enriquecida. Si activas el micrófono, también escuchará tu piano real y verás las ondas en el osciloscopio superior.</p>
+      <p class="micTip">💡 El piano en pantalla siempre suena con síntesis acústica enriquecida. Si activas el micrófono, también escuchará tu piano real y verás las ondas en el osciloscopio superior.</p>
     </div>
   </section>
 
   <!-- TECLADO 3D Y PIANO ENGINE -->
   <section>
     <div id="pianoWrap">
+      <button class="pianoNavBtn left" id="pianoNavLeft" title="Desplazar a la izquierda" aria-label="Desplazar a la izquierda">‹</button>
+      <button class="pianoNavBtn right" id="pianoNavRight" title="Desplazar a la derecha" aria-label="Desplazar a la derecha">›</button>
       <canvas id="fallingCanvas" hidden></canvas>
       <div id="metronome" class="metro"></div>
       <div id="hintArrow">▼</div>
@@ -236,18 +298,18 @@
       <div id="piano"></div>
       <div id="fx"></div>
     </div>
-    <p class="keysHelp">💡 <b>Atajos de teclado PC:</b> <b>1 2 3 4 5 6 7</b> = zona grave (mano izquierda) · <b>A W S E D F T G Y H U J</b> = centro · <b>K O L P Ñ</b> y <b>Z X C V B N M ,</b> = agudas.<br>Sigue la flecha dorada, las manos indicadas y el pentagrama vivo. ¡A brillar en el piano, Mateo! 🌟</p>
+    <p class="keysHelp">💡 <b>Atajos de teclado PC:</b> <b>1 2 3 4 5 6 7</b> = zona grave (mano izquierda) · <b>A W S E D F T G Y H U J</b> = centro · <b>K O L P Ñ</b> y <b>Z X C V B N M ,</b> = agudas.<br>Sigue la flecha dorada, las manos indicadas y el pentagrama vivo. ¡A brillar en el piano! 🌟</p>
   </section>
 </main>
 
-<!-- AVATAR 3D FLOTANTE PERMANENTE DE MATEO (ESTILO GEOGUESSR) -->
-<!-- AVATAR 3D FLOTANTE PERMANENTE DE MATEO (THREE.JS WEBGL) -->
+<!-- AVATAR 3D FLOTANTE (ESTILO GEOGUESSR) -->
+<!-- AVATAR 3D FLOTANTE (THREE.JS WEBGL) -->
 <div id="floatingMateoWidget" class="floatingWidget fw-state-idle">
 
   <!-- Globo de diálogo flotante -->
   <div id="floatingSpeechBubble" class="floatingBubble">
     <div class="bubbleHeader">
-      <span class="bubbleBadge">Mateo</span>
+      <span class="bubbleBadge">Tu Guía</span>
       <span id="floatingEmotionTag" class="emotionTag">✨ Listo</span>
     </div>
     <div id="floatingSpeechTxt" class="bubbleText">¡Hola! Estoy listo para tocar piano contigo 🎹</div>
@@ -271,18 +333,17 @@
       <div class="starParticle sp4">✦</div>
       <div class="starParticle sp5">✦</div>
 
-      <!-- Personaje 3D de Mateo Chibi (render GeoGuessr 3D con ropa de verano) -->
+      <!-- Personaje 3D Chibi (render GeoGuessr 3D con ropa de verano) -->
       <!-- Imagen fallback estática eliminada para mostrar directamente el canvas 3D -->
 
       <!-- Planeta Musical Base -->
       <div class="geo3dPlanet">
-        <img src="mateo_planet.jpg" alt="Planeta Musical" class="planetImg">
         <div class="planetGlow"></div>
       </div>
 
-      <!-- Retrato de Mateo (fallback). Si tienes PNG con transparencia, ponla aquí como mateo_portrait.png -->
+      <!-- Retrato del Avatar (fallback con PNG existente) -->
       <div class="fallbackPortraitWrap">
-        <img src="mateo_chibi_portrait.jpg" alt="Mateo" class="fallbackPortrait" id="fallbackPortraitImg">
+        <img src="mateo_chibi_portrait.png" alt="Compañero Musical" class="fallbackPortrait" id="fallbackPortraitImg">
       </div>
 
       <!-- Sombra de contacto bajo el personaje -->
@@ -292,21 +353,23 @@
     <!-- Indicador de carga del modelo -->
     <div class="avatarLoadingHint" id="avatarLoadingHint" hidden>
       <div class="loadingSpinner"></div>
-      <span>Cargando Mateo 3D...</span>
+      <span>Cargando Avatar 3D...</span>
     </div>
 
-    <!-- Botón interactivo -->
-    <button class="avatarInteractBtn" id="avatarInteractBtn" type="button" title="Hablar con Mateo">💬</button>
+    <!-- Botón interactivo de toggle -->
+    <button class="avatarInteractBtn" id="avatarInteractBtn" type="button" title="Ocultar o mostrar mensaje del compañero" aria-label="Ocultar o mostrar mensaje">💬</button>
   </div>
 </div>
 
-<footer>Hecho con ❤️ para que Mateo aprenda piano como un maestro · PianoFácil PRO</footer>
+<footer>Hecho con ❤️ para aprender piano como un maestro · PianoFácil PRO</footer>
 
 <!-- MODAL DE NIVEL COMPLETADO -->
 <div class="modal" id="modal" hidden>
   <div class="modalCard">
-    <div class="modalAvatarBox" id="modalAvatarSvg"></div>
-    <h2 id="modalTitle">🎉 ¡Nivel completado, Mateo!</h2>
+    <div class="modalAvatarBox" id="modalAvatarSvg">
+      <img src="mateo_chibi_portrait.png" class="modalPortraitImg" alt="Compañero Musical">
+    </div>
+    <h2 id="modalTitle">🎉 ¡Nivel completado!</h2>
     <div class="cheer" id="cheerMsg" hidden></div>
     <div class="bigStars" id="starsBox"></div>
     <div class="modalStats">
@@ -329,7 +392,7 @@
 <div class="modal" id="statsModal" hidden>
   <div class="modalCard">
     <h2>📊 Tu Progreso de Práctica Semanal</h2>
-    <p class="sub">Mateo, así va tu constancia y dedicación en los últimos 7 días.</p>
+    <p class="sub">Así va tu constancia y dedicación en los últimos 7 días.</p>
     <div class="statsHead">
       <div>Racha Actual<b id="smStreak">0</b></div>
       <div>Hoy<b id="smToday">0 min</b></div>
@@ -342,33 +405,234 @@
   </div>
 </div>
 
-<!-- ONBOARDING / FIRST-RUN MODAL -->
+<!-- ONBOARDING / PRIMERA MISIÓN -->
 <div class="modal" id="onboardingModal" hidden>
-  <div class="modalCard">
-    <h2>👋 Hola, Mateo</h2>
-    <p class="sub">Bienvenido a PianoFácil PRO. Vamos a configurar rápidamente tu experiencia para que puedas tocar con tu piano real.</p>
-    <ol class="onboardSteps">
-      <li><strong>Coloca tus manos</strong>: siéntate frente al piano y coloca las palmas relajadas sobre las teclas.</li>
-      <li><strong>Calibrar micrófono</strong>: activaremos el micrófono y tocarás una nota para ajustar la sensibilidad.</li>
-      <li><strong>Modo Niño</strong>: activaremos una interfaz más simple si quieres.</li>
-    </ol>
-
-    <div id="onboardCalArea" style="margin-top:10px; display:none;">
-      <div style="margin-bottom:8px">Presiona <b>Iniciar calibración</b> y toca una nota larga en tu piano.</div>
-      <button class="btn" id="onboardStartCal">▶ Iniciar calibración</button>
-      <button class="btn ghost" id="onboardStopCal" style="display:none;">⏹ Detener</button>
-      <div style="margin-top:8px">Nivel: <div class="meter" style="display:inline-block; width:120px; height:12px; background:#222; border-radius:6px; margin-left:8px;"><div id="onboardMeter" style="height:100%; width:0%; background:linear-gradient(90deg,#00e5ff,#ffb547); border-radius:6px"></div></div></div>
+  <div class="modalCard onboardModalCard">
+    <h2>🧭 Primera Misión: Preparar el Piano</h2>
+    <p class="sub">¡Bienvenido! 4 pasos sencillos para empezar como un maestro:</p>
+    
+    <div class="onboardStepsCards">
+      <div class="onboardStepCard active" id="onbStep1">
+        <div class="stepNum">1</div>
+        <div class="stepInfo">
+          <b>📱 Ubica tu teléfono o tablet</b>
+          <p>Apóyalo en el atril o frente al centro del piano para ver bien la partitura.</p>
+        </div>
+      </div>
+      <div class="onboardStepCard" id="onbStep2">
+        <div class="stepNum">2</div>
+        <div class="stepInfo">
+          <b>🧘 Postura de Maestro</b>
+          <p>Espalda recta, hombros relajados y manos curvas como sosteniendo una burbuja.</p>
+        </div>
+      </div>
+      <div class="onboardStepCard" id="onbStep3">
+        <div class="stepNum">3</div>
+        <div class="stepInfo">
+          <b>🎹 Encuentra el Do Central (Do 4)</b>
+          <p>Busca las 2 teclas negras en el centro. La tecla blanca a la izquierda es <b>Do 4</b>.</p>
+        </div>
+      </div>
+      <div class="onboardStepCard" id="onbStep4">
+        <div class="stepNum">4</div>
+        <div class="stepInfo">
+          <b>🎤 Prueba de 1 Nota</b>
+          <p>Toca Do 4 en tu piano real. Verás cómo el micrófono la reconoce al instante.</p>
+          <div id="onboardCalArea" class="onboard-cal-area">
+            <button class="btn small" id="onboardStartCal" type="button">▶ Probar Micrófono</button>
+            <button class="btn ghost small onboard-stop-btn" id="onboardStopCal" type="button">⏹ Detener</button>
+            <div class="onboard-meter-row">Señal: <div class="meter onboard-meter-wrapper"><div id="onboardMeter" class="onboard-meter-fill"></div></div></div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="modalBtns" style="margin-top:18px">
-      <button class="btn ghost" id="onboardSkip">Saltar</button>
-      <button class="btn" id="onboardNext">Listo</button>
+    <div class="modalBtns onboard-modal-btns">
+      <button class="btn ghost" id="onboardSkip" type="button">Saltar</button>
+      <button class="btn" id="onboardNext" type="button">¡Comenzar a Tocar! 🚀</button>
     </div>
   </div>
 </div>
 
+<!-- MODAL DE MISIONES DIARIAS -->
+<div class="modal" id="missionsModal" hidden>
+  <div class="modalCard missionsModalCard">
+    <h2>🎯 Misiones Diarias</h2>
+    <p class="sub">¡Completa tus 3 retos de hoy para abrir el cofre de recompensas!</p>
+    
+    <div class="missionsList">
+      <div class="missionItem">
+        <div class="missionHeader">
+          <span>🎵 Tocar 2 canciones</span>
+          <b id="mSongProg">0 / 2 canciones</b>
+        </div>
+        <div class="missionTrack"><div class="missionFill" id="mSongBar"></div></div>
+      </div>
+      
+      <div class="missionItem">
+        <div class="missionHeader">
+          <span>⭐ Ganar 5 estrellas</span>
+          <b id="mStarProg">0 / 5 estrellas</b>
+        </div>
+        <div class="missionTrack"><div class="missionFill" id="mStarBar"></div></div>
+      </div>
+      
+      <div class="missionItem">
+        <div class="missionHeader">
+          <span>⏱ Practicar 5 minutos</span>
+          <b id="mTimeProg">0 / 5 min</b>
+        </div>
+        <div class="missionTrack"><div class="missionFill" id="mTimeBar"></div></div>
+      </div>
+    </div>
+
+    <div class="modalBtns">
+      <button class="btn" id="claimMissionsBtn" type="button">🎁 Abrir Cofre</button>
+      <button class="btn ghost" id="closeMissionsBtn" type="button">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE REPRODUCCIÓN -->
+<div class="modal" id="playbackModal" hidden>
+  <div class="modalCard playbackModalCard">
+    <h2>🎵 ¡Tu Interpretación al Piano!</h2>
+    <p class="sub">Escucha cómo tocaste y compártelo con tu familia y amigos ❤️</p>
+    
+    <div class="playbackAudioWrap">
+      <audio id="familyPlaybackAudio" controls></audio>
+    </div>
+
+    <div class="modalBtns">
+      <button class="btn" id="closePlaybackBtn" type="button">✨ ¡Excelente!</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE PAUSA INTELIGENTE (ESTIRAMIENTO) -->
+<div class="modal" id="stretchPauseModal" hidden>
+  <div class="modalCard pauseModalCard">
+    <h2>🧘 ¡Pausa de Maestro!</h2>
+    <p class="sub">¡Llevas 15 minutos tocando increíble! Vamos a cuidar tus manos y ojos con un breve estiramiento:</p>
+    
+    <div class="stretchTipsGrid">
+      <div class="stretchTip">🖐 Abre y cierra los dedos suavemente 5 veces</div>
+      <div class="stretchTip">🙆 Gira los hombros hacia atrás y respira hondo</div>
+      <div class="stretchTip">👀 Mira a lo lejos por 20 segundos</div>
+    </div>
+
+    <div class="modalBtns">
+      <button class="btn" id="closePauseBtn" type="button">¡Listo, manos descansadas! 🌟</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE PIN / ACCESO PARA PADRES -->
+<div class="modal" id="parentPinModal" hidden>
+  <div class="modalCard pinModalCard">
+    <h2>🔒 Zona de Padres</h2>
+    <p class="sub">Por favor resuelve esta pequeña operación para continuar:</p>
+    <div class="pinChallengeBox">
+      <span id="pinQuestion">4 × 3 = ?</span>
+      <input type="number" id="pinAnswer" class="pinInput" placeholder="Respuesta" />
+    </div>
+    <div class="modalBtns">
+      <button class="btn" id="submitPinBtn" type="button">Ingresar</button>
+      <button class="btn ghost" id="cancelPinBtn" type="button">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PANEL DE PADRES (AJUSTES & ANALÍTICA) -->
+<div class="modal" id="parentsModal" hidden>
+  <div class="modalCard parentsModalCard">
+    <h2>👨‍👩‍👧 Panel de Control Parental</h2>
+    <p class="sub">Supervisión del progreso y configuración del aprendizaje</p>
+
+    <div class="parentsGrid">
+      <div class="parentsCard">
+        <h3>📊 Resumen de Aprendizaje</h3>
+        <div class="parentsStats">
+          <div>Tiempo Total: <b id="pTotalTime">0 min</b></div>
+          <div>Días en Racha: <b id="pStreak">0</b></div>
+          <div>Estrellas Ganadas: <b id="pStars">0</b></div>
+          <div>Niveles Completados: <b id="pLevels">0 / 44</b></div>
+        </div>
+      </div>
+
+      <div class="parentsCard">
+        <h3>🎛️ Calibración Fina de Micrófono</h3>
+        <div class="settingRow">
+          <label for="micGainSlider">Sensibilidad Micrófono: <span id="micGainVal">x1.0</span></label>
+          <input type="range" id="micGainSlider" min="0.5" max="6.0" step="0.1" value="1.0">
+        </div>
+        <div class="settingRow">
+          <label for="micNoiseGate">Filtro de Ruido:</label>
+          <select id="micNoiseGate">
+            <option value="normal">Normal (Recomendado)</option>
+            <option value="high">Alto (Ambiente con ruido)</option>
+            <option value="low">Sensible (Piano suave)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="modalBtns">
+      <button class="btn" id="closeParentsBtn" type="button">Guardar y Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DUELO MUSICAL -->
+<div class="modal" id="duelModal" hidden>
+  <div class="modalCard duelModalCard">
+    <h2>⚔️ Duelo Musical Familiar</h2>
+    <p class="sub">¡Juega por turnos con papá, mamá, amigos o familia para ver quién toca con mayor ritmo!</p>
+
+    <div class="duelScoreboard">
+      <div class="duelPlayerCard active" id="duelP1">
+        <div class="duelAvatar">🎹</div>
+        <div class="duelName">Jugador 1</div>
+        <div class="duelScore" id="duelScore1">0 pts</div>
+      </div>
+      <div class="duelVs">VS</div>
+      <div class="duelPlayerCard" id="duelP2">
+        <div class="duelAvatar">🌟</div>
+        <div class="duelName">Jugador 2</div>
+        <div class="duelScore" id="duelScore2">0 pts</div>
+      </div>
+    </div>
+
+    <div class="duelStatusBox">
+      <div id="duelTurnTxt">Turno de: <b>Jugador 1</b></div>
+      <div id="duelNoteSeq" class="duelSeq">Do · Re · Mi · Fa · Sol · Do</div>
+    </div>
+
+    <div class="modalBtns">
+      <button class="btn" id="startDuelTurnBtn" type="button">▶ Iniciar Turno</button>
+      <button class="btn ghost" id="closeDuelBtn" type="button">Salir del Duelo</button>
+    </div>
+  </div>
+</div>
+
+<!-- OVERLAY DE CUENTA REGRESIVA 3-2-1 -->
+<div id="countdownOverlay" class="countdownOverlay">
+  <div class="countdownCard">
+    <div id="countdownNum" class="countdownNum">3</div>
+    <div class="countdownSub">¡Prepara tus manos! 🎹</div>
+  </div>
+</div>
+
 <!-- SCRIPTS MODULARES -->
-<script src="levels.js"></script>
-<script src="app.js"></script>
+<script src="levels.js?v=11.0"></script>
+<script src="js/state.js?v=11.0"></script>
+<script src="js/audio.js?v=11.0"></script>
+<script src="js/pitch.js?v=11.0"></script>
+<script src="js/midi.js?v=11.0"></script>
+<script src="js/piano.js?v=11.0"></script>
+<script src="js/avatar3d.js?v=11.0"></script>
+<script src="js/synthesia.js?v=11.0"></script>
+<script src="js/practice.js?v=11.0"></script>
+<script src="js/main.js?v=11.0"></script>
 </body>
 </html>

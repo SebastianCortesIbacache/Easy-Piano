@@ -4,12 +4,18 @@ node_modules/
 # Proyecto nativo Android (generado automáticamente)
 android/
 
-# Carpeta www (copia de archivos web generada por Capacitor)
+# Carpeta www y build de producción
 www/
+dist/
+.temp_playwright/
 
-# APK de debug (archivo grande, instalar desde releases o carpeta local)
+# APK y binarios compilados
 *.apk
 *.aab
+
+# Respaldos y editor
+*.bak
+.vscode/
 
 # Logs
 npm-debug.log*

@@ -1,12 +1,12 @@
 {
-  "name": "PianoFácil para Mateo",
+  "name": "PianoFácil PRO",
   "short_name": "PianoFácil",
-  "description": "Aprende piano jugando: 9 etapas, canciones famosas, partituras, postura y recompensas para Mateo.",
+  "description": "Aprende piano jugando: 9 etapas, canciones famosas, partituras, postura y recompensas para aprender piano jugando.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0e1018",
   "theme_color": "#0e1018",
-  "orientation": "any",
+  "orientation": "landscape",
   "icons": [
     {
       "src": "icon-192.png",
