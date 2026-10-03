@@ -1,7 +1,7 @@
 {
-  "name": "PianoFácil PRO",
-  "short_name": "PianoFácil",
-  "description": "Aprende piano jugando: 9 etapas, canciones famosas, partituras, postura y recompensas para aprender piano jugando.",
+  "name": "Easy Piano — Aventura Musical",
+  "short_name": "Easy Piano",
+  "description": "Aprende piano jugando con tu compañero musical: 9 mundos de aventura, partituras interactivas, canciones y reconocimiento Web MIDI y micrófono.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0e1018",

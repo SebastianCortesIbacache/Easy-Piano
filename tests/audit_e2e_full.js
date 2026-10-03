@@ -104,7 +104,7 @@ async function runAudit() {
     await page.waitForTimeout(1000);
 
     const pageTitle = await page.title();
-    if (pageTitle.includes('PianoFácil PRO')) {
+    if (pageTitle.includes('Easy Piano') || pageTitle.includes('PianoFácil')) {
       passed.push(`Test 1: App cargada limpiamente sin errores (Título: "${pageTitle}")`);
       console.log('  ✅ ' + passed[passed.length - 1]);
     } else {

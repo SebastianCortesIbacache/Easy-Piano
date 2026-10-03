@@ -700,7 +700,28 @@ function renderPath(){
   var prog = getPath();
   var st = courseStats(prog);
   var cont = continueLevel(prog);
+  var targetLvl = cont || LEVELS[0];
   var activeStageId = cont ? cont.stage : 1;
+
+  // Actualizar Hero Card de Aventura V3
+  var heroNextTxt = document.getElementById('heroNextLevelTxt');
+  if(heroNextTxt){
+    heroNextTxt.textContent = !cont ? '🎓 ¡Completaste los 44 niveles!' : ('Nivel ' + cont.id + ': ' + cont.title);
+  }
+  var heroBtn = document.getElementById('heroContinueBtn');
+  if(heroBtn){
+    heroBtn.onclick = function(){
+      if(typeof playUiSound === 'function') playUiSound('click');
+      startPractice(targetLvl);
+    };
+  }
+  var heroStars = document.getElementById('heroStarsVal');
+  if(heroStars) heroStars.textContent = st.stars;
+  var heroStreak = document.getElementById('heroStreakVal');
+  if(heroStreak){
+    var dStats = (typeof loadDailyStats === 'function') ? loadDailyStats() : { streak: 0 };
+    heroStreak.textContent = dStats.streak || 0;
+  }
 
   if(cont){
     var bar = document.createElement('div');

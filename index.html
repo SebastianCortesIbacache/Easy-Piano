@@ -6,11 +6,11 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>PianoFácil PRO — Aprende Piano Jugando</title>
-<meta name="description" content="PWA educativa de piano interactiva y gamificada para niños y principiantes con partituras en vivo, lecciones progresivas, audio synth y afinador por micrófono.">
+<title>Easy Piano — Aventura Musical para Niños</title>
+<meta name="description" content="Aprende piano jugando con tu compañero musical: 9 mundos de aventura, partituras interactivas, canciones y reconocimiento Web MIDI y micrófono.">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -35,9 +35,9 @@
   <div class="fnote n3">🎹</div>
   <div class="fnote n4">✨</div>
   <div class="loadCard">
-    <div class="loadPiano">🎹</div>
-    <h1 class="loadTitle">PianoFácil PRO</h1>
-    <p class="loadSub">Preparando las lecciones, canciones y partituras para comenzar… 🎶</p>
+    <img src="assets/v3_design/easy_piano_logo.jpg" class="loadLogoImg" alt="Easy Piano">
+    <h1 class="loadTitle">Easy Piano</h1>
+    <p class="loadSub">Preparando tu aventura musical… 🎶</p>
     <div class="soundWaves">
       <span></span><span></span><span></span><span></span><span></span>
     </div>
@@ -48,10 +48,10 @@
 
 <header>
   <div class="brand">
-    <div class="logo">🎹</div>
+    <img src="assets/v3_design/easy_piano_logo.jpg" class="brandLogoImg" alt="Easy Piano Logo">
     <div>
-      <h1>PianoFácil PRO</h1>
-      <p class="subtitle">Curso de piano para niños · Nivel Maestro 🌟</p>
+      <h1>Easy Piano</h1>
+      <p class="subtitle">Aventura Musical · Nivel Maestro 🌟</p>
     </div>
   </div>
   
@@ -119,16 +119,51 @@
   <!-- MODO CURSO / MAPA DE APRENDIZAJE -->
   <section class="panel" id="learnPanel">
     <div id="pathView">
-      <div class="courseTop">
-        <div>
-          <h2>¡Hola! 👋 Este es tu camino del piano</h2>
-          <p class="sub noMb">9 etapas con canciones famosas que se desbloquean al avanzar. Gana estrellas, colecciona insignias y domina el teclado 🏆.</p>
+      <!-- HERO CARD: CONTINUAR AVENTURA (V3 VIDEOJUEGO) -->
+      <div class="adventureHeroCard" id="adventureHeroCard">
+        <div class="heroAvatarSide">
+          <div class="heroAvatarGlowRing">
+            <img src="assets/v3_design/avatar_celebrating.jpg" alt="Compañero Musical" class="heroAvatarImg" id="heroAvatarImg">
+          </div>
         </div>
-        <div class="courseProg">
-          <div class="miniBar"><div id="courseFill"></div></div>
-          <span id="courseTxt">0/44</span>
+        <div class="heroContentSide">
+          <div class="heroTagLine">🌟 ¡TU AVENTURA MUSICAL!</div>
+          <h2 class="heroTitle" id="heroWelcomeTitle">¡Hola, Pequeño Maestro! 👋</h2>
+          <p class="heroSub" id="heroWelcomeSub">Avanza en tu viaje del piano, gana estrellas doradas y desbloquea nuevas canciones mágicas.</p>
+          <div class="heroActionRow">
+            <button class="btn btnHeroPrimary" id="heroContinueBtn" type="button">
+              <span class="btnHeroIcon">🚀</span>
+              <span class="btnHeroTexts">
+                <strong class="btnHeroMain">CONTINUAR AVENTURA</strong>
+                <small class="btnHeroSub" id="heroNextLevelTxt">Cargando tu siguiente nivel...</small>
+              </span>
+            </button>
+            <div class="heroQuickBadges">
+              <div class="heroStatBadge"><span class="hsbIcon">⭐</span> <b id="heroStarsVal">0</b> Estrellas</div>
+              <div class="heroStatBadge"><span class="hsbIcon">🔥</span> <b id="heroStreakVal">0</b> Días</div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- BANNER DE MAPA DE MUNDOS -->
+      <div class="worldMapBannerCard">
+        <div class="worldMapHeader">
+          <div class="wmTitleBox">
+            <span class="wmBadge">🗺️ MAPA DE AVENTURA</span>
+            <h3>Explora los 9 Mundos Musicales</h3>
+          </div>
+          <div class="courseProg">
+            <div class="miniBar"><div id="courseFill"></div></div>
+            <span id="courseTxt">0/44</span>
+          </div>
+        </div>
+        <div class="worldMapVisualWrap">
+          <img src="assets/v3_design/adventure_world_map.jpg" alt="Mapa de Aventura Musical" class="worldMapVisualImg">
+          <div class="worldMapOverlayGlow"></div>
+        </div>
+      </div>
+
       <div class="badgesBar" id="badgesBar"></div>
       <div id="pathBox"></div>
     </div>
@@ -361,13 +396,13 @@
   </div>
 </div>
 
-<footer>Hecho con ❤️ para aprender piano como un maestro · PianoFácil PRO</footer>
+<footer>Hecho con ❤️ para aprender piano jugando · Easy Piano 3.0</footer>
 
 <!-- MODAL DE NIVEL COMPLETADO -->
 <div class="modal" id="modal" hidden>
   <div class="modalCard">
     <div class="modalAvatarBox" id="modalAvatarSvg">
-      <img src="mateo_chibi_portrait.png" class="modalPortraitImg" alt="Compañero Musical">
+      <img src="assets/v3_design/avatar_celebrating.jpg" class="modalPortraitImg" alt="Compañero Celebrando">
     </div>
     <h2 id="modalTitle">🎉 ¡Nivel completado!</h2>
     <div class="cheer" id="cheerMsg" hidden></div>
@@ -512,6 +547,9 @@
 <!-- MODAL DE PAUSA INTELIGENTE (ESTIRAMIENTO) -->
 <div class="modal" id="stretchPauseModal" hidden>
   <div class="modalCard pauseModalCard">
+    <div class="modalAvatarBox">
+      <img src="assets/v3_design/avatar_stretching.jpg" class="modalPortraitImg" alt="Pausa de Maestro">
+    </div>
     <h2>🧘 ¡Pausa de Maestro!</h2>
     <p class="sub">¡Llevas 15 minutos tocando increíble! Vamos a cuidar tus manos y ojos con un breve estiramiento:</p>
     

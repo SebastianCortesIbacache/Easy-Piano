@@ -48,7 +48,18 @@ function updateMateo3DState(state){
 function setAvatarState(state, speechMsg, resetDelayMs){
   currentAvatarState = state || 'idle';
 
-  var portraitImgHtml = '<img src="mateo_chibi_portrait.png" class="companionPortrait" alt="Mateo">';
+  var assetMap = {
+    'idle': 'assets/v3_design/easy_piano_logo.jpg',
+    'listen': 'assets/v3_design/avatar_listening.jpg',
+    'playing': 'assets/v3_design/avatar_pointing_key.jpg',
+    'happy': 'assets/v3_design/avatar_celebrating.jpg',
+    'fire': 'assets/v3_design/avatar_celebrating.jpg',
+    'victory': 'assets/v3_design/avatar_celebrating.jpg',
+    'oops': 'assets/v3_design/avatar_encouraging.jpg',
+    'stretch': 'assets/v3_design/avatar_stretching.jpg'
+  };
+  var portraitSrc = assetMap[currentAvatarState] || 'assets/v3_design/easy_piano_logo.jpg';
+  var portraitImgHtml = '<img src="' + portraitSrc + '" class="companionPortrait av-bounce" alt="Compañero Musical">';
 
   // 1. Renderizar en Header
   var hSvg = document.getElementById('headerAvatarSvg');
@@ -71,10 +82,13 @@ function setAvatarState(state, speechMsg, resetDelayMs){
   // 3. Renderizar en Modal de Victoria
   var mSvg = document.getElementById('modalAvatarSvg');
   if(mSvg){
-    mSvg.innerHTML = '<img src="mateo_chibi_portrait.png" class="modalPortraitImg" alt="Mateo Campeón">';
+    mSvg.innerHTML = '<img src="assets/v3_design/avatar_celebrating.jpg" class="modalPortraitImg" alt="¡Felicitaciones!">';
   }
 
-  // 4. Sincronizar Widget Flotante 3D Permanente
+  // 4. Sincronizar Widget Flotante y Fallback
+  var fbImg = document.getElementById('fallbackPortraitImg');
+  if(fbImg) fbImg.src = portraitSrc;
+
   var fw = document.getElementById('floatingMateoWidget');
   if(fw){
     fw.className = 'floatingWidget fw-state-' + currentAvatarState;

@@ -1,14 +1,14 @@
 {
-  "name": "pianofacil-pro",
-  "version": "2.0.0",
-  "description": "PianoFácil PRO - PWA de aprendizaje de piano para niños y principiantes empaquetada con Capacitor 7",
+  "name": "easy-piano",
+  "version": "3.0.0",
+  "description": "Easy Piano 3.0 — Aventura musical y juego de aprendizaje de piano para niños empaquetada con Capacitor 7",
   "main": "index.html",
   "scripts": {
     "dev": "vite",
     "build": "npm run build:web",
     "build:web": "node scripts/sync_www.js",
     "preview": "vite preview",
-    "build:apk": "npm run build:web && npx cap sync android && cd android && gradlew.bat assembleDebug && cd .. && node -e \"const fs=require('fs'); fs.copyFileSync('android/app/build/outputs/apk/debug/app-debug.apk', 'PianoFacil-v2.apk'); fs.copyFileSync('android/app/build/outputs/apk/debug/app-debug.apk', 'PianoFacil-Mateo.apk'); console.log('✅ APK v2.0 lista: PianoFacil-v2.apk');\"",
+    "build:apk": "npm run build:web && npx cap sync android && cd android && gradlew.bat assembleDebug && cd .. && node -e \"const fs=require('fs'); fs.copyFileSync('android/app/build/outputs/apk/debug/app-debug.apk', 'EasyPiano-v3.apk'); console.log('✅ APK v3.0 lista: EasyPiano-v3.apk');\"",
     "test:responsive": "node tests/test_mobile_responsive.js",
     "test:audit": "node tests/audit_e2e_full.js"
   },
